@@ -20,7 +20,7 @@ import MovimientosScreen from './src/screens/MovimientosScreen';
 import Menu from './src/components/shared/Menu';
 import Header from './src/components/shared/Header';
 import ExpenseForm from './src/components/floatButton/ExpenseForm';
-import { runOnJS } from 'react-native-reanimated';
+
 
 
 
