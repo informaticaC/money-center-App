@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { View, Text, StyleSheet, Pressable, TextInput}from 'react-native';
+import { format } from 'date-fns';
 
 const ShowPickerDate = () => {
   
@@ -19,7 +20,12 @@ const ShowPickerDate = () => {
     if (event.type === 'set') {
       const currentDate = selectedDate || date;
       setDate(currentDate);
-      setIncomeDate(currentDate.toDateString());
+      const formattedDate = format(currentDate, 'dd-MM-yyyy', { locale: esLocale }); // Formatear la fecha en español
+      setIncomeDate(formattedDate);
+      setIncomeData({
+        ...incomeData,
+        date: formattedDate,
+      });
     }
     toogleDatepicker();
   };

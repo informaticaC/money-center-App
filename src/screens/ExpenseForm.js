@@ -5,10 +5,21 @@ import IconPicker from '../components/formComponents/IconPicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonSave from '../components/formComponents/ButtonSave';
 import CheckboxButton from '../components/formComponents/CheckboxButton';
+import axios from 'axios';
+import { selectToken, setToken } from '../../store/slices/token.slice';
+import {useSelector, useDispatch } from 'react-redux';
+import { format } from 'date-fns';
 
 const ExpenseForm = () => {
-  const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
+
+  const [incomeData, setIncomeData] = useState({
+    name:"",
+    description:"",
+    amount:"",
+    date:"",
+    icon:"",
+  })
+  
   const [incomeDate, setIncomeDate] = useState("");
 
   //estados del componente datetimepicker
@@ -22,14 +33,57 @@ const ExpenseForm = () => {
   // estados del button guardar para desavilitar en caso de que los input esten vacios  
   const [isButtonEnabled, setButtonEnabled] = useState(false);
 
- 
+  const handleInputChange = (key, value) => {
+    setIncomeData({
+      ...incomeData,
+      [key]: value,
+    });
+  };
+
+  const token= useSelector(selectToken);
+  
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  const handleSave = () => {
+    // lógica de inicio de sesión
+    const url ='http://192.168.1.5:8080/api/v1/expense'
+    const { name, amount, description, date, icon} = incomeData;
+    axios.post(url, { name, amount, description, date, icon}, {headers})
+      .then((res) => {
+        
+        
+      })
+        .catch(error => {
+          
+          console.log(error,"error, linea 46")
+          if (error.response) {
+            // La solicitud fue hecha y el servidor respondió con un código de estado
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // La solicitud fue hecha pero no se recibió ninguna respuesta
+            console.log(error.request);
+          } else {
+            // Algo sucedió en el proceso de configuración que desencadenó el error
+            console.log('Error', error.message);
+          }
+          
+        });
+        
+  };
   
   // funcion para input iconos 
   
     const handleIconSelect = (selectedIcon) => {
-      // Maneja la lógica de selección del icono aquí
-      console.log('Icono seleccionado:', selectedIcon);
-      // Puedes realizar más acciones según la selección del icono
+      console.log(incomeData.icon)
+      setIncomeData({
+        ...incomeData,
+        icon: selectedIcon,
+        
+      });
     };
   
 
@@ -39,31 +93,45 @@ const ExpenseForm = () => {
     setShowPicker(!showPicker);
   };
 
+  const esLocale = require('date-fns/locale/es'); 
+
   const onChange = (event, selectedDate) => {
     if (event.type === 'set') {
       const currentDate = selectedDate || date;
       setDate(currentDate);
-      setIncomeDate(currentDate.toDateString());
+      const formattedDate = format(currentDate, 'dd-MM-yyyy', { locale: esLocale }); // Formatear la fecha en español
+      setIncomeDate(formattedDate);
+      setIncomeData({
+        ...incomeData,
+        date: formattedDate,
+      });
     }
     toogleDatepicker();
   };
-
   // funciones para la seleccion "efectivo" o "digital"
 
   const handleDigitalPress = () => {
     setDigitalSelected(true);
     setCashSelected(false);
+    setIncomeData({
+      ...incomeData,
+      description: "Digital",
+    });
   };
   
   const handleCashPress = () => {
     setDigitalSelected(false);
     setCashSelected(true);
+    setIncomeData({
+      ...incomeData,
+      description: "Efectivo",
+    });
   };
 
   // funciones de button guardar 
   // verifica si los input estan vacios 
   const checkButtonEnabled = () => {
-    if (title.trim() !== '' && amount.trim() !== '' && incomeDate.trim() !== '') {
+    if (incomeData.name.trim() !== '' && incomeData.amount.trim() !== '' && incomeDate.trim() !== '' && incomeData.description.trim() !== '' && incomeData.icon.trim() !== '') {
       setButtonEnabled(true);
     } else {
       setButtonEnabled(false);
@@ -74,7 +142,7 @@ const ExpenseForm = () => {
 
   useEffect(() => {
     checkButtonEnabled();
-  }, [title, amount, incomeDate]);
+  }, [incomeData.name, incomeData.amount, incomeDate, incomeData.icon, incomeData.description]);
   
   return (
     <SafeAreaView style={styles.container}>
@@ -87,8 +155,8 @@ const ExpenseForm = () => {
               <View style={styles.inputContainer1}>
                 <TextInput
                   style={styles.input}
-                  value={title}
-                  onChangeText={(text) => setTitle(text)}
+                  value={incomeData.name}
+                  onChangeText={(text) => handleInputChange('name', text)}
                   placeholder='Ej: sueldo '
                 />
               </View>
@@ -99,8 +167,8 @@ const ExpenseForm = () => {
               <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.input}
-                  value={amount}
-                  onChangeText={(text) => setAmount(text)}
+                  value={incomeData.amount}
+                  onChangeText={(text) => handleInputChange('amount', text)}
                   placeholder='Ej: 2000, 3000'
                 />
               </View>
@@ -118,7 +186,7 @@ const ExpenseForm = () => {
               <Text style={styles.label}>Fecha</Text>
               <View style={styles.inputContainer}>
                 <TextInput
-                  placeholder='Ej: 2000, 3000'
+                  placeholder='Seleeciona una fecha'
                   value={incomeDate}
                   editable={false}
                   style={styles.input}
@@ -134,7 +202,7 @@ const ExpenseForm = () => {
             style1={styles.selectedCheckbox}
             style2={styles.selectedTextCheckbox}
           />
-          <ButtonSave isButtonEnabled={isButtonEnabled} />
+          <ButtonSave isButtonEnabled={isButtonEnabled} save={handleSave} />
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -7,6 +7,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import { selectToken, setToken } from '../../store/slices/token.slice';
 import {useSelector, useDispatch } from 'react-redux';
+import { format } from 'date-fns';
 
 
 
@@ -16,7 +17,7 @@ const IncomeForm = () => {
     name:"",
     description:"",
     amount:"",
-    date: "",
+    date:"",
   })
   
   const token= useSelector(selectToken);
@@ -27,8 +28,8 @@ const IncomeForm = () => {
   const handleSave = () => {
     // lógica de inicio de sesión
     const url ='http://192.168.1.5:8080/api/v1/income'
-    const { name, amount, description} = incomeData;
-    axios.post(url, { name, amount, description}, {headers})
+    const { name, amount, description, date} = incomeData;
+    axios.post(url, { name, amount, description, date}, {headers})
       .then((res) => {
         
         
@@ -86,7 +87,7 @@ const IncomeForm = () => {
     });
   };
 
-  const [data, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
 
   const [incomeDate, setIncomeDate] = useState("");
@@ -95,26 +96,30 @@ const IncomeForm = () => {
     setShowPicker(!showPicker);
   };
 
+  const esLocale = require('date-fns/locale/es'); 
+
   const onChange = (event, selectedDate) => {
     if (event.type === 'set') {
       const currentDate = selectedDate || date;
       setDate(currentDate);
-      setIncomeDate(currentDate.toDateString());
+      const formattedDate = format(currentDate, 'dd/MM/yyyy', { locale: esLocale }); // Formatear la fecha en español
+      setIncomeDate(formattedDate);
       setIncomeData({
         ...incomeData,
-        date: incomeDate,
+        date: formattedDate,
       });
     }
     toogleDatepicker();
   };
 
+  
+
   // funciones de button guardar 
   // verifica si los input estan vacios 
-  const name = incomeData.name;
-  const amount = incomeData.amount;
+  
   
   const checkButtonEnabled = () => {
-    if (name.trim() !== '' && amount.trim() !== '' && incomeDate.trim() !== '') {
+    if (incomeData.name.trim() !== '' && incomeData.amount.trim() !== '' && incomeDate.trim() !== '' && incomeData.description.trim() !== '') {
       setButtonEnabled(true);
     } else {
       setButtonEnabled(false);
@@ -124,8 +129,8 @@ const IncomeForm = () => {
   //actualiza el estado de los campos 
   useEffect(() => {
     checkButtonEnabled();
-  }, [incomeData.name, incomeData.amount, incomeDate]);
-
+  }, [incomeData.name, incomeData.amount, incomeDate, incomeData.description]);
+  console.log(incomeDate)
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -157,7 +162,7 @@ const IncomeForm = () => {
           <DateTimePicker
             mode="date"
             display="calendar"
-            value={data}
+            value={date}
             onChange={onChange}
           />
         )}
@@ -169,7 +174,6 @@ const IncomeForm = () => {
               value={incomeDate}
               editable={false}
               style={styles.input}
-              
             />
           </View>
         </Pressable>
