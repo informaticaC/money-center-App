@@ -6,8 +6,8 @@ import * as Progress from 'react-native-progress';
 const CircleProgress = ({progress, size, indeterminate, color, borderWidth, borderColor, thickness, strokeCap, endAngle, unfilledColor, showsText}) => {
   
   
-  return <Progress.Circle size={size} indeterminate={indeterminate} showsText={showsText}  strokeCap={strokeCap} progress={progress}  thickness={thickness} unfilledColor={unfilledColor} borderWidth= {borderWidth} endAngle={endAngle} borderColor={borderColor} color={color} />
-
+  return <Progress.Circle size={size} indeterminate={indeterminate}   showsText={showsText}  strokeCap={strokeCap} progress={progress}  thickness={thickness} unfilledColor={unfilledColor} borderWidth= {borderWidth} endAngle={endAngle} borderColor={borderColor} color={color} />
+    
     
   
 };

@@ -11,7 +11,7 @@ import UserPage from './src/screens/UserPageScreen';
 import GoogleLogin from './src/components/GoogleLogin';
 import ConfirCode from './src/screens/ConfirCode';
 import ConfirChangePassword from './src/screens/ConfirChangePassword';
-import FormIncome from './src/screens/FormIncome';
+import IncomeForm from './src/screens/IncomeForm';
 import ProfileScreen from './src/screens/ProfileScreen';
 import {Provider} from "react-redux";
 import store from "./store/index";
@@ -19,14 +19,8 @@ import ObjetiveScreen from './src/screens/ObjetiveScreen';
 import MovimientosScreen from './src/screens/MovimientosScreen';
 import Menu from './src/components/shared/Menu';
 import Header from './src/components/shared/Header';
-import ExpenseForm from './src/components/floatButton/ExpenseForm';
-
-
-
-
-
-
-
+import ExpenseForm from './src/screens/ExpenseForm';
+import ObjetiveForm from './src/screens/ObjetiveForm';
 
 const Stack = createStackNavigator();
 
@@ -65,8 +59,9 @@ export default function App() {
           <Stack.Screen name="UserPage" component={UserPage} />
           <Stack.Screen name="GoogleLogin" component={GoogleLogin} />
           <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
-          <Stack.Screen name="FormIncome" component={FormIncome} />
+          <Stack.Screen name="IncomeForm" component={IncomeForm} />
           <Stack.Screen name="ExpenseForm" component={ExpenseForm} />
+          <Stack.Screen name="ObjetiveForm" component={ObjetiveForm} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

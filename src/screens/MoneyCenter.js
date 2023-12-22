@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Logo from '../../assets/img/moneylogo.png';
 import Fondo3 from '../../assets/img/fondo3.png';
-import {useSelector, useDispatch } from 'react-redux';
+
 
 
 const MoneyCenter = () => {
@@ -13,8 +13,7 @@ const MoneyCenter = () => {
   const [user, setUser] = React.useState(null);
   const [userStored, setUserStored] = React.useState(AsyncStorage.getItem("@user"));
   
-  const users = useSelector(state => state.users)
-  const dispatch = useDispatch()
+  
 
   
   const  isLogged = () => { //función que devuelve una promesa de recuperar los datos del local storage y cargarlos en userStored

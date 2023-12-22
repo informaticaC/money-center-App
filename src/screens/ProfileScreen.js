@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import UserProfile from '../components/shared/UserProfile';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const ProfileScreen = () => {
   
@@ -20,7 +22,9 @@ const ProfileScreen = () => {
   };
 
   return (
+    <SafeAreaView>
     <ScrollView>
+      
       <View style={styles.body}>
         <View style={styles.header}>
           <View>
@@ -72,7 +76,9 @@ const ProfileScreen = () => {
           <Text style={styles.buttonText}>Cerrar sesión</Text>
         </TouchableOpacity>
       </View>
+      
     </ScrollView>
+    </SafeAreaView>
       
     
   )

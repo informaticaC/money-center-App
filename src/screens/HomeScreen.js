@@ -5,6 +5,7 @@ import ProgressBar from '../components/ProgressBar';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {useSelector, useDispatch } from 'react-redux';
 import { setUsers } from '../../store/slices/users.slice';
+import { setToken } from '../../store/slices/token.slice';
 import UserProfile from '../components/shared/UserProfile';
 import {PaperProvider} from 'react-native-paper';
 import FloatingButton from '../components/shared/FloatingButton';
@@ -15,9 +16,9 @@ const HomeScreen = () => {
   
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
-
   // Utiliza useState para manejar el estado local de userData
   const [userData, setUserData] = useState('');
+  const [userToken, setUserToken] = useState('');
 
   // useEffect se ejecutará cuando el componente se renderize
   useEffect(() => {
@@ -27,11 +28,14 @@ const HomeScreen = () => {
         // Recupera los datos de AsyncStorage
         const storedUserData = await AsyncStorage.getItem('@user');
         const user = JSON.parse(storedUserData)
+        const storedToken = await AsyncStorage.getItem('@token');
+        const token = JSON.parse(storedToken)
         // Actualiza el estado local con los datos recuperados
         setUserData(user);
-
+        setUserToken(token),
         // Actualiza el estado global de Redux utilizando la acción setUsers
         dispatch(setUsers(user));
+        dispatch(setToken(token));
         
       } catch (error) {
         console.error('Error al recuperar datos de AsyncStorage:', error);
@@ -42,7 +46,6 @@ const HomeScreen = () => {
     fetchData();
   }, []); 
   
-  console.log(users?.firstname)
   return (
     <PaperProvider>
     <View style={styles.container}>

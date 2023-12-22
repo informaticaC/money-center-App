@@ -1,22 +1,23 @@
 import React from 'react';
 import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
 import CircleProgress from './CircleProgress';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 
 const IngresosGastosView = () => {
   
-  
+   
   const circleIngresos = {
     progress:0.7,
     size:90,
     indeterminate:false,
-    color: '#206D40',
+    color: "#206D40",
     borderWidth: 3,
-    borderColor:'#32B166',
+    borderColor:"rgba(50, 175, 101, 0.5)",
     thickness:12,
     strokeCap:"round",
-    unfilledColor:'#32B166',
+    unfilledColor:"rgba(50, 175, 101, 0.5)",
     endAngle:0.9,
     showsText:true,
   };
@@ -26,12 +27,12 @@ const IngresosGastosView = () => {
     progress:0.3,
     size:90,
     color: '#C91A2F',
-    unfilledColor: '#FF5732',
+    unfilledColor: 'rgba(223, 50, 49, 0.5)',
     borderWidth: 3,
     indeterminate:false,
     endAngle:0.1,
     showsText:true,
-    borderColor:'#FF5732',
+    borderColor:'rgba(223, 50, 49, 0.5)',
     thickness:12,
     strokeCap:"round",
     

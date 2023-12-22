@@ -44,6 +44,7 @@ const Menu = () => {
           style={styles.containButton}
           onPress={() => onMenuItemPress(item)}
         >
+          
           <View style={[
               styles.menuItem,
               selectedMenuItem === item.id ? styles.containImg : null,
@@ -57,6 +58,7 @@ const Menu = () => {
               ]}
             />
           </View>
+          
           <Text
             style={[
               styles.menuText,

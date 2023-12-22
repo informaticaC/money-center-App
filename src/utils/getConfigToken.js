@@ -1,6 +1,8 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const getConfigToken = () => ({
     headers: {
-      Authorization:`Bearer ${localStorage.getItem("@token")}`
+      Authorization:`Bearer ${AsyncStorage.getItem("@token")}`
     }
   })
   
