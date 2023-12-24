@@ -3,15 +3,19 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { View, Text, StyleSheet, Pressable, TextInput}from 'react-native';
 import { format } from 'date-fns';
 
-const ShowPickerDate = () => {
+const ShowPickerDate = ({data, funcion , field}) => {
   
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
 
+  const [incomeDate, setIncomeDate] = useState("");
   
 
-  
+  //funciones para input fecha
+  const esLocale = require('date-fns/locale/es'); 
 
+
+  
   const toogleDatepicker = () => {
     setShowPicker(!showPicker);
   };
@@ -21,10 +25,10 @@ const ShowPickerDate = () => {
       const currentDate = selectedDate || date;
       setDate(currentDate);
       const formattedDate = format(currentDate, 'dd-MM-yyyy', { locale: esLocale }); // Formatear la fecha en español
-      setIncomeDate(formattedDate);
-      setIncomeData({
-        ...incomeData,
-        date: formattedDate,
+      const value = setIncomeDate(formattedDate);
+      funcion({
+        ...data,
+       [field]: formattedDate,
       });
     }
     toogleDatepicker();
@@ -44,7 +48,7 @@ const ShowPickerDate = () => {
       <Text style={styles.label}>Fecha</Text>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="ej:160"
+          placeholder="seleccionar una fecha"
           value={incomeDate}
           editable={false}
           style={styles.input}
@@ -62,20 +66,13 @@ const styles = StyleSheet.create({
  
   label: {
     marginBottom: -9,
-    marginLeft: 10,
+    marginLeft:20,
     fontSize: 16,
     backgroundColor:'rgba(255, 255, 255, 1)',
     color: '#4A4A4A',
     zIndex: 1000,
     alignSelf: "flex-start",
     paddingHorizontal:5,
-  },
-
-  inputContainer1: {
-    borderWidth: 1,
-    borderColor: '#4A4A4A',
-    borderRadius: 8,
-    width: 250,
   },
   
   inputContainer: {

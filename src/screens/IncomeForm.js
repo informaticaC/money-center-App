@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Pressable, ScrollView} from 'react-native';
+import { View, Text, TextInput, StyleSheet, ScrollView} from 'react-native';
 import CheckboxButton from '../components/formComponents/CheckboxButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonSave from '../components/formComponents/ButtonSave';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
-import { selectToken, setToken } from '../../store/slices/token.slice';
-import {useSelector, useDispatch } from 'react-redux';
-import { format } from 'date-fns';
-
+import { selectToken} from '../../store/slices/token.slice';
+import {useSelector} from 'react-redux';
+import ShowPickerDate from '../components/formComponents/ShowPickerDate';
 
 
 const IncomeForm = () => {
@@ -21,12 +19,12 @@ const IncomeForm = () => {
   })
   
   const token= useSelector(selectToken);
-  console.log(token )
   const headers = {
     Authorization: `Bearer ${token}`,
   };
+  
   const handleSave = () => {
-    // lógica de inicio de sesión
+    
     const url ='http://192.168.1.5:8080/api/v1/income'
     const { name, amount, description, date} = incomeData;
     axios.post(url, { name, amount, description, date}, {headers})
@@ -57,29 +55,6 @@ const IncomeForm = () => {
   // estados del button guardar para desavilitar en caso de que los input esten vacios  
   const [isButtonEnabled, setButtonEnabled] = useState(false);
 
-  // estados del checkbox digital o efectivo 
-  const [isDigitalSelected, setDigitalSelected] = useState(false);
-  const [isCashSelected, setCashSelected] = useState(false);
-
-  // funciones para la seleccion "efectivo" o "digital"
-  const handleDigitalPress = () => {
-    setDigitalSelected(true);
-    setCashSelected(false);
-    setIncomeData({
-      ...incomeData,
-      description: "Digital",
-    });
-  };
-  
-  const handleCashPress = () => {
-    setDigitalSelected(false);
-    setCashSelected(true);
-    setIncomeData({
-      ...incomeData,
-      description: "Efectivo",
-    });
-  };
-
   const handleInputChange = (key, value) => {
     setIncomeData({
       ...incomeData,
@@ -87,39 +62,10 @@ const IncomeForm = () => {
     });
   };
 
-  const [date, setDate] = useState(new Date());
-  const [showPicker, setShowPicker] = useState(false);
-
-  const [incomeDate, setIncomeDate] = useState("");
-
-  const toogleDatepicker = () => {
-    setShowPicker(!showPicker);
-  };
-
-  const esLocale = require('date-fns/locale/es'); 
-
-  const onChange = (event, selectedDate) => {
-    if (event.type === 'set') {
-      const currentDate = selectedDate || date;
-      setDate(currentDate);
-      const formattedDate = format(currentDate, 'dd/MM/yyyy', { locale: esLocale }); // Formatear la fecha en español
-      setIncomeDate(formattedDate);
-      setIncomeData({
-        ...incomeData,
-        date: formattedDate,
-      });
-    }
-    toogleDatepicker();
-  };
-
-  
-
   // funciones de button guardar 
   // verifica si los input estan vacios 
-  
-  
   const checkButtonEnabled = () => {
-    if (incomeData.name.trim() !== '' && incomeData.amount.trim() !== '' && incomeDate.trim() !== '' && incomeData.description.trim() !== '') {
+    if (incomeData.name.trim() !== '' && incomeData.amount.trim() !== '' && incomeData.date.trim() !== '' && incomeData.description.trim() !== '') {
       setButtonEnabled(true);
     } else {
       setButtonEnabled(false);
@@ -129,8 +75,8 @@ const IncomeForm = () => {
   //actualiza el estado de los campos 
   useEffect(() => {
     checkButtonEnabled();
-  }, [incomeData.name, incomeData.amount, incomeDate, incomeData.description]);
-  console.log(incomeDate)
+  }, [incomeData.name, incomeData.amount, incomeData.date, incomeData.description]);
+  
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -157,32 +103,10 @@ const IncomeForm = () => {
             />
           </View>
         </View>
-        <View>
-        {showPicker && (
-          <DateTimePicker
-            mode="date"
-            display="calendar"
-            value={date}
-            onChange={onChange}
-          />
-        )}
-        <Pressable onPress={toogleDatepicker} >
-          <Text style={styles.label}>Fecha</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Seleccionar una fecha"
-              value={incomeDate}
-              editable={false}
-              style={styles.input}
-            />
-          </View>
-        </Pressable>
-        </View>
+        <ShowPickerDate data={incomeData} funcion={setIncomeData} field="date"/>
         <CheckboxButton
-          handleDigitalPress={handleDigitalPress}
-          handleCashPress={handleCashPress}
-          isDigitalSelected={isDigitalSelected}
-          isCashSelected={isCashSelected}
+          Data={incomeData}
+          setData={setIncomeData}
           style1={styles.selectedCheckbox}
           style2={styles.selectedTextCheckbox}
         />
@@ -218,7 +142,7 @@ const styles = StyleSheet.create({
 
   inputContainer: {
     borderWidth: 1,
-    borderColor: '#4A4A4A',
+    borderColor: 'rgba(74, 74, 74, 1)',
     borderRadius: 8,
     width: 350,
     

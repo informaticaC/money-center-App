@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Modal, FlatList, Text, StyleSheet, TextInput } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const ColorPicker = ({ onSelectc }) => {
+const ColorPicker = ({ onSelect }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedColor, setSelectedColor] = useState('#FF0000'); // Color por defecto
   const [searchQuery, setSearchQuery] = useState('');
@@ -36,14 +35,14 @@ const ColorPicker = ({ onSelectc }) => {
   const handleColorSelect = color => {
     setSelectedColor(color);
     setModalVisible(false);
-    onSelectc(color);
+    onSelect(selectedColor);
   };
 
   return (
     <View>
       <Text style={styles.label}>Color</Text>
       <TouchableOpacity style={styles.containerButton} onPress={() => setModalVisible(true)}>
-        <View style={[styles.colorButton, { backgroundColor: selectedColor }]} />
+        <View name={selectedColor} style={[styles.colorButton, { backgroundColor: selectedColor }]} />
       </TouchableOpacity>
 
       <Modal

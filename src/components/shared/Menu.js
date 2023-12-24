@@ -18,8 +18,7 @@ const Menu = () => {
     { id: 'metas', icon: Objetivos  },
     { id: 'perfil', icon: Perfil },
   ];
-
-  const [selectedMenuItem, setSelectedMenuItem] = useState("inicio");
+ const [selectedMenuItem, setSelectedMenuItem] = useState("inicio");
   
  
  

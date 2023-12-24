@@ -1,8 +1,30 @@
-// CheckboxButton.js
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const CheckboxButton = ({ handleDigitalPress, handleCashPress, isDigitalSelected, isCashSelected, style1, style2 }) => {
+const CheckboxButton = ({ Data, setData, style1, style2 }) => {
+  // estados del checkbox digital o efectivo 
+  const [isDigitalSelected, setDigitalSelected] = useState(false);
+  const [isCashSelected, setCashSelected] = useState(false);
+ 
+  // funciones para la seleccion "efectivo" o "digital"
+
+  const handleDigitalPress = () => {
+    setDigitalSelected(true);
+    setCashSelected(false);
+    setData({
+      ...Data,
+      description: "Digital",
+    });
+  };
+  
+  const handleCashPress = () => {
+    setDigitalSelected(false);
+    setCashSelected(true);
+    setData({
+      ...Data,
+      description: "Efectivo",
+    });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.text}>
@@ -51,7 +73,7 @@ const styles = StyleSheet.create( {
     paddingVertical: 10,
     width: 110,
     alignItems: 'center',
-    borderColor: '#4A4A4A',
+    borderColor: '#A3A3A3',
     borderRadius: 20,
     borderWidth: 1,
   },

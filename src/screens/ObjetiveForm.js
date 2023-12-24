@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Pressable, TextInput, ScrollView, TouchableOpacity} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native';
 import IconPicker from '../components/formComponents/IconPicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonSave from '../components/formComponents/ButtonSave';
 import ColorPicker from '../components/formComponents/ColorPicker';
+import ShowPickerDate from '../components/formComponents/ShowPickerDate';
+import axios from 'axios';
+import { selectToken} from '../../store/slices/token.slice';
+import {useSelector} from 'react-redux';
 
 const ObjetiveForm = () => {
 
-  const [incomeData, setIncomeData] = useState({
+  const [metaData, setMetaData] = useState({
     icon:"",
     name:"",
     budget:"",
@@ -17,71 +20,82 @@ const ObjetiveForm = () => {
   }); 
     
   const handleInputChange = (key, value) => {
-    setIncomeData({
-      ...incomeData,
+    setMetaData({
+      ...metaData,
       [key]: value,
     });
-  };  
+  };
+
   
 
-  //estados del componente datetimepicker
-  const [date, setDate] = useState(new Date());
-  const [showPicker, setShowPicker] = useState(false);
+  const token= useSelector(selectToken);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  
+  const handleSave = () => {
+    const url ='http://192.168.1.5:8080/api/v1/objectives'
+    const { name, budget, color, deadline, icon} = metaData;
+    axios.post(url, { name, budget, color, deadline, icon}, {headers})
+      .then((res) => {
+        
+        
+      })
+        .catch(error => {
+          
+          console.log(error,"error, linea 46")
+          if (error.response) {
+            // La solicitud fue hecha y el servidor respondió con un código de estado
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // La solicitud fue hecha pero no se recibió ninguna respuesta
+            console.log(error.request);
+          } else {
+            // Algo sucedió en el proceso de configuración que desencadenó el error
+            console.log('Error', error.message);
+          }
+          
+        });
+  };
 
-  const [incomeDate, setIncomeDate] = useState("");
-
-  // estados del button guardar para desavilitar en caso de que los input esten vacios  
-  const [isButtonEnabled, setButtonEnabled] = useState(false);
+  //funcion para ingresar la fecha al estado metadata
 
  
-  
+
   // funcion para input iconos 
-  
     const handleIconSelect = (selectedIcon) => {
-      // Maneja la lógica de selección del icono aquí
-      console.log('Icono seleccionado:', selectedIcon);
-      // Puedes realizar más acciones según la selección del icono
+      setMetaData({
+        ...metaData,
+        icon: selectedIcon,
+      });
     };
-
-    const handleColorSelect = (selectedIcon) => {
-      // Maneja la lógica de selección del icono aquí
-      console.log('Icono seleccionado:', selectedIcon);
-      // Puedes realizar más acciones según la selección del icono
+    
+    // funcion para input color
+    const handleColorSelect = (selectedColor) => {
+      console.log(selectedColor)
+      setMetaData({
+        ...metaData,
+        color: selectedColor,
+      });
     };
+  // estados del button guardar para desavilitar en caso de que los input esten vacios  
+  const [isButtonEnabled, setButtonEnabled] = useState(false);  
   
-
-
-  //funciones para input fecha 
-  const toogleDatepicker = () => {
-    setShowPicker(!showPicker);
-  };
-
-  const onChange = (event, selectedDate) => {
-    if (event.type === 'set') {
-      const currentDate = selectedDate || date;
-      setDate(currentDate);
-      setIncomeDate(currentDate.toDateString());
-    }
-    toogleDatepicker();
-  };
-
- 
-
   // funciones de button guardar 
   // verifica si los input estan vacios 
   const checkButtonEnabled = () => {
-    if (incomeData.name.trim() !== '' && incomeData.budget.trim() !== '' && incomeDate.trim() !== '') {
+    if (metaData.name.trim() !== '' && metaData.budget.trim() !== '' && metaData.deadline.trim() !== '' && metaData.color.trim() !== '' && metaData.icon.trim() !== '') {
       setButtonEnabled(true);
     } else {
       setButtonEnabled(false);
     }
-  };
-
+  };  
   //actualiza el estado de los campos 
-
   useEffect(() => {
     checkButtonEnabled();
-  }, [incomeData.name, incomeData.budget, incomeDate]);
+  }, [metaData.name, metaData.budget, metaData.deadline, metaData.color, metaData.icon]);
   
   return (
     <SafeAreaView style={styles.container}>
@@ -94,7 +108,7 @@ const ObjetiveForm = () => {
               <View style={styles.inputContainer1}>
                 <TextInput
                   style={styles.input}
-                  value={incomeData.name}
+                  value={metaData.name}
                   onChangeText={(text) => handleInputChange("name", text)}
                   placeholder='Ej: sueldo '
                 />
@@ -102,42 +116,21 @@ const ObjetiveForm = () => {
             </View>
           </View>
           <View style={styles.tituloIcon}>
-            <ColorPicker onSelectc={handleColorSelect} />
+            <ColorPicker onSelect={handleColorSelect} />
             <View>
               <Text style={styles.label}>Objetivo</Text>
                 <View style={styles.inputContainer1}>
                   <TextInput
                     style={styles.input}
-                    value={incomeData.budget}
+                    value={metaData.budget}
                     onChangeText={(text) => handleInputChange("budget", text)}
                     placeholder='Ej: 2000, 3000'
                   />
               </View>
             </View>
           </View>
-          <View>
-            {showPicker && (
-              <DateTimePicker
-                mode="date"
-                display="calendar"
-                value={date}
-                onChange={onChange}
-              />
-            )}
-            <Pressable onPress={toogleDatepicker} >
-              <Text style={styles.label}>Fecha limite</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  placeholder='Ej: 2000, 3000'
-                  value={incomeDate}
-                  editable={false}
-                  style={styles.input}
-                  onChangeText={(text) => handleInputChange("deadline", text)}
-                />
-              </View>
-            </Pressable>
-          </View>
-          <ButtonSave isButtonEnabled={isButtonEnabled} />
+          <ShowPickerDate data={metaData} funcion={setMetaData}  field="deadline" />
+          <ButtonSave isButtonEnabled={isButtonEnabled} save={handleSave} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -178,14 +171,14 @@ const styles = StyleSheet.create({
 
   inputContainer1: {
     borderWidth: 1,
-    borderColor: '#4A4A4A',
+    borderColor: 'rgba(74, 74, 74, 1)',
     borderRadius: 8,
     width: 250,
   },
   
   inputContainer: {
     borderWidth: 1,
-    borderColor: '#4A4A4A',
+    borderColor: 'rgba(74, 74, 74, 1)',
     borderRadius: 8,
     width: 350,
     marginBottom: 120,

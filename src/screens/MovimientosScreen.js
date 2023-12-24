@@ -1,16 +1,24 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import {PaperProvider} from 'react-native-paper';
 import FloatingButton from '../components/shared/FloatingButton';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
+import MonthPicker from '../components/movimientoscomp/MonthPicker';
 
 const MovimientosScreen = () => {
   return (
     <PaperProvider>
-      <View>
-
-      </View>
-      <FloatingButton />
+      <SafeAreaView>
+        <ScrollView>  
+          <View>
+            <Text>Mis Moviemientos</Text>
+            <View>
+              <MonthPicker />
+            </View>
+          </View>
+          <FloatingButton />
+        </ScrollView>  
+      </SafeAreaView>
     </PaperProvider>
   )
 }
