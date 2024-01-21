@@ -62,56 +62,38 @@ const SocialLogin = () => {
 
 
   return (
-    <View >
+    <View style={styles.container}>
         <TouchableOpacity style={styles.socialLoginButton} onPress={() =>  promptAsyncIdToken() }>
-          <View style={styles.socialLoginOption}>
-            <Text style={styles.socialLoginText}>Continuar con </Text>
-            <Image source={Gooogle} style={styles.socialLoginIcon} />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.socialLoginButton} onPress={() => alert('Iniciar sesión con Facebook')}>
-          <View style={styles.socialLoginOption}>
-            <Text style={styles.socialLoginText}>Continuar con </Text>
-            <Image source={Facebook}  style={styles.socialLoginIcon} />
-          </View>
+          <Image source={Gooogle} style={styles.socialLoginIcon} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialLoginButton} onPress={() => alert('Iniciar sesión con Apple')}>
-          <View style={styles.socialLoginOption}>
-            <Text style={styles.socialLoginText}>Continuar con </Text>
-            <Image source={Apple} style={styles.socialLoginIcon} />
-          </View>
+          <Image source={Apple}  style={styles.socialLoginIcon} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.socialLoginButton} onPress={() => alert('Iniciar sesión con Facebook')}>
+          <Image source={Facebook} style={styles.socialLoginIcon} />
         </TouchableOpacity>
       </View>
   )
 };
 
 const styles = StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      gap: 15,
+    },
 
     socialLoginButton: {
-      backgroundColor: '#EBEBEB',
-      borderRadius: 10,
+      backgroundColor: '#fff',
+      borderRadius: 20,
       borderWidth: 1,
-      borderColor: 'transparent',
-      marginBottom: 10,
-      paddingHorizontal: 25,
-      paddingVertical: 5,
+      borderColor: 'rgba(0, 0, 0, 0.15)',
+      marginTop: 25,
+      marginBottom: 20,
+      padding: 5,
       
     },
-    socialLoginText: {
-      color: 'black',
-      textDecorationLine: 'none',
-      fontWeight: "500",
-      
-    },
-    socialLoginOption: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: 10,
-    },
-    
+   
     socialLoginIcon: {
-      marginRight: 10,
-      marginLeft: 10,
       width: 25,
       height: 25,
     },

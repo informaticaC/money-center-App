@@ -22,8 +22,7 @@ const FloatingButton = () => {
     <Portal >
       
       <FAB.Group
-        fabStyle={{ backgroundColor: isMenuVisible ? "#F01E44" : '#22904E' , width:65, height:65, alignItems: "center", justifyContent: "center", }}
-          
+        fabStyle={{ backgroundColor: isMenuVisible ? "#F01E44" : '#22904E' , width:65, height:65, alignItems: "center", justifyContent: "center", borderRadius:22}}
         color="#D9D9D9"
         open={isMenuVisible}
         icon={isMenuVisible ? 'close' : 'plus'}

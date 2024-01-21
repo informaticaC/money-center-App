@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet,ScrollView,ImageBackground } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
-import Line from "../components/Line";
-import SocialLogin from '../components/SocialLogin';
-import Fondo1 from '../../assets/img/fondo1.png';
+import SocialLogin from '../SocialLogin';
 
-const RegisterScreen = () => {
+
+const FormRegister = () => {
   const [userData, setuserData] = useState({
     firstname:"",
     phone:"",
@@ -37,57 +36,44 @@ const RegisterScreen = () => {
 
   return (
     <ScrollView Style={styles.scrollContent}>
-       <ImageBackground
-       source={Fondo1}
-       style={styles.backgroundImage}
-    >
     <View style={styles.container}>
-      <Text style={styles.title}>Crea tu cuenta</Text>
-      <Text style={styles.inputLabel}>Nombre:</Text>
+       <Text style={styles.inputLabel}>Nombre</Text>
       <TextInput
         style={styles.input}
         onChangeText={(text) => handleInputChange('firstname', text)}
         value={userData.firstname}
       />
-      <Text style={styles.inputLabel}>Telefono:</Text>
+      <Text style={styles.inputLabel}>Telefono</Text>
       <TextInput
         style={styles.input}
         onChangeText={(text) => handleInputChange('phone', text)}
         value={userData.phone}
         
       />
-      <Text style={styles.inputLabel}>Correo electrónico:</Text>
+      <Text style={styles.inputLabel}>Email</Text>
       <TextInput
         style={styles.input}
         onChangeText={(text) => handleInputChange('email', text)}
         value={userData.email}
       />
-      <Text style={styles.inputLabel}>Contraseña:</Text>
+      <Text style={styles.inputLabel}>Nueva contraseña</Text>
       <TextInput
         style={styles.input}
         onChangeText={(text) => handleInputChange('password', text)}
         value={userData.password}
       />
-      <Text style={styles.inputLabel}>Repetir contraseña:</Text>
+      <Text style={styles.inputLabel}>Confirmar contraseña</Text>
       <TextInput
         style={styles.input}
         onChangeText={(text) => handleInputChange('password', text)}
         value={userData.password}
       />
       <TouchableOpacity style={styles.registerbutton} title="Registrarse" onPress={handleRegister} >
-        <Text style={styles.buttonText}>Registrarse</Text>
+        <Text style={styles.buttonText}>Comenzar</Text>
       </TouchableOpacity>
-      <View style={styles.loginOption}>
-        <Text>¿Ya tienes una cuenta?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-          <Text style={styles.loginLink}>Iniciar Sesión</Text>
-        </TouchableOpacity>
-      </View>
-      <Line />
       <SocialLogin />
     </View>
-    </ImageBackground>
-    </ScrollView>
+  </ScrollView>
   );
 };
 
@@ -96,38 +82,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    
-    
   },
-   backgroundImage: {
-    resizeMode: 'cover',
-  },
+
+  
+
   scrollContent: {
-    
-    
   },
+
   inputLabel: {
-    marginBottom: 5,
-    width: "70%",
-    
-    
+    fontSize: 16,
+    color: "rgba(74, 74, 74, 1)",
+    alignSelf: "flex-start",
+    paddingLeft: 25,
   },
-  title: {
-    fontSize: 42,
-    marginBottom: 20,
-    fontWeight: "500",
-    
-  },
+  
   input: {
-    width: '70%',
+    width: '85%',
     height: 40,
-    borderColor: 'grey',
-    borderWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.62)',
     marginBottom: 10,
-    paddingLeft: 10,
-    borderRadius: 10,
-    
-  },
+  },  
+
 
   registerbutton: {
     backgroundColor: '#22904E', 
@@ -137,23 +113,20 @@ const styles = StyleSheet.create({
     width: '40%', 
     alignItems: 'center', 
   },
-
+  
   buttonText: {
     color: '#fff', 
     fontSize: 20, 
-    
   },
+
   loginOption: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 20,
   },
-  loginLink: {
-    backgroundColor: '#22904E',
-    textDecorationLine: 'none',
-    marginLeft: 5,
-  },
+  
+ 
   
 });
 
-export default RegisterScreen;
+export default FormRegister;

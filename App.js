@@ -2,7 +2,6 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MoneyCenter from './src/screens/MoneyCenter';
-import RegisterScreen from './src/screens/RegisterScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import Otpverified from './src/screens/Otpverified';
@@ -21,7 +20,7 @@ import Menu from './src/components/shared/Menu';
 import Header from './src/components/shared/Header';
 import ExpenseForm from './src/screens/ExpenseForm';
 import ObjetiveForm from './src/screens/ObjetiveForm';
-
+ 
 const Stack = createStackNavigator();
 
 const Tab = createBottomTabNavigator();
@@ -40,18 +39,14 @@ const MainTabs = () => {
     
   );
 };
-//
+
 export default function App() {
   
   return (
-    
     <Provider store = {store}>
-      
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="MoneyCenter" component={MoneyCenter} options={{title: 'Money Center'}} />
-          <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-         
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
           <Stack.Screen name="ConfirCode" component={ConfirCode} />
@@ -70,9 +65,6 @@ export default function App() {
 }
 
 /*
-        
-        
-        J
-         <Stack.Screen name="Otpverified" component={Otpverified} />
-        <Stack.Screen name="IncomeScreens" component={IncomeScreen}  />
-        <Stack.Screen name="ExpensesForm" component={ExpensesForm}  />*/
+<Stack.Screen name="Otpverified" component={Otpverified} />
+<Stack.Screen name="IncomeScreens" component={IncomeScreen}  />
+*/

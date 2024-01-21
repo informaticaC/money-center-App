@@ -36,14 +36,17 @@ const Menu = () => {
     <View>
     
     <View style={styles.menu}>
+    
       {menuItems.map((item) => (
+        
         <TouchableOpacity
           key={item.id}
           source={item.id}
           style={styles.containButton}
           onPress={() => onMenuItemPress(item)}
         >
-          
+          <LinearGradient colors={selectedMenuItem === item.id ? [ '#32B166','#206D40'] : ["transparent", "transparent"]} style={styles.gradient}
+        >
           <View style={[
               styles.menuItem,
               selectedMenuItem === item.id ? styles.containImg : null,
@@ -57,6 +60,7 @@ const Menu = () => {
               ]}
             />
           </View>
+          </LinearGradient>
           
           <Text
             style={[
@@ -67,10 +71,10 @@ const Menu = () => {
             {item.id}
           </Text>
         </TouchableOpacity>
+        
       ))}
       
     </View>
-    
     </View>
     
   );
@@ -88,15 +92,19 @@ const styles = StyleSheet.create({
     
   },
 
+  gradient: {
+    paddingHorizontal: 20,
+    paddingVertical: 2,
+    borderRadius: 30,
+  },
+
   containButton: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: "center",
     alignItems: 'center',
     
-    
   },
-
 
   menuItem: {
     width: 35,
@@ -106,22 +114,10 @@ const styles = StyleSheet.create({
   menuText: {
     fontWeight: 'bold',
   },
-  
   containImg: {
-    backgroundColor: "#164C2C",
     width: "60%",
     justifyContent: "center",
     alignItems: 'center',
-    borderRadius: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-	    width: 0,
-	    height: 4,
-    },
-    shadowOpacity: 0.30,
-    shadowRadius: 4.65,
-    elevation: 8,
-   
   },
 
   selectedMenuText: {
@@ -131,10 +127,7 @@ const styles = StyleSheet.create({
   },
 
   selectedMenuItem: {
-    
     tintColor: "white",
-    
-    
   },
 });
 
