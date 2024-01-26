@@ -1,23 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Icon } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { selectToken} from '../../../store/slices/token.slice';
 import {useSelector} from 'react-redux';
-import { MaterialIcons } from '@expo/vector-icons';
+import SearchInput from './SearchInput'
 
 
-const ExpensesCard = ({selectedOption}) => {
+const ExpensesCard = ({selectedOption, selectedMonth}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [nameSearchTerm, setNameSearchTerm] = useState('');
 
   const token= useSelector(selectToken);
-  
   const headers = {
     Authorization: `Bearer ${token}`,
   };
   
   const url = "http://192.168.1.5:8080/api/v1/expense"
-  useEffect(() => {
+    useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(url, {headers});
@@ -30,13 +31,52 @@ const ExpensesCard = ({selectedOption}) => {
       }
     };
 
+
+
     fetchData();
   }, [selectedOption]);
+  // Función para convertir nombre de mes a número
+  const monthNameToNumber = () => {
+    const monthsMap = {
+      enero: '01',
+      febrero: '02',
+      marzo: '03',
+      abril: '04',
+      mayo: '05',
+      junio: '06',
+      julio: '07',
+      agosto: '08',
+      septiembre: '09',
+      octubre: '10',
+      noviembre: '11',
+      diciembre: '12',
+    };
+
+    const normalizedMonthName = selectedMonth.toLowerCase();
+    return monthsMap[normalizedMonthName] || null;
+  };
+
+  // Convertir el nombre del mes a su representación numérica
+  const numericMonth = selectedMonth ? monthNameToNumber(selectedMonth) : null;
+
+  // Filtrar gastos según el mes seleccionado
+  const filteredExpenses = data.filter((expense) => {
+    const expenseMonth = expense.date.split('-')[1];
+    const nameMatches = expense.name.toLowerCase().includes(nameSearchTerm);
+    // Obtener el mes de la fecha
+    return numericMonth === expenseMonth && nameMatches;
+  });
+
+  const handleNameSearchChange = () => {
+    setNameSearchTerm();
+  };
+
   
   return (
     <ScrollView style={styles.ingresosContainer}>
+      <SearchInput onNameSearchChange={handleNameSearchChange} nameSearchTerm={nameSearchTerm} />
       <View >
-        {data.map((item) => (
+        {filteredExpenses.map((item) => (
           <View key={item.id} style={styles.containerCard}>
             <View>
               <Text style={styles.titleCard}>{item.date}</Text>
@@ -78,7 +118,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 30,
     paddingVertical: 12,
-    borderWidth: 1,
+    borderBottomWidth: 1,
     borderBottomColor: "rgba(74, 74, 74, 1)",
   },
 

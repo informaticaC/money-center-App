@@ -3,20 +3,16 @@ import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import {PaperProvider} from 'react-native-paper';
 import FloatingButton from '../components/shared/FloatingButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import MonthPicker from '../components/movimientoscomp/MonthPicker';
 import SliderButtons from '../components/movimientoscomp/SliderButton';
 
 const MovimientosScreen = () => {
- 
+  
   return (
     <PaperProvider >
       <SafeAreaView style={styles.container}>
         <ScrollView>  
-          <View style={styles.textPicker}>
+          <View>
             <Text style={styles.textMovimiento}>Mis Movimientos</Text>
-            <View>
-              <MonthPicker/>
-            </View>
           </View>
           <View>
             <SliderButtons />
@@ -39,7 +35,7 @@ const styles = StyleSheet.create ({
     textAlign: 'center',
     color: "#212121",
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 0,
   }, 
 });
 

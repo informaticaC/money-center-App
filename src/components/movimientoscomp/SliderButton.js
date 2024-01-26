@@ -3,25 +3,32 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import IncomesCard from './IncomesCard';
 import ExpensesCard from './ExpensesCard';
-
+import MonthPicker from './MonthPicker';
+import SearchInput from './SearchInput'
 
 const SliderButtons = () => {
   const [selectedOption, setSelectedOption] = useState('Ingresos');
-  
-
-  const handleIngresosPress = () => {
-    // Lógica para manejar el botón de Ingresos
-    setSelectedOption('Ingresos');
-  };
-
-  const handleGastosPress = () => {
-    // Lógica para manejar el botón de Gastos
-    setSelectedOption('Gastos');
-  };
+  const [selectedMonth, setSelectedMonth] = useState(null);
  
+  // controles boton incomes
+  const handleIngresosPress = () => {
+    
+    setSelectedOption('Ingresos');
+    
+  };
+
+  //controles boton expenses
+  const handleGastosPress = () => {
+    setSelectedOption('Gastos');
+    
+  };
   return (
     <SafeAreaView>
+      <View>
+        <MonthPicker setSelectedMonth={setSelectedMonth} selectedMonth={selectedMonth}/>
+      </View>
     <View style={styles.container}>
+      
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={[styles.button, selectedOption === "Ingresos" && styles.buttonIngresos ]} onPress={handleIngresosPress}>
           <Text style={[styles.buttonText, selectedOption === "Ingresos" && styles.buttonTextIngresos  ]}>Ingresos</Text>
@@ -31,11 +38,12 @@ const SliderButtons = () => {
         </TouchableOpacity>
       </View>
       {selectedOption === 'Gastos' && (
-        <ExpensesCard selectedOption= {selectedOption} />
+        <ExpensesCard selectedOption= {selectedOption} selectedMonth={selectedMonth} />
       )}
       {selectedOption === 'Ingresos' && (
-        <IncomesCard selectedOption= {selectedOption} />
+        <IncomesCard selectedOption= {selectedOption} selectedMonth={selectedMonth}/>
       )}
+      
     </View>
     </SafeAreaView>
   );

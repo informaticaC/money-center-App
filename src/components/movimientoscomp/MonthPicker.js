@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
-const MonthPicker = () => {
+const MonthPicker = ({setSelectedMonth, selectedMonth}) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const [selectedMonth, setSelectedMonth] = useState(null);
+  
 
   const months = [
     { label: 'Enero', value: '01' },
@@ -24,13 +24,13 @@ const MonthPicker = () => {
   const toggleAccordion = () => {
     setIsCollapsed(!isCollapsed);
   };
-
+ 
   const handleMonthSelect = (label) => {
     setSelectedMonth(label);
     setIsCollapsed(true);
    
   };
-
+  
   useEffect(() => {
     const currentDate = new Date();
     const currentMonthIndex = currentDate.getMonth();

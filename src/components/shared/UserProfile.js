@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 
 const UserProfile = () => {
   const [avatarSource, setAvatarSource] = useState(null);
+  
 
   useEffect(() => {
     (async () => {
@@ -38,7 +39,7 @@ const UserProfile = () => {
           <Image source={avatarSource} style={{ width: 80, height: 80, borderRadius: 100 }} />
         ) : (
           <View style={{ width: 80, height: 80, borderRadius: 100, backgroundColor: 'lightgray', justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Seleccionar imagen de perfil</Text>
+            <Text>imagen de perfil</Text>
           </View>
         )}
       </TouchableOpacity>
