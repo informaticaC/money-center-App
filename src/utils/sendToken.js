@@ -5,8 +5,8 @@ import { setUsers } from '../../store/slices/users.slice';
 
 async function sendToken(idToken) {
     //redux
-
-    const url = 'http://localhost:8080/api/v1/users/verifyGoogleToken'
+    const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
+    const url = `url_base/users/verifyGoogleToken`;
     const {userData} = useSelector(state => state)
     const dispatch =  useDispatch()
     //console.log('idToken =========>>>>>>>>>',idToken);

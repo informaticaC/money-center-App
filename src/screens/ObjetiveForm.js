@@ -34,7 +34,8 @@ const ObjetiveForm = () => {
   };
   
   const handleSave = () => {
-    const url ='http://192.168.1.5:8080/api/v1/objectives'
+    const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
+    const url =`${url_base}/objectives`
     const { name, budget, color, deadline, icon} = metaData;
     axios.post(url, { name, budget, color, deadline, icon}, {headers})
       .then((res) => {

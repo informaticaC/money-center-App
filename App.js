@@ -57,6 +57,7 @@ export default function App() {
           <Stack.Screen name="IncomeForm" component={IncomeForm} />
           <Stack.Screen name="ExpenseForm" component={ExpenseForm} />
           <Stack.Screen name="ObjetiveForm" component={ObjetiveForm} />
+          <Stack.Screen name="Otpverified" component={Otpverified} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

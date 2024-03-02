@@ -2,13 +2,34 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet,ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Fondo3 from '../../assets/img/fondo3.png';
-
-
+import axios from 'axios';
 
 const ForgotPasswordScreen = () => {
- 
-  const navigation = useNavigation(); 
 
+  const [email, setEmail] = useState(''); 
+  const navigation = useNavigation();
+  
+  const handleInputChange = (letter) => {
+    //console.log('l 12 letter:', letter);
+    setEmail(letter);
+    //console.log('l 16 email:>>',email);
+  }
+
+  const handleOnPress = () => {
+    const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
+    const url = `${url_base}/users/reset_password`;
+    //console.log('handle OnPress email:',email);
+    axios.post(url, {email})
+          .then(res => {
+            //console.log(res.data);
+            navigation.navigate('ConfirCode', email);
+
+          })
+          .catch(err => {
+            console.log('No se pudo realizar la consulta')
+            console.log(err);
+          })
+  }
   return (
     <ImageBackground
     source={Fondo3}
@@ -23,15 +44,18 @@ const ForgotPasswordScreen = () => {
         <Text style={styles.inputLabel}>Correo electrónico:</Text>
         <TextInput
           style={styles.input}
+          placeholder='Ingresa tu correo'
+              onChangeText={(text) => handleInputChange(text)}
+              value={email} 
         />
       </View>
       <View style={styles.seccion2}>
-       <TouchableOpacity style={styles.recoverybutton} title="" onPress={() => navigation.navigate('ConfirCode')} >
+       <TouchableOpacity style={styles.recoverybutton} title="" onPress={() => handleOnPress()} >
          <Text style={styles.buttonText}>Continuar</Text>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.recoverybutton} title=""  >
+       {/* <TouchableOpacity style={styles.recoverybutton} title=""  >
          <Text style={styles.buttonText}>Atras</Text>
-       </TouchableOpacity>
+       </TouchableOpacity> */}
      </View>
      
     </View>

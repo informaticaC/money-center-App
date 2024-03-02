@@ -16,8 +16,8 @@ const ExpensesCard = ({selectedOption, selectedMonth}) => {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-  
-  const url = "http://192.168.1.5:8080/api/v1/expense"
+  const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
+  const url = `${url_base}/expense`; //"http://192.168.0.102:8080/api/v1/expense"
     useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,8 +30,6 @@ const ExpensesCard = ({selectedOption, selectedMonth}) => {
         setLoading(false);
       }
     };
-
-
 
     fetchData();
   }, [selectedOption]);

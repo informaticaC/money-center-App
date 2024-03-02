@@ -12,10 +12,7 @@ const MoneyCenter = () => {
   const navigation = useNavigation();
   const [user, setUser] = React.useState(null);
   const [userStored, setUserStored] = React.useState(AsyncStorage.getItem("@user"));
-  
-  
-
-  
+   
   const  isLogged = () => { //función que devuelve una promesa de recuperar los datos del local storage y cargarlos en userStored
     return new Promise( async (resolve, reject) => {
 		  setUserStored(await AsyncStorage.getItem("@user"));

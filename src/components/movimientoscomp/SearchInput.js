@@ -4,9 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SearchInput = ({ onNameSearchChange, nameSearchTerm}) => {
   const [searchTerm, setSearchTerm] = useState('');
-
-  
-
   return (
     
     <View style={styles.container}>

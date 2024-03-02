@@ -24,8 +24,8 @@ const IncomeForm = () => {
   };
   
   const handleSave = () => {
-    
-    const url ='http://192.168.1.5:8080/api/v1/income'
+    const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
+    const url = `${url_base}/income`//'http://192.168.100.21:8080/api/v1/income'
     const { name, amount, description, date} = incomeData;
     axios.post(url, { name, amount, description, date}, {headers})
       .then((res) => {
@@ -34,7 +34,7 @@ const IncomeForm = () => {
       })
         .catch(error => {
           
-          console.log(error,"error, linea 46")
+          console.log(error,"error, linea 37-IncomeForm.js")
           if (error.response) {
             // La solicitud fue hecha y el servidor respondió con un código de estado
             console.log(error.response.data);

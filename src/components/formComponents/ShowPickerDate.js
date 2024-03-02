@@ -14,8 +14,6 @@ const ShowPickerDate = ({data, funcion , field}) => {
   //funciones para input fecha
   const esLocale = require('date-fns/locale/es'); 
 
-
-  
   const toogleDatepicker = () => {
     setShowPicker(!showPicker);
   };

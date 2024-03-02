@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet,TouchableOpacity,ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Fondo3 from '../../assets/img/fondo3.png';
-
-const ConfirCode = () => {
-  
+import axios from 'axios';
+const ConfirCode = (email) => {
+  console.log('l 7 ConfirCode.js email: ', email.route.params)
   const [otp, setOtp] = useState(['', '', '', '', '', '']); // Un array para almacenar los 6 dígitos del OTP
+  const [otpValue, setOtpValue] = useState('');// email.route.params.email
   const navigation = useNavigation();
  
 
@@ -13,6 +14,39 @@ const ConfirCode = () => {
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
+
+    if (newOtp.every((digit) => digit !== '')) {
+      setOtpValue(newOtp.join(''));
+    }
+  };
+
+  const sendOtpToBackend = async () => {
+    const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
+    const url =`${url_base}/users/verify/${otpValue}`;
+    try {
+      // const response = await axios.post(url, {
+      //   code: otpValue, //phone: dataphone,
+        
+      // });
+      axios.post(url,{email: email.route.params})
+           .then(response =>{
+						  if (response.status === 200) {
+							 // Procesar la respuesta exitosa del backend aquí
+							 console.log("User verified OK!!!!");
+							 //go to login	
+							 //navigation.navigate('LoginScreen');	
+               navigation.navigate('ConfirChangePassword')					 
+						 } 
+					 }).catch(err => {
+						console.log('Line 41 Otpverified.js Axios error',err);
+						
+					 })
+
+    } catch (error) {
+      // Manejar errores de red u otros errores
+      console.error(error);
+      console.log("no se pudo verificar")
+    }
   };
 
   return (
@@ -22,7 +56,7 @@ const ConfirCode = () => {
     >
     <View style={styles.container}>
       <Text style={styles.title}>Confirmar Codigo</Text>
-      <Text style={styles.text}>Coloca el código que recibiste por correo electrónico. </Text>
+      <Text style={styles.text}>Coloca el código que recibiste por correo electrónico.({email.route.params}) </Text>
       <View style={styles.otpInputContainer}>
         {otp.map((digit, index) => (
           <TextInput
@@ -35,7 +69,7 @@ const ConfirCode = () => {
           />
         ))}
       </View>
-      <TouchableOpacity style={styles.verifybutton} title="Verificar" onPress={() => navigation.navigate('ConfirChangePassword')} >
+      <TouchableOpacity style={styles.verifybutton} title="Verificar" onPress={sendOtpToBackend} >
         <Text style={styles.buttonText}>Verificar</Text>
       </TouchableOpacity>
     </View>

@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 import SocialLogin from '../SocialLogin';
 
-
 const FormRegister = () => {
   const [userData, setuserData] = useState({
     firstname:"",
@@ -14,19 +13,18 @@ const FormRegister = () => {
   })
   
   const navigation = useNavigation();
-  
-
+ 
   const handleRegister = () => {
-    const url ="http://192.168.1.5:8080/api/v1/users";
+    const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
+    const url = `${url_base}/users`; //"http://192.168.100.21:8080/api/v1/users";
     axios.post(url, userData)
-      .then(res => {console.log( res.data)
-          
-          navigation.navigate('Otpverified', {dataphone:phone},)}
+      .then(res => {
+        console.log(res.data);
+        navigation.navigate('Otpverified')}
       )
       .catch(err=> console.log(err))
   };
  
-
   const handleInputChange = (key, value) => {
     setuserData({
       ...userData,
@@ -84,8 +82,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  
-
   scrollContent: {
   },
 
@@ -103,7 +99,6 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.62)',
     marginBottom: 10,
   },  
-
 
   registerbutton: {
     backgroundColor: '#22904E', 
@@ -124,9 +119,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
-  
- 
-  
+   
 });
 
 export default FormRegister;

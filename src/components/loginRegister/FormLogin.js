@@ -28,7 +28,8 @@ const FormLogin = () => {
   //console.log(users)
   const handleLogin = () => {
     // lógica de inicio de sesión
-    const url ="http://192.168.1.5:8080/api/v1/users/login"
+    const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
+    const url =`${url_base}/users/login` //  "http://localhost:8080/api/v1/users/login"
     const { email, password } = formData;
     axios.post(url, { email, password })
       .then((res) => {
@@ -61,29 +62,29 @@ const FormLogin = () => {
 
  
   return (
-      <View style={styles.container}>
-        <Text style={styles.inputLabel}>Email</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => handleInputChange('email', text)}
-          value={formData.email}
-        />
-        <Text style={styles.inputLabel}>Contraseña</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => handleInputChange('password', text)}
-          value={formData.password}
-          secureTextEntry
-        />
-        <TouchableOpacity  style={styles.buttonLink} onPress={() => navigation.navigate('ForgotPasswordScreen')}>
-          <Text style={styles.forgotPassword}>Olvidaste tu contraseña?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style= {styles.button} onPress={handleLogin}> 
-          <Text style= {styles.buttonText}>Iniciar Sesión</Text>
-        </TouchableOpacity>
-        <Text>o</Text>
-        <SocialLogin />
-      </View>
+    <View style={styles.container}>
+      <Text style={styles.inputLabel}>Email</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={(text) => handleInputChange('email', text)}
+        value={formData.email}
+      />
+      <Text style={styles.inputLabel}>Contraseña</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={(text) => handleInputChange('password', text)}
+        value={formData.password}
+        secureTextEntry
+      />
+      <TouchableOpacity  style={styles.buttonLink} onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+        <Text style={styles.forgotPassword}>Olvidaste tu contraseña?</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style= {styles.button} onPress={handleLogin}> 
+        <Text style= {styles.buttonText}>Iniciar Sesión</Text>
+      </TouchableOpacity>
+      <Text>o</Text>
+      <SocialLogin />
+    </View>
     
   );
 };

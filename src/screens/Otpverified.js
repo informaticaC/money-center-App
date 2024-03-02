@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import {useNavigation} from '@react-navigation/native';
 
-const Otpverified = ({ route }) => {
+const Otpverified = () => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [otpValue, setOtpValue] = useState('');
-  const dataphone = route.params.dataphone;
-
+  //const dataphone = route.params.dataphone;
+  const navigation = useNavigation(); 
   const handleOtpInputChange = (index, value) => {
     const newOtp = [...otp];
     newOtp[index] = value;
@@ -18,18 +19,26 @@ const Otpverified = ({ route }) => {
   };
 
   const sendOtpToBackend = async () => {
-    const url ="http://192.168.1.5:8080/api/v1/users/verify/:code";
+    const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
+    const url =`${url_base}/users/verify/${otpValue}`;
     try {
-      const response = await axios.post(url, {
-        code: otpValue,
-        phone: dataphone,
-      });
+      // const response = await axios.post(url, {
+      //   code: otpValue, //phone: dataphone,
+        
+      // });
+      axios.post(url,{code: otpValue})
+           .then(response =>{
+						  if (response.status === 200) {
+							 // Procesar la respuesta exitosa del backend aquí
+							 console.log("User verified OK!!!!");
+							 //go to login	
+							 navigation.navigate('LoginScreen');						 
+						 } 
+					 }).catch(err => {
+						console.log('Line 41 Otpverified.js Axios error',err);
+						
+					 })
 
-      if (response.status === 200) {
-        // Procesar la respuesta exitosa del backend aquí
-      } else {
-       
-      }
     } catch (error) {
       // Manejar errores de red u otros errores
       console.error(error);
@@ -39,9 +48,9 @@ const Otpverified = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.appName}>Nombre de tu App</Text>
-      <Text style={styles.phoneNumber}>Tu número de teléfono: {dataphone} </Text>
-      <Text style={styles.instructions}>Ingresa el OTP</Text>
+      <Text style={styles.appName}>Money Center</Text>
+      <Text style={styles.phoneNumber}>Tu número de teléfono:  </Text>
+      <Text style={styles.instructions}>Ingresa el código enviado a tu email de registro</Text>
       <View style={styles.otpInputContainer}>
         {otp.map((digit, index) => (
           <TextInput

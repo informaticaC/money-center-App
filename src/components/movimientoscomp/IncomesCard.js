@@ -10,18 +10,22 @@ const IncomesCard = ({selectedOption, selectedMonth}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  const token= useSelector(selectToken);
+  const token = useSelector(selectToken);
+  console.log('Linea 14, IncomesCard.js, selectToken:==>>',  token); //selectToken
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-
-  const url = "http://192.168.1.5:8080/api/v1/income"
+  const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
+  const url = `${url_base}/income`
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(url, {headers});
-        setData(response.data);
-        
+        // const response = await axios.get(url, {headers});
+        // setData(response.data);
+        await axios.get(url, {headers}).then(response => {
+          console.log('Linea 26: ==>', response.data);
+          setData(response.data);
+        })
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -30,7 +34,7 @@ const IncomesCard = ({selectedOption, selectedMonth}) => {
     };
 
     fetchData();
-  }, [selectedOption])
+  }, [selectedOption]); //
   
   const monthNameToNumber = () => {
     const monthsMap = {
