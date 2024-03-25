@@ -22,9 +22,9 @@ const SocialLogin = () => {
   const [userLocal, setUserLocal] = React.useState(AsyncStorage.getItem("@user"));
   const [userInfo, setUserInfo] = React.useState();
   const [request, response, promptAsyncIdToken] = Google.useIdTokenAuthRequest({
-		androidClientId: "83523683186-k0o3j3cjd1ch3ucl279omcp4hk0pr4jr.apps.googleusercontent.com",
-		iosClientId: "83523683186-acfsse1jd9sq1pu7fp9egn3huufmgjte.apps.googleusercontent.com",
-		webClientId: "83523683186-8bkf72s0295k3jq9upke9hep30a28ub5.apps.googleusercontent.com"
+		androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,
+		iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
+		webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID
 	});
 
   React.useEffect(() => {
