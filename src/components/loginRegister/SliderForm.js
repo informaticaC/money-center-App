@@ -7,7 +7,7 @@ import FormRegister from './FormRegister';
 
 
 const SliderForm = () => {
-  const [selectedForm, setSelectedForm] = useState("Iniciar sesion")
+  const [selectedForm, setSelectedForm] = useState("Iniciar sesion");
 
   const handleLoginPress = () => {
     // Lógica para manejar el botón de Ingresos

@@ -1,39 +1,77 @@
 import React from 'react';
+import { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet,ImageBackground} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Logo from '../../assets/img/moneylogo.png';
 import Fondo3 from '../../assets/img/fondo3.png';
+import axios from 'axios';
+import getConfigToken from '../utils/getConfigToken';
+import FormLogin from '../components/loginRegister/FormLogin';
 
 
 
 const MoneyCenter = () => {
 
   const navigation = useNavigation();
-  const [user, setUser] = React.useState(null);
-  const [userStored, setUserStored] = React.useState(AsyncStorage.getItem("@user"));
+  const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState('');
+  const [userStored, setUserStored] = useState(AsyncStorage.getItem("@user"));
    
   const  isLogged = () => { //función que devuelve una promesa de recuperar los datos del local storage y cargarlos en userStored
     return new Promise( async (resolve, reject) => {
 		  setUserStored(await AsyncStorage.getItem("@user"));
       //setUsers(await AsyncStorage.getItem("@user"))
-      resolve(userStored);
-      
+      resolve(userStored);      
     })
 	}
 
+  const checkUserLogged = async () => {
+   
+    const url = `${process.env.EXPO_PUBLIC_API_URL_BASE}/users/me`;
+    //console.log('config token:::::::========>>>', getConfigToken());
+    axios.get(url, getConfigToken())
+          .then(res => {
+            console.log(res.data);
+            console.log(res.status);
+            setUserData(true);
+          })
+          .catch(err => {
+            console.log('Codigo de error por /me:=>',err.response.status);
+            //logOut();
+            setUserData(false);
+          });
+          
+  };
+  const logOut = async () => {
+    console.log('Loggin Out!!')
+    await AsyncStorage.removeItem("@user");
+    await AsyncStorage.removeItem("@token");
+    setTimeout(() => {
+      console.log('goin to Home Page');
+      //navigation.navigate("LoginScreen");
+    }, 50);
+    console.log('Already Out!!');
+  }
+
 	React.useEffect(() => {
+    checkUserLogged();
     
     isLogged()
       .then ((resolve) => {
-        //console.log('resolve:',resolve);
-        if (userStored) {
-          //console.log(userStored)
-          //setUser(JSON.parse(userStored));
+        console.log('resolve, user stored, MoneyCenter.js:',resolve);
+        if (userStored && userData) {
+          //check if the token is valid
+          console.log('going to MainTabs, screen: inicio ');
+          console.log(userData);        
           navigation.navigate('MainTabs', { screen: 'inicio'});
         }
         else{
-          navigation.navigate("MoneyCenter");
+          console.log('Not logued, where do I go????')
+          logOut().then(()=>{
+            navigation.navigate("MoneyCenter");
+
+          })
           //console.log(user);
         }
       })
@@ -45,7 +83,7 @@ const MoneyCenter = () => {
 
   const ShowUserInfo = ({users})=>{
 		//console.log({users});
-		
+		console.log('am I here??');
 		return(
 			<View style={styles.container}>
 				<Text style={styles.text}>Name: {user.firstname+ ' ' + user.lastname}</Text>
@@ -55,16 +93,7 @@ const MoneyCenter = () => {
 		)
 	}
 
-  const logOut = async () => {
-    console.log('Loggin Out!!')
-    await AsyncStorage.removeItem("@user");
-    setTimeout(() => {
-      console.log('goin to Home Page');
-      navigation.navigate("LoginScreen");
-      
-    }, 50);
-    console.log('Already Out!!');
-  }
+  
     
   return (
     <ImageBackground
@@ -145,8 +174,5 @@ const styles = StyleSheet.create({
       
     },
   });
-
-
-
 
 export default MoneyCenter;

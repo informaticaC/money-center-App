@@ -8,6 +8,7 @@ import ShowPickerDate from '../components/formComponents/ShowPickerDate';
 import axios from 'axios';
 import { selectToken} from '../../store/slices/token.slice';
 import {useSelector} from 'react-redux';
+import { useNavigation } from '@react-navigation/native'
 
 const ObjetiveForm = () => {
 
@@ -17,6 +18,7 @@ const ObjetiveForm = () => {
     budget:"",
     color:"",
     deadline:"",
+    //date ??
   }); 
     
   const handleInputChange = (key, value) => {
@@ -26,25 +28,31 @@ const ObjetiveForm = () => {
     });
   };
 
-  
-
   const token= useSelector(selectToken);
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-  
+
+  const navigation = useNavigation();  
   const handleSave = () => {
     const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
     const url =`${url_base}/objectives`
     const { name, budget, color, deadline, icon} = metaData;
     axios.post(url, { name, budget, color, deadline, icon}, {headers})
       .then((res) => {
-        
-        
+        //console.log('res.status ObjetiveForm.js:==>>>', res.data)
+        setMetaData({
+          icon:"",
+          name:"",
+          budget:"",
+          color:"",
+          deadline:"",
+        }); 
+        navigation.navigate('MainTabs', { screen: 'inicio' });
       })
         .catch(error => {
           
-          console.log(error,"error, linea 46")
+          console.log(error,"error, linea 46, ObjetiveForm.js")
           if (error.response) {
             // La solicitud fue hecha y el servidor respondió con un código de estado
             console.log(error.response.data);
@@ -111,7 +119,7 @@ const ObjetiveForm = () => {
                   style={styles.input}
                   value={metaData.name}
                   onChangeText={(text) => handleInputChange("name", text)}
-                  placeholder='Ej: sueldo '
+                  placeholder='Ej: Vacaciones 🛫 '
                 />
               </View>
             </View>

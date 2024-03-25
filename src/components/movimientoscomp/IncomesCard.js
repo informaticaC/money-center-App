@@ -11,7 +11,7 @@ const IncomesCard = ({selectedOption, selectedMonth}) => {
   const [loading, setLoading] = useState(true);
   
   const token = useSelector(selectToken);
-  console.log('Linea 14, IncomesCard.js, selectToken:==>>',  token); //selectToken
+  //console.log('Linea 14, IncomesCard.js, selectToken:==>>',  token); //selectToken
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -20,14 +20,15 @@ const IncomesCard = ({selectedOption, selectedMonth}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response = await axios.get(url, {headers});
-        // setData(response.data);
-        await axios.get(url, {headers}).then(response => {
-          console.log('Linea 26: ==>', response.data);
-          setData(response.data);
-        })
+        
+        axios.get(url, {headers})
+          .then(response => {
+            //console.log('Linea 27: ==>', response.data);
+            setData(response.data);
+          })
+          .catch(err => console.error('Error fetching data (Axios), IncomesCard.js:', err))
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data, IncomesCard.js:', error);
       } finally {
         setLoading(false);
       }

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 
-const Otpverified = () => {
+const Otpverified = (email) => {
+  console.log('Email for OtpVerified:=>>', email.route.params);
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [otpValue, setOtpValue] = useState('');
   //const dataphone = route.params.dataphone;
@@ -22,10 +23,7 @@ const Otpverified = () => {
     const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
     const url =`${url_base}/users/verify/${otpValue}`;
     try {
-      // const response = await axios.post(url, {
-      //   code: otpValue, //phone: dataphone,
-        
-      // });
+      
       axios.post(url,{code: otpValue})
            .then(response =>{
 						  if (response.status === 200) {

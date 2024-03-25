@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, TouchableOpacity, Text } from 'react-native';
+import { View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { useSelector } from 'react-redux';
 
 const UserProfile = () => {
   const [avatarSource, setAvatarSource] = useState(null);
+  const user = useSelector(state => state.users);
+  //console.log('imagen:===>',user.image);
   
-
   useEffect(() => {
+    if (user?.image) {
+      setAvatarSource({ uri: user.image });
+    }
+    
     (async () => {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      //console.log('status of ImagePicker permissions',status)
       if (status !== 'granted') {
         alert('Se necesita permiso para acceder a la galería.');
       }
@@ -24,7 +31,7 @@ const UserProfile = () => {
         quality: 1,
       });
 
-      if (!result.cancelled) {
+      if (!result.canceled) {
         setAvatarSource({ uri: result.uri });
       }
     } catch (error) {
@@ -33,7 +40,7 @@ const UserProfile = () => {
   };
 
   return (
-    <View>
+    <View style={styles.profile} >
       <TouchableOpacity onPress={selectImage}>
         {avatarSource ? (
           <Image source={avatarSource} style={{ width: 80, height: 80, borderRadius: 100 }} />
@@ -43,9 +50,28 @@ const UserProfile = () => {
           </View>
         )}
       </TouchableOpacity>
+      <Text style={styles.textName}>Hola, {user.firstname} !!</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  profile:{
+    flexDirection: 'row',
+    paddingBottom: 15,
+    paddingLeft: 8,
+    
+  },
+  textName: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+    marginHorizontal: 15,
+    alignSelf: 'center',
+    textTransform: 'capitalize'
+  },
+})
+
 
 export default UserProfile;
 

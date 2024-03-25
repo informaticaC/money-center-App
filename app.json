@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "moneycenterfrondend",
-    "slug": "moneycenterfrondend",
+    "name": "moneycenter",
+    "slug": "moneycenter",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,13 +15,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.footalent.moneycenter"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.footalent.moneycenter"
     },
     "web": {
       "favicon": "./assets/favicon.png"

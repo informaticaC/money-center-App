@@ -20,8 +20,6 @@ const Menu = () => {
   ];
  const [selectedMenuItem, setSelectedMenuItem] = useState("inicio");
   
- 
- 
   const onMenuItemPress = (item) => {
     
     setSelectedMenuItem(item.id)

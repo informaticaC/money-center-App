@@ -47,6 +47,7 @@ const ForgotPasswordScreen = () => {
           placeholder='Ingresa tu correo'
               onChangeText={(text) => handleInputChange(text)}
               value={email} 
+              keyboardType="email-address"
         />
       </View>
       <View style={styles.seccion2}>

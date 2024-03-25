@@ -1,6 +1,3 @@
-// web 83523683186-8bkf72s0295k3jq9upke9hep30a28ub5.apps.googleusercontent.com
-// ios 83523683186-acfsse1jd9sq1pu7fp9egn3huufmgjte.apps.googleusercontent.com
-// android 83523683186-k0o3j3cjd1ch3ucl279omcp4hk0pr4jr.apps.googleusercontent.com
 import * as React from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Button, Image, StyleSheet, Text, View } from 'react-native'
@@ -11,10 +8,7 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import sendToken from '../utils/sendToken';
 
-
-
 WebBrowser.maybeCompleteAuthSession();
-
 
 const GoogleLogin = () => {
 	//console.log("Estoy en GoogleLogin!!");
@@ -23,19 +17,18 @@ const GoogleLogin = () => {
 	const [userLocal, setUserLocal] = React.useState(AsyncStorage.getItem("@user"));
 	const [userInfo, setUserInfo] = React.useState();
 	// const [request, response, promptAsync] = Google.useAuthRequest({
-	// 	androidClientId: "83523683186-k0o3j3cjd1ch3ucl279omcp4hk0pr4jr.apps.googleusercontent.com",
-	// 	iosClientId: "83523683186-acfsse1jd9sq1pu7fp9egn3huufmgjte.apps.googleusercontent.com",
-	// 	webClientId: "83523683186-8bkf72s0295k3jq9upke9hep30a28ub5.apps.googleusercontent.com"
+	// 	androidClientId: EXPO_PUBLIC_ANDROID_CLIENT_ID,
+	// 	iosClientId: EXPO_PUBLIC_IOS_CLIENT_ID,
+	// 	webClientId: EXPO_PUBLIC_WEB_CLIENT_ID
 	// });
 	//const [userData, setuserData] = React.useState();
 
 	const [request, response, promptAsyncIdToken] = Google.useIdTokenAuthRequest({
-		androidClientId: "83523683186-k0o3j3cjd1ch3ucl279omcp4hk0pr4jr.apps.googleusercontent.com",
-		iosClientId: "83523683186-acfsse1jd9sq1pu7fp9egn3huufmgjte.apps.googleusercontent.com",
-		webClientId: "83523683186-8bkf72s0295k3jq9upke9hep30a28ub5.apps.googleusercontent.com"
+		androidClientId: EXPO_PUBLIC_ANDROID_CLIENT_ID,
+		iosClientId: EXPO_PUBLIC_IOS_CLIENT_ID,
+		webClientId: EXPO_PUBLIC_WEB_CLIENT_ID
 	});
 	
-
 	React.useEffect(() => {
 		console.log('handleSignInWithGoogle with response:', response);
 	 		handleSignInWithGoogle();
@@ -54,16 +47,14 @@ const GoogleLogin = () => {
 	const isUserInfo = async function (){
 		let userinfo = await getActualUserInfo();
 		return userinfo;
-		
 	}
-
 		
 	async function handleSignInWithGoogle(){
 		
 		let user = await userLocal;
 				
 		if (!user) {
-			if (response) {
+			if (response.type === 'success' ) {
 				console.log('using data getted in promptAsyncIdToken........')
 				console.log("There aren't user in storage, Google user from de bakend server");
 				console.log('response from propmtAsyncIdToken:',response);

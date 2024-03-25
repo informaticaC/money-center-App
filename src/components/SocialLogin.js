@@ -19,7 +19,7 @@ WebBrowser.maybeCompleteAuthSession();
 const SocialLogin = () => {
 
   const navigation = useNavigation();
- /* const [userLocal, setUserLocal] = React.useState(AsyncStorage.getItem("@user"));
+  const [userLocal, setUserLocal] = React.useState(AsyncStorage.getItem("@user"));
   const [userInfo, setUserInfo] = React.useState();
   const [request, response, promptAsyncIdToken] = Google.useIdTokenAuthRequest({
 		androidClientId: "83523683186-k0o3j3cjd1ch3ucl279omcp4hk0pr4jr.apps.googleusercontent.com",
@@ -38,16 +38,21 @@ const SocialLogin = () => {
 
    async function handleSignInWithGoogle(){
 		let user = await userLocal;
+    
 		if (!user) {
-			if (response) {
+			if (response?.type === 'success' ) {
 				console.log('using data getted in promptAsyncIdToken........')
 				console.log("There aren't user in storage, Google user from de bakend server");
 				console.log('response from propmtAsyncIdToken:',response);
 					//console.log("idToken:",resp.params.id_token);
-				await sendToken(response.params.id_token).then(()=>{
-          navigation.navigate('UserPage');
-
-        });
+				await sendToken(response.params.id_token)
+          .then(()=>{
+            console.log('Navigating to UserPage');
+            navigation.navigate('UserPage');
+            })
+          .catch(err => {
+            console.log('SocialLogin err:==>', err);
+            });
 				user = await AsyncStorage.getItem("@user");
 				console.log('user:==>',user);
 				// //setUserInfo(JSON.parse(user));
@@ -58,7 +63,7 @@ const SocialLogin = () => {
       navigation.navigate('UserPage');
 			//setUserInfo(JSON.parse(user));
 		}
-	};  */
+	};  
 
 
   return (
@@ -67,7 +72,7 @@ const SocialLogin = () => {
           <Image source={Gooogle} style={styles.socialLoginIcon} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialLoginButton} onPress={() => alert('Iniciar sesión con Apple')}>
-          <Image source={Apple}  style={styles.socialLoginIcon} />
+          <Image source={Apple} style={styles.socialLoginIcon} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialLoginButton} onPress={() => alert('Iniciar sesión con Facebook')}>
           <Image source={Facebook} style={styles.socialLoginIcon} />

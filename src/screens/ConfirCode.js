@@ -1,45 +1,74 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { View, Text, TextInput, StyleSheet,TouchableOpacity,ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Fondo3 from '../../assets/img/fondo3.png';
 import axios from 'axios';
+import Toast from 'react-native-root-toast';
+
 const ConfirCode = (email) => {
-  console.log('l 7 ConfirCode.js email: ', email.route.params)
-  const [otp, setOtp] = useState(['', '', '', '', '', '']); // Un array para almacenar los 6 dígitos del OTP
+  console.log('l 7 ConfirCode.js email: ', email.route.params);
+  
+  const [otp, setOtp] = useState([]); // Un array para almacenar los 6 dígitos del OTP
   const [otpValue, setOtpValue] = useState('');// email.route.params.email
   const navigation = useNavigation();
- 
-
-  const handleOtpInputChange = (index, value) => {
+  const inputRef = useRef(0);
+  // inputRef.current._children[0].focus();
+  const handleOtpInputChange = (value) => {
+    console.log('value:==>', value)
     const newOtp = [...otp];
-    newOtp[index] = value;
+    let isVerified = true;
+    for (let i = 0; i < inputRef.current._children.length; i++) {
+      
+      if (isVerified === true && inputRef.current._children[i].isFocused()) {
+        isVerified = false;
+        console.log('i:', i, 'value: ', value);
+        newOtp[i]=(value);
+        if (value && i < inputRef.current._children.length -1 ) {
+          inputRef.current._children[i].focus(false);
+          inputRef.current._children[i+1].focus(true);//saltar a la próxima ventana.          
+        }
+      }
+    }
+    console.log('newOtp:==>>', newOtp);
     setOtp(newOtp);
+    console.log("otp:==>>",otp);
+    
 
     if (newOtp.every((digit) => digit !== '')) {
       setOtpValue(newOtp.join(''));
     }
+    console.log('otpValue:=>',otpValue);
+    
   };
 
   const sendOtpToBackend = async () => {
     const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
     const url =`${url_base}/users/verify/${otpValue}`;
     try {
-      // const response = await axios.post(url, {
-      //   code: otpValue, //phone: dataphone,
-        
-      // });
+      
       axios.post(url,{email: email.route.params})
            .then(response =>{
-						  if (response.status === 200) {
+						  if (response.status === 202) {
 							 // Procesar la respuesta exitosa del backend aquí
-							 console.log("User verified OK!!!!");
-							 //go to login	
-							 //navigation.navigate('LoginScreen');	
-               navigation.navigate('ConfirChangePassword')					 
-						 } 
-					 }).catch(err => {
-						console.log('Line 41 Otpverified.js Axios error',err);
-						
+							 	
+               navigation.navigate('ConfirChangePassword', email);			 
+						 }
+             if (response.status === 200) {
+              navigation.navigate('LoginScreen');
+             } 
+          })
+          .catch(err => {
+            //console.log('Line 41 Otpverified.js :=>',err.message);
+            console.log('Error 401, wrong verification code')
+						// Add a Toast on screen.
+            let toast = Toast.show(`Codigo de verificación equivocado para ${email.route.params}`, {
+              duration: 1500, //Toast.durations.LONG,
+              backgroundColor: '#008000',
+            });
+            inputRef.current._children.map(input => {
+              console.log(input.clear());
+            })
+            inputRef.current._children[0].focus();
 					 })
 
     } catch (error) {
@@ -48,7 +77,7 @@ const ConfirCode = (email) => {
       console.log("no se pudo verificar")
     }
   };
-
+  
   return (
     <ImageBackground
     source={Fondo3}
@@ -57,8 +86,8 @@ const ConfirCode = (email) => {
     <View style={styles.container}>
       <Text style={styles.title}>Confirmar Codigo</Text>
       <Text style={styles.text}>Coloca el código que recibiste por correo electrónico.({email.route.params}) </Text>
-      <View style={styles.otpInputContainer}>
-        {otp.map((digit, index) => (
+      <View style={styles.otpInputContainer} ref={inputRef}>
+        {/* {otp.map((digit, index) => (
           <TextInput
             key={index}
             style={styles.otpInput}
@@ -66,8 +95,60 @@ const ConfirCode = (email) => {
             value={digit}
             maxLength={1} // Para permitir solo un dígito en cada casilla
             keyboardType="numeric"
+            ref={inputRef}
           />
-        ))}
+        ))} */}
+      <TextInput
+        style={styles.otpInput}
+        focus="true"
+        onChangeText={(text) => handleOtpInputChange(text)}
+        // value={digit}
+        maxLength={1} // Para permitir solo un dígito en cada casilla
+        keyboardType="numeric"
+        
+      />
+      <TextInput
+        style={styles.otpInput}
+        onChangeText={(text) => handleOtpInputChange(text)}
+        // value={digit}
+        maxLength={1} // Para permitir solo un dígito en cada casilla
+        keyboardType="numeric"
+        
+      />
+      <TextInput
+        style={styles.otpInput}
+        onChangeText={(text) => handleOtpInputChange(text)}
+        // value={digit}
+        maxLength={1} // Para permitir solo un dígito en cada casilla
+        keyboardType="numeric"
+        
+      />
+      <TextInput
+        style={styles.otpInput}
+        onChangeText={(text) => handleOtpInputChange(text)}
+        // value={digit}
+        maxLength={1} // Para permitir solo un dígito en cada casilla
+        keyboardType="numeric"
+        
+      />
+      <TextInput
+        style={styles.otpInput}
+        onChangeText={(text) => handleOtpInputChange(text)}
+        // value={digit}
+        maxLength={1} // Para permitir solo un dígito en cada casilla
+        keyboardType="numeric"
+        
+      />
+      <TextInput
+        style={styles.otpInput}
+        onChangeText={(text) => handleOtpInputChange(text)}
+        // value={digit}
+        maxLength={1} // Para permitir solo un dígito en cada casilla
+        keyboardType="numeric"
+        
+      />
+
+
       </View>
       <TouchableOpacity style={styles.verifybutton} title="Verificar" onPress={sendOtpToBackend} >
         <Text style={styles.buttonText}>Verificar</Text>

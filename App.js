@@ -20,7 +20,8 @@ import Menu from './src/components/shared/Menu';
 import Header from './src/components/shared/Header';
 import ExpenseForm from './src/screens/ExpenseForm';
 import ObjetiveForm from './src/screens/ObjetiveForm';
- 
+import { RootSiblingParent} from 'react-native-root-siblings';
+import FormRegister from './src/components/loginRegister/FormRegister';
 const Stack = createStackNavigator();
 
 const Tab = createBottomTabNavigator();
@@ -31,7 +32,7 @@ const MainTabs = () => {
     
     <Tab.Navigator tabBar={() => <Menu  />}  screenOptions={{
       header: () => <Header />, }}>
-      <Tab.Screen name="inicio" component={HomeScreen} options={{title: 'HomeScreen'}} />
+      <Tab.Screen name="inicio" component={HomeScreen} options={{title: 'Home Screen'}} />
       <Tab.Screen name="metas" component={ObjetiveScreen} />
       <Tab.Screen name="movimientos" component={MovimientosScreen} />
       <Tab.Screen name="perfil" component={ProfileScreen} />
@@ -43,11 +44,12 @@ const MainTabs = () => {
 export default function App() {
   
   return (
+    <RootSiblingParent>
     <Provider store = {store}>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="MoneyCenter" component={MoneyCenter} options={{title: 'Money Center'}} />
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen name="LoginScreen" component={LoginScreen} options={{title: 'Login Screen'}} />
           <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
           <Stack.Screen name="ConfirCode" component={ConfirCode} />
           <Stack.Screen name="ConfirChangePassword" component={ConfirChangePassword} />
@@ -58,9 +60,11 @@ export default function App() {
           <Stack.Screen name="ExpenseForm" component={ExpenseForm} />
           <Stack.Screen name="ObjetiveForm" component={ObjetiveForm} />
           <Stack.Screen name="Otpverified" component={Otpverified} />
+          <Stack.Screen name="FormRegister" component={FormRegister} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
+    </RootSiblingParent>
    
   );
 }

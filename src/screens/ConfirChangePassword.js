@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet,ImageBackground } from 'react-native';
 import Fondo3 from '../../assets/img/fondo3.png';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native'
 
-const ConfirChangePassword = () => {
-  const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
+const ConfirChangePassword = (email) => {
+  const {route} = email.route.params;
+  //console.log('ConfirChangePassword email:==>>', route.params);
+  const navigation = useNavigation();
   const [pass1, setPass1] = useState(null);
   const [pass2, setPass2] = useState(null);
   const handleInputChange = (text) => {
@@ -11,11 +15,28 @@ const ConfirChangePassword = () => {
     setPass1(text);
     console.log('l 16 pass1:>>',pass1);
   }
-
+  
   const handleInputChange2 = (text) => {
     //console.log('l 12 letter:', letter);
     setPass2(text);
-    console.log('l 16 pass2:>>',pass2);
+    //console.log('l 16 pass2:>>',pass2);
+  }
+  
+  const handleOnPress = () => {
+    if (pass1 === pass2) {
+      const email = route.params;
+      const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
+      const url = `${url_base}/users/reset_password/11`
+      axios.post(url, {password: pass1, email: email})
+        .then(res => {
+          //console.log(res.data);
+          navigation.navigate('LoginScreen');
+        })
+        .catch( err => console.error(err));
+        
+    } else {
+      console.log("Las contraseñas deben ser iguales!!")
+    }
   }
 
   return (
@@ -41,7 +62,7 @@ const ConfirChangePassword = () => {
         value={pass2}
       /> 
       </View> 
-      <TouchableOpacity style={styles.confirbutton}  >
+      <TouchableOpacity style={styles.confirbutton} onPress={() => handleOnPress()} >
         <Text style={styles.buttonText}>Confirmar</Text>
       </TouchableOpacity>
     </View>

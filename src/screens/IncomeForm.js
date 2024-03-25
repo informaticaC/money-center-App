@@ -7,7 +7,7 @@ import axios from 'axios';
 import { selectToken} from '../../store/slices/token.slice';
 import {useSelector} from 'react-redux';
 import ShowPickerDate from '../components/formComponents/ShowPickerDate';
-
+import { useNavigation } from '@react-navigation/native'
 
 const IncomeForm = () => {
 
@@ -22,6 +22,7 @@ const IncomeForm = () => {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
+  const navigation = useNavigation();
   
   const handleSave = () => {
     const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
@@ -29,7 +30,13 @@ const IncomeForm = () => {
     const { name, amount, description, date} = incomeData;
     axios.post(url, { name, amount, description, date}, {headers})
       .then((res) => {
-        
+        setIncomeData({
+          name:"",
+          description:"",
+          amount:"",
+          date:"",
+        });
+        navigation.navigate('MainTabs', { screen: 'inicio' });
         
       })
         .catch(error => {

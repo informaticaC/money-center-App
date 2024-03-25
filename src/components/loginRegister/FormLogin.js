@@ -4,8 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 import SocialLogin from '../SocialLogin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-//import {useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch } from 'react-redux';
 //import { setUsers } from '../../store/slices/users.slice';
+import { setUsers } from '../../../store/slices/users.slice';
+import { setToken } from '../../../store/slices/token.slice';
 
 const FormLogin = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +16,10 @@ const FormLogin = () => {
   });
 
   const navigation = useNavigation();
+  const  users  = useSelector( state => state.users );
+  const dispatch = useDispatch();
+  //console.log('users, from redux FormLogin.js line 29',users);
+  const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
 
   const handleInputChange = (key, value) => {
     setFormData({
@@ -23,30 +29,36 @@ const FormLogin = () => {
   };
   
   //redux
-  //const { users} = useSelector(state => state);
-  //const dispatch = useDispatch();
-  //console.log(users)
+ 
+  
+
   const handleLogin = () => {
     // lógica de inicio de sesión
     const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
-    const url =`${url_base}/users/login` //  "http://localhost:8080/api/v1/users/login"
+    const url =`${url_base}/users/login` //  
+    //const url = "http://localhost:8080/api/v1/users/login";
+    console.log('url for login:==>>', url)
     const { email, password } = formData;
+    console.log('email and pass:==>>', email, password);
+    
     axios.post(url, { email, password })
       .then((res) => {
-        console.log(res.data)
+        console.log('Login ok!!');
+        //console.log(res.data);
+        dispatch(setUsers(res.data.user));
+        dispatch(setToken(res.data.token));
+        // Actualizar estado de Redux y AsyncStorage
         AsyncStorage.setItem('@token', JSON.stringify(res.data.token));
         AsyncStorage.setItem('@user', JSON.stringify(res.data.user));
         
-        // Actualizar estado de Redux y AsyncStorage
-        //dispatch(setUsers(res.data.user));
         navigation.navigate('MainTabs', { screen: 'inicio' });
       })
         .catch(error => {
-          console.log(error,"error, linea 46")
+          console.log(error,"error, linea 56, FormLogin.js")
           if (error.response) {
             // La solicitud fue hecha y el servidor respondió con un código de estado
             console.log(error.response.data);
-            console.log(error.response.status);
+            //console.log(error.response.status);
             console.log(error.response.headers);
           } else if (error.request) {
             // La solicitud fue hecha pero no se recibió ninguna respuesta
@@ -68,6 +80,7 @@ const FormLogin = () => {
         style={styles.input}
         onChangeText={(text) => handleInputChange('email', text)}
         value={formData.email}
+        keyboardType="email-address"
       />
       <Text style={styles.inputLabel}>Contraseña</Text>
       <TextInput
@@ -82,7 +95,7 @@ const FormLogin = () => {
       <TouchableOpacity style= {styles.button} onPress={handleLogin}> 
         <Text style= {styles.buttonText}>Iniciar Sesión</Text>
       </TouchableOpacity>
-      <Text>o</Text>
+      <Text style={styles.forgotPassword}>O inicia con:</Text>
       <SocialLogin />
     </View>
     

@@ -45,7 +45,13 @@ const ExpenseForm = () => {
     const { name, amount, description, date, icon} = expenseData;
     axios.post(url, { name, amount, description, date, icon}, {headers})
       .then((res) => {
-        
+        setExpenseData({
+          name:"",
+          description:"",
+          amount:"",
+          date:"",
+          icon:"",
+        });
         
       })
         .catch(error => {
