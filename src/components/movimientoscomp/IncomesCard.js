@@ -4,7 +4,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { selectToken} from '../../../store/slices/token.slice';
 import {useSelector} from 'react-redux';
-import SearchInput from './SearchInput'
+import SearchInput from './SearchInput';
+import fetchIncomeData from '../../utils/fetchIncomeData';
 
 const IncomesCard = ({selectedOption, selectedMonth}) => {
   const [data, setData] = useState([]);
@@ -12,29 +13,16 @@ const IncomesCard = ({selectedOption, selectedMonth}) => {
   
   const token = useSelector(selectToken);
   //console.log('Linea 14, IncomesCard.js, selectToken:==>>',  token); //selectToken
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-  const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
-  const url = `${url_base}/income`
+  
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        
-        axios.get(url, {headers})
-          .then(response => {
-            //console.log('Linea 27: ==>', response.data);
-            setData(response.data);
-          })
-          .catch(err => console.error('Error fetching data (Axios), IncomesCard.js:', err))
-      } catch (error) {
-        console.error('Error fetching data, IncomesCard.js:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    
+    fetchIncomeData(token).then(incomes => {
+      console.log('IncomesCard.js, line 20, incomes response.data: ==>', incomes);
+      setData(incomes);
+    }).catch(reject => {
+      console.error('IncomesCard, line 23, reject from fetchIncomeData',reject)
+    }).finally(() => setLoading(false));
 
-    fetchData();
   }, [selectedOption]); //
   
   const monthNameToNumber = () => {
@@ -61,16 +49,16 @@ const IncomesCard = ({selectedOption, selectedMonth}) => {
   const numericMonth = selectedMonth ? monthNameToNumber(selectedMonth) : null;
 
   // Filtrar gastos según el mes seleccionado
-  const filteredExpenses = data.filter((expense) => {
-    const expenseMonth = expense.date.split('-')[1];
+  const filteredIncomes = data.filter((income) => {
+    const incomeMonth = income.date.split('-')[1];
     // Obtener el mes de la fecha
-    return expenseMonth === numericMonth;
+    return incomeMonth === numericMonth;
   })
   return (
     <ScrollView style={styles.ingresosContainer}>
       <SearchInput />
       <View >
-        {filteredExpenses.map((item) => (
+        {filteredIncomes.map((item) => (
           <View key={item.id} style={styles.containerCard}>
             <View>
               <Text style={styles.titleCard}>{item.date}</Text>

@@ -30,8 +30,8 @@ const GoogleLogin = () => {
 	});
 	
 	React.useEffect(() => {
-		console.log('handleSignInWithGoogle with response:', response);
-	 		handleSignInWithGoogle();
+		console.log('GoogleLogin.js, line 33, handleSignInWithGoogle with response:', response);
+	 	handleSignInWithGoogle();
 			
  	}, [response]);
 
@@ -61,10 +61,10 @@ const GoogleLogin = () => {
 					//console.log("idToken:",resp.params.id_token);
 				await sendToken(response.params.id_token);
 				console.log(AsyncStorage.getItem("@user"));
-				await AsyncStorage.getItem("@user").then(googleUser => console.log(googleUser));
-				user = await AsyncStorage.getItem("@user");
-				console.log(user);
-				setUserInfo(JSON.parse(user));
+				await AsyncStorage.getItem("@user").then(googleUser => console.log('googleUser : ',googleUser));
+				await AsyncStorage.getItem("@user").then(usr => setUserInfo(JSON.parse(usr)));
+				//console.log(user);
+				//setUserInfo(JSON.parse(user));
 				
 			}
 					// console.log(response.authentication.accessToken);

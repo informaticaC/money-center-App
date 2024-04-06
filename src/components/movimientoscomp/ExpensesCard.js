@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Icon } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { selectToken} from '../../../store/slices/token.slice';
 import {useSelector} from 'react-redux';
-import SearchInput from './SearchInput'
+import SearchInput from './SearchInput';  
+import fetchExpensesData from '../../utils/fetchExpensesData';
 
 
 const ExpensesCard = ({selectedOption, selectedMonth}) => {
@@ -12,27 +13,19 @@ const ExpensesCard = ({selectedOption, selectedMonth}) => {
   const [loading, setLoading] = useState(true);
   const [nameSearchTerm, setNameSearchTerm] = useState('');
 
-  const token= useSelector(selectToken);
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-  const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
-  const url = `${url_base}/expense`; //"http://192.168.0.102:8080/api/v1/expense"
-    useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(url, {headers});
-        setData(response.data);
-        
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+  const token = useSelector(selectToken);
+ 
+  useEffect(() => {
+   
+    fetchExpensesData(token).then(expenses => {
+      console.log('ExpensesCard.js, line 21, fetchExpensesData response.data: ==>', expenses);
+      setData(expenses);
+    }).catch(reject => {
+      console.error('IncomesCard, line 24, reject from fetchIncomeData', reject)
+    }).finally(() => setLoading(false));
+    
   }, [selectedOption]);
+
   // Función para convertir nombre de mes a número
   const monthNameToNumber = () => {
     const monthsMap = {

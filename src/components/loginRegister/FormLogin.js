@@ -16,6 +16,7 @@ const FormLogin = () => {
   });
 
   const navigation = useNavigation();
+  //redux
   const  users  = useSelector( state => state.users );
   const dispatch = useDispatch();
   //console.log('users, from redux FormLogin.js line 29',users);
@@ -28,18 +29,12 @@ const FormLogin = () => {
     });
   };
   
-  //redux
- 
-  
-
   const handleLogin = () => {
     // lógica de inicio de sesión
     const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
     const url =`${url_base}/users/login` //  
-    //const url = "http://localhost:8080/api/v1/users/login";
-    console.log('url for login:==>>', url)
     const { email, password } = formData;
-    console.log('email and pass:==>>', email, password);
+    //console.log('email and pass:==>>', email, password);
     
     axios.post(url, { email, password })
       .then((res) => {
@@ -53,8 +48,8 @@ const FormLogin = () => {
         
         navigation.navigate('MainTabs', { screen: 'inicio' });
       })
-        .catch(error => {
-          console.log(error,"error, linea 56, FormLogin.js")
+        .catch(error => {///
+          console.log(error,"error, linea 54, FormLogin.js")
           if (error.response) {
             // La solicitud fue hecha y el servidor respondió con un código de estado
             console.log(error.response.data);
@@ -67,7 +62,7 @@ const FormLogin = () => {
             // Algo sucedió en el proceso de configuración que desencadenó el error
             console.log('Error', error.message);
           }
-          
+          navigation.navigate('HomeScreen')
         });
         
   };
@@ -80,16 +75,19 @@ const FormLogin = () => {
         style={styles.input}
         onChangeText={(text) => handleInputChange('email', text)}
         value={formData.email}
-        keyboardType="email-address"
+        keyboardType='email-address'
+        keyboardAppearance='default'
+        
       />
       <Text style={styles.inputLabel}>Contraseña</Text>
       <TextInput
         style={styles.input}
         onChangeText={(text) => handleInputChange('password', text)}
         value={formData.password}
+        keyboardAppearance='default'
         secureTextEntry
       />
-      <TouchableOpacity  style={styles.buttonLink} onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+      <TouchableOpacity style={styles.buttonLink} onPress={() => navigation.navigate('ForgotPasswordScreen')}>
         <Text style={styles.forgotPassword}>Olvidaste tu contraseña?</Text>
       </TouchableOpacity>
       <TouchableOpacity style= {styles.button} onPress={handleLogin}> 

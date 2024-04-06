@@ -14,37 +14,33 @@ import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 
 const HomeScreen = () => {
-  
+
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
   const token = useSelector((state) => state.auth.token);
   // Utiliza useState para manejar el estado local de userData
-  const [userData, setUserData] = useState('true');
-  
+  const [userData, setUserData] = useState(true);
+
   const navigator = useNavigation();
 
   const checkUserLogged = async () => {
-    //console.log('token:======>>', token);
+    console.log('HomeScreen.js, line 27, users (global store):', users)
+    console.log('HomeScreen.js, line 28, token from global store:======>>', token);
     const url = `${process.env.EXPO_PUBLIC_API_URL_BASE}/users/me`;
-        
+
     axios.get(url, { headers: { Authorization:`Bearer ${token}` } })
           .then(res => {
-            //console.log(res.data);
-            console.log(res.status);
-            console.log('UserData = true!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-            //setUserData('true');
-            
+            //console.log('UserData = true!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            setUserData(true);
+            return true;
           })
           .catch(err => {
             console.error(err);
             logOut();
             console.log('UserData = false!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-            //setUserData('false');
-            
-          });
 
-    if (res.status === 200) return true 
-    else return false;
+            setUserData(false);
+          });
           
   };
 
@@ -53,56 +49,38 @@ const HomeScreen = () => {
     await AsyncStorage.removeItem("@user");
     await AsyncStorage.removeItem("@token");
     setTimeout(() => {
-      console.log('From HomeScreen, goin to Home Page');
-      //navigation.navigate("LoginScreen");
+      console.log('From HomeScreen, line54, going to Login Screen');
+      navigator.navigate("LoginScreen");
     }, 50);
     console.log('Already Out!!');
   }
-  // useEffect se ejecutará cuando el componente se renderize
-  useEffect(() => {
-        
-    // Función asincrónica para obtener datos de AsyncStorage
-    const fetchData = async () => {
-      try {
-        
-        // Recupera los datos de AsyncStorage
-        const storedUserData = await AsyncStorage.getItem('@user');
-        const user = JSON.parse(storedUserData)
-        const storedToken = await AsyncStorage.getItem('@token');
-        const token = JSON.parse(storedToken)
-        // Actualiza el estado local con los datos recuperados
-        // setUserData(user);
-        // setUserToken(token),
-        // Actualiza el estado global de Redux utilizando la acción setUsers
-        dispatch(setUsers(user));
-        dispatch(setToken(token));
-        
-      } catch (error) {
-        console.error('Error al recuperar datos de AsyncStorage:', error);
-      }
-    };
-    checkUserLogged().then((res) => {
-      // Llama a la función fetchData
-    if ( res ) {
-      console.log('res, linea 82 (true):==>>', res);
-      console.log(checkUserLogged());
-      console.log('HomeScreen linea 87, User Logged, going to fetchData!!!!!!!!!!!!!!!!!!!!!!!')
-      fetchData();
-      
-    } else {
-      //User not logged or token invalid!!
-      console.log('userData:==>>, linea91 (false) +}+}+}+}+}}', res);
-      console.error('HomeScreen.js line 92User not logged or token invalid!!-+-+-+-+-+-+-+-+-+-+-+-+-');
-      logOut();
-      navigator.navigate('LoginScreen');
-      dispatch(setUsers(null));
-      dispatch(setToken(null));
-    }
-    })
-    .catch(err => console.log('HomeScreen.js line 102', err));
-    
-  }, []); 
   
+  const fetchData = async () => {
+    try {
+      // Recupera los datos de AsyncStorage
+      const storedUserData = await AsyncStorage.getItem('@user');
+      const user = JSON.parse(storedUserData);
+      const storedToken = await AsyncStorage.getItem('@token');
+      const token = JSON.parse(storedToken);
+      // Actualiza el estado local con los datos recuperados
+      dispatch(setUsers(user));
+      dispatch(setToken(token));
+
+    } catch (error) {
+      console.error('Error al recuperar datos de AsyncStorage:', error);
+    }
+  };
+
+  useEffect(() => {
+    // console.log('HomeScreen.js, line 27, users (global store):', users?.email );
+    // console.log('token:======>>', token);
+    // Función asincrónica para obtener datos de AsyncStorage
+   
+    fetchData();
+   
+
+  }, []);
+
   return (
     <PaperProvider>
     <View style={styles.container}>
@@ -110,11 +88,11 @@ const HomeScreen = () => {
         <View>
          <UserProfile />
         </View>
-       
+
         <View style={styles.movimientosContainer}>
           <View style={styles.circleprogress}>
-            <IngresosGastosView /> 
-          </View>  
+            <IngresosGastosView />
+          </View>
         </View>
       </View>
       <View>
@@ -122,7 +100,7 @@ const HomeScreen = () => {
       </View>
     </View>
     <FloatingButton />
-    
+
     </PaperProvider>
   );
 };
@@ -158,13 +136,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
     marginHorizontal: 20,
-    
+
   },
 
 // nombre y finanzas personales
 userContainer: {
   padding: 16,
-  
+
 },
 
 movimientosContainer: {

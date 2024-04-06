@@ -12,15 +12,15 @@ import ConfirCode from './src/screens/ConfirCode';
 import ConfirChangePassword from './src/screens/ConfirChangePassword';
 import IncomeForm from './src/screens/IncomeForm';
 import ProfileScreen from './src/screens/ProfileScreen';
-import {Provider} from "react-redux";
-import store from "./store/index";
+import { Provider } from "react-redux";
+import store from './store/index'
 import ObjetiveScreen from './src/screens/ObjetiveScreen';
 import MovimientosScreen from './src/screens/MovimientosScreen';
 import Menu from './src/components/shared/Menu';
 import Header from './src/components/shared/Header';
 import ExpenseForm from './src/screens/ExpenseForm';
 import ObjetiveForm from './src/screens/ObjetiveForm';
-import { RootSiblingParent} from 'react-native-root-siblings';
+import { RootSiblingParent } from 'react-native-root-siblings';
 import FormRegister from './src/components/loginRegister/FormRegister';
 const Stack = createStackNavigator();
 
@@ -30,7 +30,8 @@ const MainTabs = () => {
   
   return (
     
-    <Tab.Navigator tabBar={() => <Menu  />}  screenOptions={{
+    <Tab.Navigator tabBar={() => <Menu  />}  
+    screenOptions={{
       header: () => <Header />, }}>
       <Tab.Screen name="inicio" component={HomeScreen} options={{title: 'Home Screen'}} />
       <Tab.Screen name="metas" component={ObjetiveScreen} />
@@ -44,8 +45,8 @@ const MainTabs = () => {
 export default function App() {
   
   return (
-    <RootSiblingParent>
     <Provider store = {store}>
+    <RootSiblingParent>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="MoneyCenter" component={MoneyCenter} options={{title: 'Money Center'}} />
@@ -63,8 +64,8 @@ export default function App() {
           <Stack.Screen name="FormRegister" component={FormRegister} />
         </Stack.Navigator>
       </NavigationContainer>
-    </Provider>
     </RootSiblingParent>
+    </Provider>
    
   );
 }

@@ -8,7 +8,7 @@ import axios from 'axios';
 import { selectToken} from '../../store/slices/token.slice';
 import {useSelector} from 'react-redux';
 import ShowPickerDate from '../components/formComponents/ShowPickerDate';
-
+import { useNavigation } from '@react-navigation/native';
 const ExpenseForm = () => {
 
   const [expenseData, setExpenseData] = useState({
@@ -18,12 +18,10 @@ const ExpenseForm = () => {
     date:"",
     icon:"",
   })
-  
-  
+    
   // estados del checkbox digital o efectivo 
   
-
-  // estados del button guardar para desavilitar en caso de que los input esten vacios  
+  // estados del button guardar para deshabilitar en caso de que los input esten vacios  
   const [isButtonEnabled, setButtonEnabled] = useState(false);
 
   const handleInputChange = (key, value) => {
@@ -33,12 +31,12 @@ const ExpenseForm = () => {
     });
   };
 
-  const token= useSelector(selectToken);
+  const token = useSelector(selectToken);
   
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-
+  const navigation = useNavigation();
   const handleSave = () => {
     const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
     const url = `${url_base}/expense`; //'http://192.168.100.21:8080/api/v1/expense'
@@ -52,7 +50,7 @@ const ExpenseForm = () => {
           date:"",
           icon:"",
         });
-        
+        navigation.navigate('MainTabs', { screen: 'inicio' });  
       })
         .catch(error => {
           
@@ -114,7 +112,7 @@ const ExpenseForm = () => {
                   style={styles.input}
                   value={expenseData.name}
                   onChangeText={(text) => handleInputChange('name', text)}
-                  placeholder='Ej: sueldo '
+                  placeholder='Ej: pago de Servicios'
                 />
               </View>
             </View>
@@ -127,6 +125,7 @@ const ExpenseForm = () => {
                   value={expenseData.amount}
                   onChangeText={(text) => handleInputChange('amount', text)}
                   placeholder='Ej: 2000, 3000'
+                  keyboardType='number-pad'
                 />
               </View>
           </View>

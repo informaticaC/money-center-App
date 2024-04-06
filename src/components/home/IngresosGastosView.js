@@ -2,57 +2,80 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import CircleProgress from './CircleProgress';
 import { LinearGradient } from 'expo-linear-gradient';
-import axios from 'axios';
-import {useSelector} from 'react-redux';
-import { parseJSON } from 'date-fns';
+import { useSelector, useDispatch } from 'react-redux';
+import { setBalance } from '../../../store/slices/balance.slice';
+import fetchIncomeData from '../../utils/fetchIncomeData';
+import fetchExpensesData from '../../utils/fetchExpensesData';
 
 const IngresosGastosView = () => {
-  const [ingresosData, setIngresosData] = useState("");
-  const [gastosData, setGastosData] = useState("");
-  
-  const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
+  console.log('IngresosGastosView, begining, line 11');
+  const [incomesData, setIncomesData] = useState("");
+  const [expensesData, setExpensesData] = useState("");
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalExpense, setTotalExpense] = useState(0);
   const user = useSelector((state) => state.users);
-  const id = user?.id;
-  console.log('user', user);
-  const token = useSelector((state) => state.auth.token)
+  const token = useSelector((state) => state.auth.token);
+  const balance = useSelector((state) => state.balance);
+  const dispatch = useDispatch();
 
- useEffect(() => {
+  //console.log('IngresosGastosView.js, line 22, balance:===========>>', balance);
+  useEffect(() => {
     // Lógica para obtener datos de ingresos desde tu API
-    const fetchIngresosData = async () => {
-      try {
-        const response = await axios.get(`${url_base}/income/byUserId/${id}`,{
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-        });
-       setIngresosData(response.data);
-       console.log(response.data)
-      } catch (error) {
-        console.error('Error al obtener datos de ingresos:', error);
+    //console.log('IngresosGastosView.js, line 22, user (from global state:==>>', user);
+    //console.log('IngresosGastosView.js, line 23, token (from global state:==>>', token);
+    //-+-+- Manejar aquí la variable global incomes!!!!!!!!!!!!!!
+    const currentDate = new Date();
+    console.log('IngresosGastosView, line28, currentDate', currentDate);
+    fetchIncomeData(token).then((incomes)=>{
+      
+      console.log('line 32, incomes from fetchIncomesData(incomes):::', incomes);
+      getTotal(incomes).then(resIncomes => {
+        //console.log('Total incomes, line 47:', resIncomes);
+        setTotalIncome(resIncomes);
+      })
+      .catch( err => 
+        console.error('error on line 38 IngresosGastosView.js getTotal(incomes):==>>', err)
+        );
       }
-    };
+      // here goes fetchExpenseData
+      ).then(()=> {
+        fetchExpensesData(token).then((expenses) =>{
+          //console.log('IngresosGastosView.js, line 44, expenses array returned by fetchExpensesData:', expenses);
+          //
+          getTotal(expenses).then(resExpenses => {
+            console.log('Total Expenses, line 47, resExpenses:', resExpenses);
+            setTotalExpense(resExpenses);
+            dispatch(setBalance(totalIncome - resExpenses));
+            console.log('IngresosGastosView.js, line 49, balance:================>>>>>>>>>>>>>>>>>>>', balance);
+          })
+          .catch( err => 
+            console.error('error on line 66 IngresosGastosView.js getTotal(expenses):==>>',err)
+            );
+            
+          }).catch( err => {
+            console.error('IngresosGastosView.js, line 57 error: ===>>>', err)
+          });
+      })
+      .catch( err => {
+        console.error('IngresosGastosView.js, line 40 error: ===>>>', err)
+      });
+      
+      
+      
+      }, [balance]);
 
-    // Lógica para obtener datos de gastos desde tu API*/
-    const fetchGastosData = async () => {
-      try {
-        const response = await axios.get(`${url_base}/expense/byUserId/${id}`,{
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-        });
-        setGastosData(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error('Error al obtener datos de gastos:', error);
-      }
-    };
-
-    fetchIngresosData();
-    fetchGastosData();
-  }, []);
-
-  // const totalIngresos = ingresosData.
-
+  const sum = (accumulator, item) => {
+    //console.log(item.amount);
+    return accumulator + item.amount;
+  }
+  
+  const initialValue = 0 ; 
+  const getTotal = async (arrayData) => {
+    console.log('line 85, arrrayData in getTotal::::::::::::', arrayData)
+    const total = await arrayData.reduce(sum, initialValue); 
+    return total;
+  }
+    
   const circleIngresos = {
     progress:0.75,
     size: 90,
@@ -60,7 +83,7 @@ const IngresosGastosView = () => {
     color: '#206D40',
     borderWidth: 3,
     borderColor: 'rgba(50, 175, 101, 0.5)',
-    thickness: 12,
+    thickness: 10,
     strokeCap: 'round',
     unfilledColor: 'rgba(50, 175, 101, 0.5)',
     endAngle: 0.90,
@@ -74,20 +97,13 @@ const IngresosGastosView = () => {
     color: '#C91A2F',
     borderWidth: 3,
     borderColor: 'rgba(223, 50, 49, 0.5)',
-    thickness: 12,
+    thickness: 10,
     strokeCap: 'round',
     unfilledColor: 'rgba(223, 50, 49, 0.5)',
     endAngle: 0.1,
     showsText: true,
   };
 
-  
-  
-  /*const sumarIngresos = () => {
-   //return ingresosData?.incomes.reduce((total, incomes) => total + incomes.amount, 0);
-  };
-  const totalIngresos = sumarIngresos();
-  console.log(ingresosData)*/
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
@@ -95,6 +111,9 @@ const IngresosGastosView = () => {
         <TouchableOpacity>
           <Text>Ver más </Text>
         </TouchableOpacity>
+      </View>
+      <View >
+        <Text style={styles.balance}>${balance}</Text>
       </View>
       <View style={styles.circleContainer}>
         <View style={styles.circle}>
@@ -144,7 +163,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     marginVertical: 20,
   },
+  balance: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginHorizontal: 30
+  }
 });
+
 
 export default IngresosGastosView;
 

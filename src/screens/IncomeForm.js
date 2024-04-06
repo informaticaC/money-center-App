@@ -106,7 +106,8 @@ const IncomeForm = () => {
               style={styles.input}
               placeholder='Ej: 2000, 3000'
               onChangeText={(text) => handleInputChange('amount', text)}
-              value={incomeData.amount}     
+              value={incomeData.amount}
+              keyboardType='number-pad'     
             />
           </View>
         </View>

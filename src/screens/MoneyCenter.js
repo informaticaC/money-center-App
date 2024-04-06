@@ -8,93 +8,125 @@ import Fondo3 from '../../assets/img/fondo3.png';
 import axios from 'axios';
 import getConfigToken from '../utils/getConfigToken';
 import FormLogin from '../components/loginRegister/FormLogin';
-
-
+import { setUsers } from '../../store/slices/users.slice';
+import { setToken } from '../../store/slices/token.slice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const MoneyCenter = () => {
-
   const navigation = useNavigation();
-  const [user, setUser] = useState(null);
-  const [userData, setUserData] = useState('');
-  const [userStored, setUserStored] = useState(AsyncStorage.getItem("@user"));
-   
-  const  isLogged = () => { //función que devuelve una promesa de recuperar los datos del local storage y cargarlos en userStored
+  //const [user, setUser] = useState(null);
+  const [isValidToken, setIsValidToken] = useState('false');
+  const [tokenStored, setTokenStored ] = useState( );
+  const [userStored, setUserStored] = useState( );//
+  // console.log('begining MoneyCenter.js, line 21, tokenStored:==>>',(tokenStored));
+  // console.log('begining MoneyCenter.js, line 22, userStored:==>>',(userStored));
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+  
+  const  isLogged = async () => { //función que devuelve una promesa de recuperar los datos del local storage y cargarlos en userStored
     return new Promise( async (resolve, reject) => {
-		  setUserStored(await AsyncStorage.getItem("@user"));
-      //setUsers(await AsyncStorage.getItem("@user"))
-      resolve(userStored);      
+      console.log('Is logged?')
+      await AsyncStorage.getItem("@user").then( res => {
+        setUserStored( JSON.parse(res) );
+        dispatch(setUsers(JSON.parse(res))); //actualizar el usuario global
+        const usr = JSON.parse(res);
+        AsyncStorage.getItem( "@token" ).then( res => {
+          setTokenStored( JSON.parse(res) );
+          // console.log('isLogged, line 34, tokenStored:==>>');
+          // console.log(JSON.parse(res));
+          dispatch(setToken(JSON.parse(res)));
+          const tkn = JSON.parse(res);
+          const localData = {usr, tkn}
+          resolve(localData);
+          reject(userStored);
+        })
+      });      
     })
 	}
 
-  const checkUserLogged = async () => {
-   
-    const url = `${process.env.EXPO_PUBLIC_API_URL_BASE}/users/me`;
-    //console.log('config token:::::::========>>>', getConfigToken());
-    axios.get(url, getConfigToken())
-          .then(res => {
-            console.log(res.data);
-            console.log(res.status);
-            setUserData(true);
-          })
-          .catch(err => {
-            console.log('Codigo de error por /me:=>',err.response.status);
-            //logOut();
-            setUserData(false);
-          });
+  const checkUserLogged = async (token) => {
+
+    return new Promise( async (resolve, reject) => {
+      const url = `${process.env.EXPO_PUBLIC_API_URL_BASE}/users/me`;
+      //console.log('Money Center, line 50, checkUserLogged, tokenStored::::====-+-->>', token)
+      axios.get(url, {
+        headers: {
+          Authorization:`Bearer ${token}`
+        }
+      })
+      .then(res => {
+        //console.log(res.data);
+        //console.log('MoneyCenter.js, line 58:>>>>',res.status);
+        //console.log('token valid!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        setIsValidToken(true);
+        resolve(true);
+      })
+      .catch(err => {
+        setTimeout(() => {
+          //console.log('MoneyCenter.js line 61, Codigo de error por /me:=>', err.response.status);
+          setIsValidToken(false);
+          reject(false);
+          logOut();
+        }, 100)
+        
+      });
+    });
+    
           
   };
   const logOut = async () => {
     console.log('Loggin Out!!')
     await AsyncStorage.removeItem("@user");
     await AsyncStorage.removeItem("@token");
-    setTimeout(() => {
-      console.log('goin to Home Page');
-      //navigation.navigate("LoginScreen");
-    }, 50);
-    console.log('Already Out!!');
+    dispatch(setUsers(null));
+    dispatch(setToken(null));
+    console.log('Already Out From Money Center!!');
   }
 
 	React.useEffect(() => {
-    checkUserLogged();
-    
+        
     isLogged()
-      .then ((resolve) => {
-        console.log('resolve, user stored, MoneyCenter.js:',resolve);
-        if (userStored && userData) {
-          //check if the token is valid
-          console.log('going to MainTabs, screen: inicio ');
-          console.log(userData);        
-          navigation.navigate('MainTabs', { screen: 'inicio'});
-        }
-        else{
-          console.log('Not logued, where do I go????')
-          logOut().then(()=>{
-            navigation.navigate("MoneyCenter");
-
-          })
-          //console.log(user);
-        }
+      .then ( resolve => {
+        if(resolve.tkn){
+          //console.log('MoneyCenter.js line 90, user from global state:', user);
+          //console.log('MoneyCenter.js line 91, isLogged-resolve, resolve?.usr stored, MoneyCenter.js:', resolve?.usr);
+          //console.log('MoneyCenter.js line 92, isLogged-resolve, Token stored, MoneyCenter.js:', resolve?.tkn);
+          //console.log('MoneyCenter.js, line 93, checking if isValidToken', resolve.usr.email);
+          checkUserLogged(resolve.tkn).then((resolve) => {//check if the token is valid
+           // console.log('MoneyCenter.js, line 89, isValid??:', resolve);
+            if (resolve) { 
+              //console.log('MoneyCenter.js, line 89, isValidToken:', resolve);  
+              navigation.navigate('MainTabs', { screen: 'inicio'}); // go to HomeScreen.js
+            }else{
+                 // console.log('Line 94, Token Invalid :( !!!!!!');
+                  logOut().then(() => {
+                  navigation.navigate("MoneyCenter");
+               });
+            };
+          });
+        }else{
+              console.log('Not logued :(' );
+              logOut().then(() => {
+                //navigation.navigate('LoginScreen')
+                console.log('isValidToken: ', isValidToken);
+                console.log('userStored: ', userStored);
+                navigation.navigate("MoneyCenter");
+              });
+        };
       })
-      .catch(reject => console.log(reject));
+      .catch(reject => {
+        console.log('MoneyCenter.js, line 119, isLogged().then rejected:==>', reject)
+        console.log('Not logued :(' );
+        logOut().then(() => {
+          //navigation.navigate('LoginScreen')
+          console.log('isValidToken: ', isValidToken);
+          console.log('userStored: ', userStored);
+          navigation.navigate("MoneyCenter");
+        });
+    });
 
-  }, [userStored]);
-
-  //console.log('user:', user);
-
-  const ShowUserInfo = ({users})=>{
-		//console.log({users});
-		console.log('am I here??');
-		return(
-			<View style={styles.container}>
-				<Text style={styles.text}>Name: {user.firstname+ ' ' + user.lastname}</Text>
-				<Text style={styles.text}>Email: {user?.email}</Text>
-				<Image source={{uri: user?.image}} style={{width:100, height:100, borderRadius: 50}} />
-			</View>
-		)
-	}
-
+  }, []);
   
-    
   return (
     <ImageBackground
       source={Fondo3}

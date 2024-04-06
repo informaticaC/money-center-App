@@ -5,7 +5,6 @@ import { AntDesign } from '@expo/vector-icons';
 const MonthPicker = ({setSelectedMonth, selectedMonth}) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
   
-
   const months = [
     { label: 'Enero', value: '01' },
     { label: 'Febrero', value: '02' },
@@ -98,18 +97,16 @@ const styles = StyleSheet.create({
     
   },
 
-  
-
   monthList: {
-    
-    
     padding: 5,
     alignItems: "center",
     
     alignSelf:"center",
     position: "absolute",
-    zIndex: 1000,
+    zIndex: 10000,
     backgroundColor:"rgba(245, 245, 250, 1)",
+    borderRadius: 5,
+    
   },
 });
 

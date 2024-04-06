@@ -1,12 +1,8 @@
-import React, { useState, useEffect} from 'react';
 import { View, StyleSheet, ScrollView, Image} from 'react-native';
 import SliderForm from '../components/loginRegister/SliderForm';
 import CircleDegrade from '../components/shared/CircleDegrade';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Logo from '../../assets/img/moneylogo.png';
-//import {useSelector, useDispatch } from 'react-redux';
-//import { setUsers } from '../../store/slices/users.slice';
-
 
 const LoginScreen = () => {
   return (
@@ -24,7 +20,6 @@ const LoginScreen = () => {
     
   );
 };
-
 
 const styles = StyleSheet.create({
 
@@ -44,7 +39,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 8,
    
-  
   },
 
   logo: {
@@ -58,9 +52,6 @@ const styles = StyleSheet.create({
     
   },
  
-
-  
-
 });
 
 export default LoginScreen;

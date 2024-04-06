@@ -3,14 +3,17 @@ import { View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useSelector } from 'react-redux';
 
+
 const UserProfile = () => {
   const [avatarSource, setAvatarSource] = useState(null);
   const user = useSelector(state => state.users);
+  
   //console.log('imagen:===>',user.image);
   
   useEffect(() => {
+    console.log('global User, (state.users)', user);
     if (user?.image) {
-      setAvatarSource({ uri: user.image });
+      setAvatarSource({ uri: user?.image });
     }
     
     (async () => {
@@ -20,7 +23,7 @@ const UserProfile = () => {
         alert('Se necesita permiso para acceder a la galería.');
       }
     })();
-  }, []);
+  }, [user]);
 
   const selectImage = async () => {
     try {
@@ -32,7 +35,7 @@ const UserProfile = () => {
       });
 
       if (!result.canceled) {
-        setAvatarSource({ uri: result.uri });
+        setAvatarSource({ uri: result?.uri });
       }
     } catch (error) {
       console.error('Error al seleccionar la imagen:', error);
@@ -43,14 +46,14 @@ const UserProfile = () => {
     <View style={styles.profile} >
       <TouchableOpacity onPress={selectImage}>
         {avatarSource ? (
-          <Image source={avatarSource} style={{ width: 80, height: 80, borderRadius: 100 }} />
+          <Image source={ avatarSource } style={{ width: 80, height: 80, borderRadius: 100 }} />
         ) : (
           <View style={{ width: 80, height: 80, borderRadius: 100, backgroundColor: 'lightgray', justifyContent: 'center', alignItems: 'center' }}>
             <Text>imagen de perfil</Text>
           </View>
         )}
       </TouchableOpacity>
-      <Text style={styles.textName}>Hola, {user.firstname} !!</Text>
+      <Text style={styles.textName}>Hola, {user?.firstname} !!</Text>
     </View>
   );
 };
