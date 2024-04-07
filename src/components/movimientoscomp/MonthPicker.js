@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     
     alignSelf:"center",
     position: "absolute",
-    zIndex: 10000,
+    zIndex: 1000,
     backgroundColor:"rgba(245, 245, 250, 1)",
     borderRadius: 5,
     
