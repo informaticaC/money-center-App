@@ -44,15 +44,15 @@ const FormRegister = () => {
       ...userData,
       [key]: value,
     });
-    console.log('userData.password:=>',userData.password);
+    //console.log('userData.password:=>',userData.password);
   };
 
   const handleConfirmPassword = (text) => {
-    console.log(text);
+    //console.log(text);
     setConfirmPassword(text);
     setTimeout(()=>{
 
-      console.log('confirmPassword: ',confirmPassword);
+      //console.log('confirmPassword: ',confirmPassword);
     },500)
   }
 
