@@ -56,7 +56,7 @@ export default function App() {
           <Stack.Screen name="ConfirChangePassword" component={ConfirChangePassword} />
           <Stack.Screen name="UserPage" component={UserPage} />
           <Stack.Screen name="GoogleLogin" component={GoogleLogin} />
-          <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
+          <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: true }} />
           <Stack.Screen name="IncomeForm" component={IncomeForm} />
           <Stack.Screen name="ExpenseForm" component={ExpenseForm} />
           <Stack.Screen name="ObjetiveForm" component={ObjetiveForm} />

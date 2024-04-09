@@ -5,7 +5,6 @@ import axios from "axios";
 import SocialLogin from '../SocialLogin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector, useDispatch } from 'react-redux';
-//import { setUsers } from '../../store/slices/users.slice';
 import { setUsers } from '../../../store/slices/users.slice';
 import { setToken } from '../../../store/slices/token.slice';
 
@@ -17,10 +16,10 @@ const FormLogin = () => {
 
   const navigation = useNavigation();
   //redux
-  const  users  = useSelector( state => state.users );
+  //const  users  = useSelector( state => state.users );
   const dispatch = useDispatch();
   //console.log('users, from redux FormLogin.js line 29',users);
-  const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
+  //const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
 
   const handleInputChange = (key, value) => {
     setFormData({
@@ -45,7 +44,10 @@ const FormLogin = () => {
         // Actualizar estado de Redux y AsyncStorage
         AsyncStorage.setItem('@token', JSON.stringify(res.data.token));
         AsyncStorage.setItem('@user', JSON.stringify(res.data.user));
-        
+        setFormData({
+          email: '',
+          password: ''
+        });
         navigation.navigate('MainTabs', { screen: 'inicio' });
       })
         .catch(error => {///

@@ -4,33 +4,35 @@ import CircleProgress from './CircleProgress';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSelector, useDispatch } from 'react-redux';
 import { setBalance } from '../../../store/slices/balance.slice';
+import { setMonthSelected } from '../../../store/slices/monthSelected';
+import { setReload } from '../../../store/slices/reload.slice';
 import fetchIncomeData from '../../utils/fetchIncomeData';
 import fetchExpensesData from '../../utils/fetchExpensesData';
 
 const IngresosGastosView = () => {
   console.log('IngresosGastosView, begining, line 11');
-  const [incomesData, setIncomesData] = useState("");
-  const [expensesData, setExpensesData] = useState("");
+  
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
   const user = useSelector((state) => state.users);
   const token = useSelector((state) => state.auth.token);
   const balance = useSelector((state) => state.balance);
+  const monthSelected = useSelector( (state) => state.monthSelected);
   const dispatch = useDispatch();
-
+  const reload = useSelector(state => state.reload);
   //console.log('IngresosGastosView.js, line 22, balance:===========>>', balance);
   useEffect(() => {
-    // Lógica para obtener datos de ingresos desde tu API
-    //console.log('IngresosGastosView.js, line 22, user (from global state:==>>', user);
-    //console.log('IngresosGastosView.js, line 23, token (from global state:==>>', token);
-    //-+-+- Manejar aquí la variable global incomes!!!!!!!!!!!!!!
-    const currentDate = new Date();
-    console.log('IngresosGastosView, line28, currentDate', currentDate);
+   
+    const currentMonth = new Date().getMonth();
+    //console.log('IngresosGastosView, line28, currentMonth:===>>>>>>>>>>>>>>>>>>>>>>>>>>>>', currentMonth);
+    dispatch(setMonthSelected(currentMonth+1));
+    //console.log('IngresosGastosView.js, line 32, monthSelected:-------------------------------: ', monthSelected);
     fetchIncomeData(token).then((incomes)=>{
       
-      console.log('line 32, incomes from fetchIncomesData(incomes):::', incomes);
+      console.log('IngresosGastosView.js, line 31, incomes from fetchIncomesData(incomes):::', incomes);
+      
       getTotal(incomes).then(resIncomes => {
-        //console.log('Total incomes, line 47:', resIncomes);
+        console.log('Total incomes, line 35, resIncomes:', resIncomes);
         setTotalIncome(resIncomes);
       })
       .catch( err => 
@@ -43,10 +45,10 @@ const IngresosGastosView = () => {
           //console.log('IngresosGastosView.js, line 44, expenses array returned by fetchExpensesData:', expenses);
           //
           getTotal(expenses).then(resExpenses => {
-            console.log('Total Expenses, line 47, resExpenses:', resExpenses);
+            console.log('Total Expenses, line 48, resExpenses:', resExpenses);
             setTotalExpense(resExpenses);
-            dispatch(setBalance(totalIncome - resExpenses));
-            console.log('IngresosGastosView.js, line 49, balance:================>>>>>>>>>>>>>>>>>>>', balance);
+            dispatch(setBalance(totalIncome - totalExpense));
+            console.log('IngresosGastosView.js, line 49, balance:================>>>>>>>>>>>>>>>>>>>', Math.round(balance));
           })
           .catch( err => 
             console.error('error on line 66 IngresosGastosView.js getTotal(expenses):==>>',err)
@@ -59,10 +61,8 @@ const IngresosGastosView = () => {
       .catch( err => {
         console.error('IngresosGastosView.js, line 40 error: ===>>>', err)
       });
-      
-      
-      
-      }, [balance]);
+      //dispatch(setReload(false));
+  }, [balance, user, monthSelected, totalExpense, totalIncome]);
 
   const sum = (accumulator, item) => {
     //console.log(item.amount);
@@ -71,13 +71,19 @@ const IngresosGastosView = () => {
   
   const initialValue = 0 ; 
   const getTotal = async (arrayData) => {
-    console.log('line 85, arrrayData in getTotal::::::::::::', arrayData)
-    const total = await arrayData.reduce(sum, initialValue); 
+    //console.log('line 74, arrrayData in getTotal:::::::::::::', arrayData);
+    //console.log('getTotal, line 78, monthSelected___________________:', monthSelected);
+    //arrayData.map(data => console.log('Month:=======>>>-+-+->>>>>',Number(data.date.split('-')[1])));
+    const newArrayData = arrayData.filter(data => {
+           return Number(data.date.split('-')[1]) === monthSelected;
+    })
+    //console.log('line 79, newArrayData in getTotal:::::::::::::', newArrayData);
+    const total = await newArrayData.reduce(sum, initialValue); 
     return total;
   }
     
   const circleIngresos = {
-    progress:0.75,
+    progress: 0.75,
     size: 90,
     indeterminate: false,
     color: '#206D40',
@@ -113,7 +119,7 @@ const IngresosGastosView = () => {
         </TouchableOpacity>
       </View>
       <View >
-        <Text style={styles.balance}>${balance}</Text>
+        <Text style={styles.balance}>${new Intl.NumberFormat().format(balance)}</Text>
       </View>
       <View style={styles.circleContainer}>
         <View style={styles.circle}>

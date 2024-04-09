@@ -5,7 +5,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonSave from '../components/formComponents/ButtonSave';
 import axios from 'axios';
 import { selectToken} from '../../store/slices/token.slice';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch } from 'react-redux';
+import { setReload } from '../../store/slices/reload.slice';
 import ShowPickerDate from '../components/formComponents/ShowPickerDate';
 import { useNavigation } from '@react-navigation/native'
 
@@ -18,7 +19,9 @@ const IncomeForm = () => {
     date:"",
   })
   
-  const token= useSelector(selectToken);
+  const dispatch = useDispatch();
+  const token = useSelector(selectToken);
+  //const reload = useSelector((state) => state.reload);
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -36,7 +39,10 @@ const IncomeForm = () => {
           amount:"",
           date:"",
         });
-        navigation.navigate('MainTabs', { screen: 'inicio' });
+        //dispatch(setReload(true));
+        
+        //snavigation.navigate('MainTabs', { screen: 'inicio' });
+        //navigation.navigate('MoneyCenter')
         
       })
         .catch(error => {
