@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import axios from 'axios';
 import { selectToken} from '../../../store/slices/token.slice';
 import {useSelector} from 'react-redux';
 import SearchInput from './SearchInput';  
@@ -18,7 +17,7 @@ const ExpensesCard = ({selectedOption, selectedMonth}) => {
   useEffect(() => {
    
     fetchExpensesData(token).then(expenses => {
-      console.log('ExpensesCard.js, line 21, fetchExpensesData response.data: ==>', expenses);
+      //console.log('ExpensesCard.js, line 21, fetchExpensesData response.data: ==>', expenses);
       setData(expenses);
     }).catch(reject => {
       console.error('IncomesCard, line 24, reject from fetchIncomeData', reject)

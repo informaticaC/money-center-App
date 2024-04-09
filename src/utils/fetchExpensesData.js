@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const fetchExpensesData = async (token) => {
-  console.log('Fetching expenses from server!!!!!!!');
+  //console.log('Fetching expenses from server!!!!!!!');
 
   return new Promise( async (expenses, reject) => {
     const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;

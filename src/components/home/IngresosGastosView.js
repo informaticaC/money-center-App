@@ -10,7 +10,7 @@ import fetchIncomeData from '../../utils/fetchIncomeData';
 import fetchExpensesData from '../../utils/fetchExpensesData';
 
 const IngresosGastosView = () => {
-  console.log('IngresosGastosView, begining, line 11');
+  //console.log('IngresosGastosView, begining, line 11');
   
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
@@ -29,10 +29,10 @@ const IngresosGastosView = () => {
     //console.log('IngresosGastosView.js, line 32, monthSelected:-------------------------------: ', monthSelected);
     fetchIncomeData(token).then((incomes)=>{
       
-      console.log('IngresosGastosView.js, line 31, incomes from fetchIncomesData(incomes):::', incomes);
+      //console.log('IngresosGastosView.js, line 31, incomes from fetchIncomesData(incomes):::', incomes);
       
       getTotal(incomes).then(resIncomes => {
-        console.log('Total incomes, line 35, resIncomes:', resIncomes);
+        //console.log('Total incomes, line 35, resIncomes:', resIncomes);
         setTotalIncome(resIncomes);
       })
       .catch( err => 
@@ -45,10 +45,10 @@ const IngresosGastosView = () => {
           //console.log('IngresosGastosView.js, line 44, expenses array returned by fetchExpensesData:', expenses);
           //
           getTotal(expenses).then(resExpenses => {
-            console.log('Total Expenses, line 48, resExpenses:', resExpenses);
+            //console.log('Total Expenses, line 48, resExpenses:', resExpenses);
             setTotalExpense(resExpenses);
             dispatch(setBalance(totalIncome - totalExpense));
-            console.log('IngresosGastosView.js, line 49, balance:================>>>>>>>>>>>>>>>>>>>', Math.round(balance));
+            //console.log('IngresosGastosView.js, line 49, balance:================>>>>>>>>>>>>>>>>>>>', Math.round(balance));
           })
           .catch( err => 
             console.error('error on line 66 IngresosGastosView.js getTotal(expenses):==>>',err)

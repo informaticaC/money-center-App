@@ -78,7 +78,7 @@ const ExpenseForm = () => {
   // funcion para input iconos 
   
     const handleIconSelect = (selectedIcon) => {
-      console.log(expenseData.icon)
+      //console.log(expenseData.icon)
       setExpenseData({
         ...expenseData,
         icon: selectedIcon,
