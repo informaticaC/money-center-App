@@ -6,7 +6,7 @@ import ButtonSave from '../components/formComponents/ButtonSave';
 import axios from 'axios';
 import { selectToken} from '../../store/slices/token.slice';
 import {useSelector, useDispatch } from 'react-redux';
-import { setReload } from '../../store/slices/reload.slice';
+import { setBalance } from '../../store/slices/balance.slice';
 import ShowPickerDate from '../components/formComponents/ShowPickerDate';
 import { useNavigation } from '@react-navigation/native'
 
@@ -21,7 +21,7 @@ const IncomeForm = () => {
   
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
-  //const reload = useSelector((state) => state.reload);
+  
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -33,17 +33,14 @@ const IncomeForm = () => {
     const { name, amount, description, date} = incomeData;
     axios.post(url, { name, amount, description, date}, {headers})
       .then((res) => {
+        dispatch(setBalance(0));
         setIncomeData({
           name:"",
           description:"",
           amount:"",
           date:"",
-        });
-        //dispatch(setReload(true));
-        
-        //snavigation.navigate('MainTabs', { screen: 'inicio' });
-        //navigation.navigate('MoneyCenter')
-        
+        });                
+        navigation.navigate('MainTabs', { screen: 'inicio' });
       })
         .catch(error => {
           

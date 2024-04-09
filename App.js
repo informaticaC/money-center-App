@@ -1,5 +1,5 @@
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MoneyCenter from './src/screens/MoneyCenter';
 import LoginScreen from './src/screens/LoginScreen';
@@ -22,7 +22,7 @@ import ExpenseForm from './src/screens/ExpenseForm';
 import ObjetiveForm from './src/screens/ObjetiveForm';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import FormRegister from './src/components/loginRegister/FormRegister';
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 //

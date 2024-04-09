@@ -6,7 +6,8 @@ import ButtonSave from '../components/formComponents/ButtonSave';
 import CheckboxButton from '../components/formComponents/CheckboxButton';
 import axios from 'axios';
 import { selectToken} from '../../store/slices/token.slice';
-import {useSelector} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setBalance } from '../../store/slices/balance.slice';
 import ShowPickerDate from '../components/formComponents/ShowPickerDate';
 import { useNavigation } from '@react-navigation/native';
 const ExpenseForm = () => {
@@ -31,6 +32,7 @@ const ExpenseForm = () => {
     });
   };
 
+  const dispatch = useDispatch();
   const token = useSelector(selectToken);
   
   const headers = {
@@ -43,6 +45,7 @@ const ExpenseForm = () => {
     const { name, amount, description, date, icon} = expenseData;
     axios.post(url, { name, amount, description, date, icon}, {headers})
       .then((res) => {
+        dispatch(setBalance(0));
         setExpenseData({
           name:"",
           description:"",
