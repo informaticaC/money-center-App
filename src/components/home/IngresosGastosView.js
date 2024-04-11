@@ -8,6 +8,7 @@ import { setMonthSelected } from '../../../store/slices/monthSelected';
 import { setReload } from '../../../store/slices/reload.slice';
 import fetchIncomeData from '../../utils/fetchIncomeData';
 import fetchExpensesData from '../../utils/fetchExpensesData';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const IngresosGastosView = () => {
   //console.log('IngresosGastosView, begining, line 11');
@@ -62,6 +63,7 @@ const IngresosGastosView = () => {
         console.error('IngresosGastosView.js, line 40 error: ===>>>', err)
       });
       //dispatch(setReload(false));
+      
   }, [balance, user, monthSelected, totalExpense, totalIncome]);
 
   const sum = (accumulator, item) => {
@@ -82,8 +84,20 @@ const IngresosGastosView = () => {
     return total;
   }
     
+  const progress = (totalIncome, totalExpense, type)=>{//type === true return income, else expense
+    if (type) {
+      if (totalIncome === 0) {
+        return 0;
+      } else { return ( balance ) / ( totalIncome ); }
+    } else {
+      if ( totalIncome === 0) {
+        return 0
+      } else { return ( totalExpense ) / ( totalIncome )}
+    }
+   
+  }
   const circleIngresos = {
-    progress: 0.75,
+    progress: progress(totalIncome, totalExpense, true),
     size: 90,
     indeterminate: false,
     color: '#206D40',
@@ -92,12 +106,13 @@ const IngresosGastosView = () => {
     thickness: 10,
     strokeCap: 'round',
     unfilledColor: 'rgba(50, 175, 101, 0.5)',
-    endAngle: 0.90,
-    showsText: true,
+    endAngle: 0.1,
+    showsText: false,
   };
 
+
   const circleGastos = {
-    progress:  0.3,
+    progress:  progress(totalIncome, totalExpense, false),
     size: 90,
     indeterminate: false,
     color: '#C91A2F',
@@ -107,33 +122,41 @@ const IngresosGastosView = () => {
     strokeCap: 'round',
     unfilledColor: 'rgba(223, 50, 49, 0.5)',
     endAngle: 0.1,
-    showsText: true,
+    showsText: false,
   };
 
+  const calcCent = () => {
+    const cent = balance - Math.trunc(new Intl.NumberFormat().format(balance));
+      console.log('IngresosGastosView.js, line 66, cent:==>', cent);
+      return (new Intl.NumberFormat().format(cent * 100));
+  }
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.movimientosText}>Tus movimientos</Text>
+        <Text style={styles.movimientosText}>Mis movimientos</Text>
         <TouchableOpacity>
           <Text>Ver más </Text>
         </TouchableOpacity>
       </View>
-      <View >
-        <Text style={styles.balance}>${new Intl.NumberFormat().format(balance)}</Text>
+      <View style={styles.balanceContainer}>
+        <Text style={styles.balance}>${Math.trunc(new Intl.NumberFormat().format(balance))}</Text>
+        <Text style={styles.cent}>{calcCent()}</Text>
+        <Icon name='visibility-off'  style={styles.eye}/>
+        {/* <Icon name='visibility' style={styles.eye}/> */}
       </View>
       <View style={styles.circleContainer}>
         <View style={styles.circle}>
           <CircleProgress {...circleIngresos} />
           <View style={styles.containerText}>
-            <Text></Text>
-            <Text style={styles.text}>ingresos</Text>
+            <Text style={styles.text}>${totalIncome}</Text>
+            <Text style={styles.textDescriptionIncomes}>ingresos</Text>
           </View>
         </View>
         <View style={styles.circle}>
           <CircleProgress {...circleGastos} />
           <View style={styles.containerText}>
-            <Text></Text>
-            <Text style={styles.text}>gastos</Text>
+            <Text style={styles.text}>${totalExpense}</Text>
+            <Text style={styles.textDescriptionExpenses}>gastos</Text>
           </View>
         </View>
       </View>
@@ -157,23 +180,59 @@ const styles = StyleSheet.create({
     padding: 5,
     marginBottom: 5,
   },
-  containerText: {
-    position: 'absolute',
-    textAlign: 'center',
-    top: '50%',
-    left: '50%',
-  },
+  
   movimientosText: {
     fontSize: 18,
     fontWeight: 'bold',
     marginHorizontal: 30,
-    marginVertical: 20,
+    marginTop: 16,
+    marginBottom: 10,
+    
+  },
+  balanceContainer: {
+    flexDirection: 'row',
+    alignContent: 'center'
+
   },
   balance: {
-    fontSize: 30,
+    fontSize: 35,
     fontWeight: 'bold',
-    marginHorizontal: 30
-  }
+    paddingStart:  30
+    
+  },
+  cent: {
+    paddingTop: 5,
+    fontSize: 20,
+    paddingLeft: 5
+  },
+  eye: {
+    
+    fontSize: 40,
+    paddingLeft: 20,
+    fontWeight: '100'
+  },
+ 
+  containerText: {
+    position: 'absolute',
+    alignItems: 'center',
+    top: '35%',
+    left: '19%',
+  },
+  text: {
+    fontWeight: 'bold',
+    marginHorizontal: 0,
+    paddingHorizontal: 0
+    
+  },
+  textDescriptionIncomes: {
+    fontWeight: 'normal',
+    
+  },
+  textDescriptionExpenses: {
+    fontWeight: 'normal',
+    paddingHorizontal: 6,
+    
+  },
 });
 
 
