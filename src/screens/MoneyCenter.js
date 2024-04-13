@@ -146,7 +146,7 @@ const MoneyCenter = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('RegisterScreen')}
+          onPress={() => navigation.navigate('ConfirCode')}
         > 
           <Text style={styles.buttonText}>Crear cuenta</Text>
         </TouchableOpacity>

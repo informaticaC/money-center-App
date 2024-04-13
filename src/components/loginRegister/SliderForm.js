@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import FormLogin from './FormLogin';
 import FormRegister from './FormRegister';
+import SocialLogin from '../SocialLogin';
 
 
 const SliderForm = () => {
@@ -50,7 +51,8 @@ const SliderForm = () => {
         <View >
           <FormRegister/>
         </View>
-      )}   
+      )}
+      <SocialLogin />
     </SafeAreaView>
   )
 }

@@ -7,7 +7,7 @@ import Logo from '../../assets/img/moneylogo.png';
 const LoginScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <CircleDegrade />
+      <CircleDegrade styleCircle={styles.circle} />
       <ScrollView >
         <View >
           <Image source={Logo} style={styles.logo}/>
@@ -51,6 +51,16 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     
   },
+
+  circle: {
+    position: "absolute",
+    zIndex: 0,
+    borderRadius:200,
+    width: 400,
+    height: 400,
+    top: -160,
+    left: -100,
+  }, 
  
 });
 
