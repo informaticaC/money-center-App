@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet,ImageBackground } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet,ScrollView} from 'react-native';
 import Fondo3 from '../../assets/img/fondo3.png';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ConfirChangePassword = (email) => {
   const {route} = email.route.params;
@@ -40,10 +41,8 @@ const ConfirChangePassword = (email) => {
   }
 
   return (
-    <ImageBackground
-       source={Fondo3}
-       style={styles.backgroundImage}
-    >
+    <SafeAreaView>
+    <ScrollView>
     <View style={styles.container}>
       <Text style={styles.title}>Nueva Contraseña</Text>
       <View style={styles.containerInput}>
@@ -66,8 +65,9 @@ const ConfirChangePassword = (email) => {
         <Text style={styles.buttonText}>Confirmar</Text>
       </TouchableOpacity>
     </View>
-    </ImageBackground>  
-  )
+    </ScrollView>
+    </SafeAreaView>
+  );  
 }
 
 const styles = StyleSheet.create({

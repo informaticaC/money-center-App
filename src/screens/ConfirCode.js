@@ -1,9 +1,11 @@
 import { useState, useRef } from 'react';
-import { View, Text, TextInput, StyleSheet,TouchableOpacity,ImageBackground } from 'react-native';
+import { View, Text, TextInput, StyleSheet,TouchableOpacity,ImageBackground, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Fondo3 from '../../assets/img/fondo3.png';
 import axios from 'axios';
 import Toast from 'react-native-root-toast';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const ConfirCode = (email) => {
   console.log('l 7 ConfirCode.js email: ', email.route.params);
@@ -79,10 +81,9 @@ const ConfirCode = (email) => {
   };
   
   return (
-    <ImageBackground
-    source={Fondo3}
-    style={styles.backgroundImage}
-    >
+   < SafeAreaView>
+    
+    <ScrollView>
     <View style={styles.container}>
       <Text style={styles.title}>Confirmar Codigo</Text>
       <Text style={styles.text}>Coloca el código que recibiste por correo electrónico.({email.route.params}) </Text>
@@ -154,7 +155,9 @@ const ConfirCode = (email) => {
         <Text style={styles.buttonText}>Verificar</Text>
       </TouchableOpacity>
     </View>
-    </ImageBackground>
+    </ScrollView>
+    
+    </SafeAreaView>
   );
 };
 
