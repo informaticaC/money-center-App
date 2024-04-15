@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     container: {
       flexDirection: "row",
       gap: 15,
+      justifyContent: "center",
     },
 
     socialLoginButton: {
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       borderWidth: 1,
       borderColor: 'rgba(0, 0, 0, 0.15)',
-      marginTop: 25,
+      marginTop: 20,
       marginBottom: 20,
       padding: 5,
       

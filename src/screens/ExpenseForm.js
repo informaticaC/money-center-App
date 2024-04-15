@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView} from 'react-native';
 import IconPicker from '../components/formComponents/IconPicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setBalance } from '../../store/slices/balance.slice';
 import ShowPickerDate from '../components/formComponents/ShowPickerDate';
 import { useNavigation } from '@react-navigation/native';
+
 const ExpenseForm = () => {
 
   const [expenseData, setExpenseData] = useState({
@@ -23,7 +24,7 @@ const ExpenseForm = () => {
   // estados del checkbox digital o efectivo 
   
   // estados del button guardar para deshabilitar en caso de que los input esten vacios  
-  const [isButtonEnabled, setButtonEnabled] = useState(false);
+  /*const [isButtonEnabled, setButtonEnabled] = useState(false);*/
 
   const handleInputChange = (key, value) => {
     setExpenseData({
@@ -90,7 +91,7 @@ const ExpenseForm = () => {
    
   // funciones de button guardar 
   // verifica si los input estan vacios 
-  const checkButtonEnabled = () => {
+ /* const checkButtonEnabled = () => {
     if (expenseData.name.trim() !== '' && expenseData.amount.trim() !== '' && expenseData.date.trim() !== '' && expenseData.description.trim() !== '' && expenseData.icon.trim() !== '') {
       setButtonEnabled(true);
     } else {
@@ -102,7 +103,7 @@ const ExpenseForm = () => {
 
   useEffect(() => {
     checkButtonEnabled();
-  }, [expenseData.name, expenseData.amount, expenseData.date, expenseData.icon, expenseData.description]);
+  }, [expenseData.name, expenseData.amount, expenseData.date, expenseData.icon, expenseData.description]);*/
   
   return (
     <SafeAreaView style={styles.container}>
@@ -141,7 +142,7 @@ const ExpenseForm = () => {
             style1={styles.selectedCheckbox}
             style2={styles.selectedTextCheckbox}
           />
-          <ButtonSave isButtonEnabled={isButtonEnabled} save={handleSave} />
+          <ButtonSave save={handleSave} text={"Guardar"} gradient={styles.gradient} data={expenseData}/>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -209,6 +210,13 @@ const styles = StyleSheet.create({
   selectedTextCheckbox: {
     color: '#B00020',
     fontWeight: 'bold',
+  },
+
+  gradient: {
+    borderRadius: 27,
+    flex: 1,
+    marginTop: 165,
+    width: 380,
   },
 });
 
