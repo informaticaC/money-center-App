@@ -33,7 +33,7 @@ const IncomeForm = () => {
     const { name, amount, description, date} = incomeData;
     axios.post(url, { name, amount, description, date}, {headers})
       .then((res) => {
-        dispatch(setBalance(0));
+        dispatch(setBalance(null));
         setIncomeData({
           name:"",
           description:"",
