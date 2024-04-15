@@ -90,11 +90,11 @@ const ObjetiveForm = () => {
       });
     };
   // estados del button guardar para desavilitar en caso de que los input esten vacios  
-  const [isButtonEnabled, setButtonEnabled] = useState(false);  
+  
   
   // funciones de button guardar 
   // verifica si los input estan vacios 
-  const checkButtonEnabled = () => {
+  /*const checkButtonEnabled = () => {
     if (metaData.name.trim() !== '' && metaData.budget.trim() !== '' && metaData.deadline.trim() !== '' && metaData.color.trim() !== '' && metaData.icon.trim() !== '') {
       setButtonEnabled(true);
     } else {
@@ -104,8 +104,24 @@ const ObjetiveForm = () => {
   //actualiza el estado de los campos 
   useEffect(() => {
     checkButtonEnabled();
-  }, [metaData.name, metaData.budget, metaData.deadline, metaData.color, metaData.icon]);
+  }, [metaData.name, metaData.budget, metaData.deadline, metaData.color, metaData.icon]);*/
+  /*const checkButtonEnabled = () => {
+    // Verifica si todos los campos están llenos
+    const allFieldsFilled = Object.values(metaData).map(value => value.trim() !== '');
   
+    // Si todos los campos están llenos, allFieldsFilled contendrá solo true
+    // Si hay algún campo vacío, allFieldsFilled contendrá al menos un false
+    // Usamos includes para verificar si hay algún false en el array
+    const buttonEnabled = !allFieldsFilled.includes(false);
+  
+    // Actualiza el estado del botón basado en si todos los campos están llenos
+    setButtonEnabled(buttonEnabled);
+  };
+  
+  // Actualiza el estado de los campos y el botón cuando los campos de metaData cambian
+  useEffect(() => {
+    checkButtonEnabled();
+  }, Object.values(metaData));*/
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -139,7 +155,7 @@ const ObjetiveForm = () => {
             </View>
           </View>
           <ShowPickerDate data={metaData} funcion={setMetaData}  field="deadline" />
-          <ButtonSave isButtonEnabled={isButtonEnabled} save={handleSave} />
+          <ButtonSave  save={handleSave} text={"Guardar"} gradient={styles.gradient} data={metaData}/>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -152,9 +168,9 @@ const styles = StyleSheet.create({
     gap:10,
     alignItems: "center",
     backgroundColor: "rgba(255, 255, 255, 1)",
-    
-   
+    paddingTop: 15,
   },  
+  
   container1: {
     flex: 1,
     gap:10,
@@ -197,6 +213,13 @@ const styles = StyleSheet.create({
     height: 60,
     paddingLeft: 10,
     fontSize: 16,
+  },
+
+  gradient: {
+    borderRadius: 27,
+    flex: 1,
+    marginTop: 260,
+    width: 380,
   },
 
  

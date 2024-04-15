@@ -63,7 +63,7 @@ const IncomeForm = () => {
   };
 
   // estados del button guardar para desavilitar en caso de que los input esten vacios  
-  const [isButtonEnabled, setButtonEnabled] = useState(false);
+  /*const [isButtonEnabled, setButtonEnabled] = useState(false);*/
 
   const handleInputChange = (key, value) => {
     setIncomeData({
@@ -74,7 +74,7 @@ const IncomeForm = () => {
 
   // funciones de button guardar 
   // verifica si los input estan vacios 
-  const checkButtonEnabled = () => {
+  /*const checkButtonEnabled = () => {
     if (incomeData.name.trim() !== '' && incomeData.amount.trim() !== '' && incomeData.date.trim() !== '' && incomeData.description.trim() !== '') {
       setButtonEnabled(true);
     } else {
@@ -85,7 +85,7 @@ const IncomeForm = () => {
   //actualiza el estado de los campos 
   useEffect(() => {
     checkButtonEnabled();
-  }, [incomeData.name, incomeData.amount, incomeData.date, incomeData.description]);
+  }, [incomeData.name, incomeData.amount, incomeData.date, incomeData.description]);*/
   
   return (
     <SafeAreaView style={styles.container}>
@@ -121,7 +121,7 @@ const IncomeForm = () => {
           style1={styles.selectedCheckbox}
           style2={styles.selectedTextCheckbox}
         />
-        <ButtonSave isButtonEnabled={isButtonEnabled} save={handleSave}/>
+        <ButtonSave save={handleSave} text={"Guardar"} gradient={styles.gradient} data={incomeData}/>
       </View>
       </ScrollView>
     </SafeAreaView>  
@@ -174,6 +174,13 @@ const styles = StyleSheet.create({
   selectedTextCheckbox: {
     color: "#206D40",
     fontWeight: 'bold',
+  },
+
+  gradient: {
+    borderRadius: 27,
+    flex: 1,
+    marginTop: 165,
+    width: 380,
   },
 });
 

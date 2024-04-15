@@ -22,55 +22,53 @@ import ExpenseForm from './src/screens/ExpenseForm';
 import ObjetiveForm from './src/screens/ObjetiveForm';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import FormRegister from './src/components/loginRegister/FormRegister';
+
+
 const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 //
 const MainTabs = () => {
-  
+
   return (
-    
-    <Tab.Navigator tabBar={() => <Menu  />}  
-    screenOptions={{
-      header: () => <Header />, }}>
-      <Tab.Screen name="inicio" component={HomeScreen} options={{title: 'Home Screen'}} />
+
+    <Tab.Navigator tabBar={() => <Menu />}
+      screenOptions={{
+        header: () => <Header />,
+      }}>
+      <Tab.Screen name="inicio" component={HomeScreen} options={{ title: 'Home Screen' }} />
       <Tab.Screen name="metas" component={ObjetiveScreen} />
       <Tab.Screen name="movimientos" component={MovimientosScreen} />
       <Tab.Screen name="perfil" component={ProfileScreen} />
     </Tab.Navigator>
-    
+
   );
 };
 
 export default function App() {
-  
+
   return (
-    <Provider store = {store}>
-    <RootSiblingParent>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="MoneyCenter" component={MoneyCenter} options={{title: 'Money Center'}} />
-          <Stack.Screen name="LoginScreen" component={LoginScreen} options={{title: 'Login Screen'}} />
-          <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
-          <Stack.Screen name="ConfirCode" component={ConfirCode} />
-          <Stack.Screen name="ConfirChangePassword" component={ConfirChangePassword} />
-          <Stack.Screen name="UserPage" component={UserPage} />
-          <Stack.Screen name="GoogleLogin" component={GoogleLogin} />
-          <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
-          <Stack.Screen name="IncomeForm" component={IncomeForm} />
-          <Stack.Screen name="ExpenseForm" component={ExpenseForm} />
-          <Stack.Screen name="ObjetiveForm" component={ObjetiveForm} />
-          <Stack.Screen name="Otpverified" component={Otpverified} />
-          <Stack.Screen name="FormRegister" component={FormRegister} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </RootSiblingParent>
+    <Provider store={store}>
+      <RootSiblingParent>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="MoneyCenter" component={MoneyCenter} options={{ title: 'Money Center' }} />
+            <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ title: 'Login Screen' }} />
+            <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
+            <Stack.Screen name="ConfirCode" component={ConfirCode} />
+            <Stack.Screen name="ConfirChangePassword" component={ConfirChangePassword} />
+            <Stack.Screen name="UserPage" component={UserPage} />
+            <Stack.Screen name="GoogleLogin" component={GoogleLogin} />
+            <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
+            <Stack.Screen name="IncomeForm" component={IncomeForm} />
+            <Stack.Screen name="ExpenseForm" component={ExpenseForm} />
+            <Stack.Screen name="ObjetiveForm" component={ObjetiveForm} />
+            <Stack.Screen name="Otpverified" component={Otpverified} />
+            <Stack.Screen name="FormRegister" component={FormRegister} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </RootSiblingParent>
     </Provider>
-   
+
   );
 }
-
-/*
-<Stack.Screen name="Otpverified" component={Otpverified} />
-<Stack.Screen name="IncomeScreens" component={IncomeScreen}  />
-*/
