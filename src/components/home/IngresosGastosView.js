@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image,  } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, } from 'react-native';
 import CircleProgress from './CircleProgress';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,6 +14,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {IconButton} from 'react-native-paper';
 import Svg, { Path } from "react-native-svg";
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 
 const IngresosGastosView = () => {
@@ -24,8 +25,10 @@ const IngresosGastosView = () => {
   const user = useSelector((state) => state.users);
   const token = useSelector((state) => state.auth.token);
   const balance = useSelector((state) => state.balance);
+  const [showComponent, setShowComponent] = useState(true);
   const monthSelected = useSelector( (state) => state.monthSelected);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   //console.log('IngresosGastosView.js, line 22, balance:===========>>', balance);
   useEffect(() => {
    
@@ -111,10 +114,9 @@ const IngresosGastosView = () => {
     thickness: 11,
     strokeCap: 'round',
     unfilledColor: 'rgba(50, 175, 101, 0.5)',
-    endAngle: 0.9,
-    showsText: false,
+    endAngle: 0.1,
+    showsText: showComponent ? false : true,
   };
-
 
   const circleGastos = {
     progress:  progress(totalIncome, totalExpense, false),
@@ -126,47 +128,79 @@ const IngresosGastosView = () => {
     thickness: 11,
     strokeCap: 'round',
     unfilledColor: 'rgba(223, 50, 49, 0.5)',
-    endAngle: 0.9,
-    showsText: false,
+    endAngle: 0.1,
+    showsText: showComponent ? false : true,
   };
 
   const calcCent = () => {
-    const cent = balance - Math.trunc(new Intl.NumberFormat().format(balance));
+    const cent = balance - Math.trunc(new Intl.NumberFormat( { maximumSignificantDigits: 2 }).format(balance));
       //console.log('IngresosGastosView.js, line 66, cent:==>', cent);
+      if (cent === 0) return '00';
       return (new Intl.NumberFormat().format(cent * 100));
+  }
+
+  const hideBalance = () => {
+    if (showComponent){
+      setShowComponent(false);
+    }else{
+      setShowComponent(true);
+    }
+  }
+
+  const handleOnpressSeeMore = () => {
+    navigation.navigate('MainTabs', { screen: 'movimientos'});
   }
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
         <Text style={styles.movimientosText}>Mis movimientos</Text>
-        <TouchableOpacity>
-          <Text>Ver más </Text>
+        <TouchableOpacity style={styles.balanceContainer} onPress={handleOnpressSeeMore }>
+          <Text style={styles.seeMore}>Ver más</Text>
+          <View style={styles.arrowSeeMore} >
+            <Svg xmlns="http://www.w3.org/2000/svg" height={36} fill={'green'} viewBox="0 -960 960 960" width={36} >
+              <Path d="M504-480L320-664l56-56 240 240-240 240-56-56 184-184z" />
+            </Svg>
+          </View>
+          
         </TouchableOpacity>
+        
       </View>
+
       <View style={styles.balanceContainer}>
-        <Text style={styles.balance} >${Math.trunc(new Intl.NumberFormat().format(balance))}</Text>
-        <Text style={styles.cent}>{calcCent()}</Text>
-        <Svg style={styles.eye} xmlns="http://www.w3.org/2000/svg" viewBox="200 -248 640 1024" >
-          <Path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2s-6.3 25.5 4.1 33.7l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7l-105.2-82.4c39.6-40.6 66.4-86.1 79.9-118.4 3.3-7.9 3.3-16.7 0-24.6-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zm151 118.3C226 97.7 269.5 80 320 80c65.2 0 118.8 29.6 159.9 67.7C518.4 183.5 545 226 558.6 256c-12.6 28-36.6 66.8-70.9 100.9l-53.8-42.2c9.1-17.6 14.2-37.5 14.2-58.7 0-70.7-57.3-128-128-128-32.2 0-61.7 11.9-84.2 31.5l-46.1-36.1zm205.1 160.8l-81.5-63.9c4.2-8.5 6.6-18.2 6.6-28.3 0-5.5-.7-10.9-2-16h2c44.2 0 80 35.8 80 80 0 9.9-1.8 19.4-5.1 28.2zm51.3 163.3l-41.9-33C378.8 425.4 350.7 432 320 432c-65.2 0-118.8-29.6-159.9-67.7C121.6 328.5 95 286 81.4 256c8.3-18.4 21.5-41.5 39.4-64.8l-37.7-29.7c-22.8 29.7-39.1 59.3-48.6 82.2-3.3 7.9-3.3 16.7 0 24.6 14.9 35.7 46.2 87.7 93 131.1 47 43.8 111.7 80.6 192.5 80.6 47.8 0 89.9-12.9 126.2-32.5zm-88-69.3L302 334c-23.5-5.4-43.1-21.2-53.7-42.3l-56.1-44.2c-.2 2.8-.3 5.6-.3 8.5 0 70.7 57.3 128 128 128 13.3 0 26.1-2 38.2-5.8z" />
-        </Svg>
-        {/* <View>
-          <MaterialIcons name={"visibility"} size={18}  color={"black"} />
-        </View> */}
+        <Text style={[styles.balance, {display: showComponent ? 'flex' : 'none'}]} >${Math.trunc(new Intl.NumberFormat().format(balance))}</Text>
+        <Text style={[styles.cent, {display: showComponent ? 'flex' : 'none'}]}>{calcCent()}</Text>
+        <Text style={[styles.balanceOff,{display: showComponent ? 'none' : 'flex'}]}>$$$$😉</Text>
+
+        <View style={[styles.eyeContainer,{display: showComponent ? 'none' : 'flex'}]}  >
+          <TouchableOpacity style={styles.showBalance} onPress={() => setShowComponent(true)}>
+            <Svg  style={styles.eye} xmlns="http://www.w3.org/2000/svg" height={36} viewBox="0 -960 960 960" width={36} >
+              <Path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200zm0-300zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280z" />
+            </Svg>
+          </TouchableOpacity>
+        </View>
+
+        <View style={[styles.eyeContainer,{display: showComponent ? 'flex' : 'none'}]} >
+          <TouchableOpacity style={styles.showBalance} onPress={() => setShowComponent(false)} >
+            <Svg style={styles.eye} xmlns="http://www.w3.org/2000/svg" height={36} viewBox="0 -960 960 960" width={36} >
+              <Path d="M644-428l-58-58q9-47-27-88t-93-32l-58-58q17-8 34.5-12t37.5-4q75 0 127.5 52.5T660-500q0 20-4 37.5T644-428zm128 126l-58-56q38-29 67.5-63.5T832-500q-50-101-143.5-160.5T480-720q-29 0-57 4t-55 12l-62-62q41-17 84-25.5t90-8.5q151 0 269 83.5T920-500q-23 59-60.5 109.5T772-302zm20 246L624-222q-35 11-70.5 16.5T480-200q-151 0-269-83.5T40-500q21-53 53-98.5t73-81.5L56-792l56-56 736 736-56 56zM222-624q-29 26-53 57t-41 67q50 101 143.5 160.5T480-280q20 0 39-2.5t39-5.5l-36-38q-11 3-21 4.5t-21 1.5q-75 0-127.5-52.5T300-500q0-11 1.5-21t4.5-21l-84-82zm319 93zm-151 75z" />
+            </Svg>
+          </TouchableOpacity>
+        </View>
        
       </View>
       <View style={styles.circleContainer}>
         <View style={styles.circle}>
           <CircleProgress {...circleIngresos} />
-          <View style={styles.containerText}>
-            <Text style={styles.text}>${totalIncome}</Text>
-            <Text style={styles.textDescriptionIncomes}>ingresos</Text>
+          <View style={styles.containerCircleText}>
+            <Text style={[styles.text, {display: showComponent ? 'flex' : 'none'}]}>${ (Math.trunc(totalIncome))}</Text>
+            <Text style={[styles.textDescriptionIncomes, {display: showComponent ? 'flex' : 'none'}]}>ingresos</Text>
           </View>
         </View>
         <View style={styles.circle}>
           <CircleProgress {...circleGastos} />
-          <View style={styles.containerText}>
-            <Text style={styles.text}>${totalExpense}</Text>
-            <Text style={styles.textDescriptionExpenses}>gastos</Text>
+          <View style={styles.containerCircleText}>
+            <Text style={[styles.text, {display: showComponent ? 'flex' : 'none'}]}>${Math.trunc(totalExpense)}</Text>
+            <Text style={[styles.textDescriptionExpenses,{display: showComponent ? 'flex' : 'none'}]}>gastos</Text>
           </View>
         </View>
       </View>
@@ -186,19 +220,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   circle: {
-    width: '35%',
+    width: '31%',
     padding: 5,
     marginBottom: 5,
   },
-  
   movimientosText: {
-    fontFamily: '',
+    flexDirection: 'row',
     fontSize: 20,
     fontWeight: 'bold',
     marginHorizontal: 30,
     marginTop: 16,
     marginBottom: 10,
-    
+  },
+  seeMore:{
+    fontSize: 20,
+    fontWeight: '600',
+    marginHorizontal: 30,
+    marginTop: 16,
+    marginBottom: 10,
+    color: 'rgba(50, 175, 101, 1)',
+  },
+  arrowSeeMore: {
+    position: 'absolute',
+    top: '26%',
+    left: '80%',
   },
   balanceContainer: {
     flexDirection: 'row',
@@ -208,28 +253,34 @@ const styles = StyleSheet.create({
   balance: {
     fontSize: 40,
     fontWeight: 'bold',
-    paddingStart:  30
-    
+    paddingStart:  30,
+    display: 'flex',
+  },
+  balanceOff: {
+    fontSize: 40,
+    fontWeight: '100',
+    paddingStart:  30,
+    display: 'none',
   },
   cent: {
-    paddingTop: 5,
-    fontSize: 20,
-    paddingLeft: 5
+    paddingTop: 6,
+    fontSize: 22,
+    paddingLeft: 10,
+    display: 'flex',
   },
-  eye: {
-    
-    fontSize: 40,
-    paddingLeft: 20,
-    fontWeight: '100',
-    
+  eyeContainer: {
+    position: 'absolute',
+    top: '21%',
+    left: '55%',
     
   },
- 
-  containerText: {
+  
+  containerCircleText: {
     position: 'absolute',
     alignItems: 'center',
     top: '35%',
-    left: '19%',
+    left: '28%',
+   
   },
   text: {
     fontWeight: 'bold',
@@ -239,12 +290,10 @@ const styles = StyleSheet.create({
   },
   textDescriptionIncomes: {
     fontWeight: 'normal',
-    
   },
   textDescriptionExpenses: {
     fontWeight: 'normal',
     paddingHorizontal: 6,
-    
   },
 });
 

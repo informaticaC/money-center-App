@@ -92,7 +92,8 @@ const MoneyCenter = () => {
           //console.log('MoneyCenter.js line 91, isLogged-resolve, resolve?.usr stored, MoneyCenter.js:', resolve?.usr);
           //console.log('MoneyCenter.js line 92, isLogged-resolve, Token stored, MoneyCenter.js:', resolve?.tkn);
           //console.log('MoneyCenter.js, line 93, checking if isValidToken', resolve.usr.email);
-          checkUserLogged(resolve.tkn).then((resolve) => {//check if the token is valid
+          checkUserLogged(resolve.tkn)
+          .then((resolve) => {//check if the token is valid
            // console.log('MoneyCenter.js, line 89, isValid??:', resolve);
             if (resolve) { 
               //console.log('MoneyCenter.js, line 89, isValidToken:', resolve);  
@@ -103,6 +104,12 @@ const MoneyCenter = () => {
                   navigation.navigate("MoneyCenter");
                });
             };
+          })
+          .catch(err => {
+            console.error('MoneyCenter.js, line 108, Expired Token, you musto to login again!!: ',err)
+            logOut().then(() => {
+              navigation.navigate("MoneyCenter");
+           });
           });
         }else{
               console.log('Not logued :(' );
