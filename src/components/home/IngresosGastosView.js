@@ -139,16 +139,16 @@ const IngresosGastosView = () => {
       return (new Intl.NumberFormat().format(cent * 100));
   }
 
-  const hideBalance = () => {
-    if (showComponent){
-      setShowComponent(false);
-    }else{
-      setShowComponent(true);
-    }
-  }
+  // const hideBalance = () => {
+  //   if (showComponent){
+  //     setShowComponent(false);
+  //   }else{
+  //     setShowComponent(true);
+  //   }
+  // }
 
   const handleOnpressSeeMore = () => {
-    navigation.navigate('MainTabs', { screen: 'movimientos'});
+    navigation.navigate('MainTabs', { screen: 'movimientos' });
   }
   return (
     <View style={styles.container}>

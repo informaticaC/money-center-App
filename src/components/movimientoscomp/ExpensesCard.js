@@ -6,14 +6,15 @@ import {useSelector} from 'react-redux';
 import SearchInput from './SearchInput';  
 import fetchExpensesData from '../../utils/fetchExpensesData';
 
-
 const ExpensesCard = ({selectedOption, selectedMonth}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [nameSearchTerm, setNameSearchTerm] = useState('');
 
   const token = useSelector(selectToken);
- 
+  const balance = useSelector((state) => state.balance);
+ //console.log('ExpensesCard.js, line 17, balance:==>>', balance);
+
   useEffect(() => {
    
     fetchExpensesData(token).then(expenses => {
@@ -23,7 +24,7 @@ const ExpensesCard = ({selectedOption, selectedMonth}) => {
       console.error('IncomesCard, line 24, reject from fetchIncomeData', reject)
     }).finally(() => setLoading(false));
     
-  }, [selectedOption]);
+  }, [selectedOption, balance]);
 
   // Función para convertir nombre de mes a número
   const monthNameToNumber = () => {
