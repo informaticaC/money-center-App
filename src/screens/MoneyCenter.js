@@ -133,7 +133,7 @@ const MoneyCenter = () => {
     });
 
   }, []);
-  
+  const email ="kekelom88@gmail.com"
   return (
     <ImageBackground
       source={Fondo3}
@@ -153,7 +153,7 @@ const MoneyCenter = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('ConfirCode')}
+          onPress={() => navigation.navigate('ConfirChangePassword' , email)}
         > 
           <Text style={styles.buttonText}>Crear cuenta</Text>
         </TouchableOpacity>
