@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ButtonSave from "../components/formComponents/ButtonSave";
 
 const ConfirChangePassword = (email) => {
   const { route } = email.route.params;
@@ -10,11 +11,22 @@ const ConfirChangePassword = (email) => {
   const navigation = useNavigation();
   const [pass1, setPass1] = useState(null);
   const [pass2, setPass2] = useState(null);
+  const [pass, setPass] = useState({
+    pass1:"",
+    pass2:"",
+  })
   const handleInputChange = (text) => {
     //console.log('l 12 letter:', letter);
     setPass1(text);
     console.log('l 16 pass1:>>', pass1);
   }
+
+  const handleInputChange1 = (key, value) => {
+    setPass({
+      ...pass,
+      [key]: value,
+    });
+  };
 
   const handleInputChange2 = (text) => {
     //console.log('l 12 letter:', letter);
@@ -38,7 +50,8 @@ const ConfirChangePassword = (email) => {
       console.log("Las contraseñas deben ser iguales!!")
     }
   }
-
+ 
+  
   return (
     <SafeAreaView>
       <ScrollView>
@@ -49,20 +62,21 @@ const ConfirChangePassword = (email) => {
             <TextInput
               style={styles.input}
               placeholder='Ingresa tu nueva contraseña'
-              onChangeText={(text) => handleInputChange(text)}
-              value={pass1}
+              onChangeText={(text) => handleInputChange1('pass1', text)}
+              value={pass.pass1}
             />
             <Text style={styles.inputLabel}>Repetir contraseña:</Text>
             <TextInput
               style={styles.input}
               placeholder='Repite tu nueva contraseña'
-              onChangeText={(text) => handleInputChange2(text)}
-              value={pass2}
+              onChangeText={(text) => handleInputChange1('pass2', text)}
+              value={pass.pass2}
             />
           </View>
           <TouchableOpacity style={styles.confirbutton} onPress={() => handleOnPress()} >
             <Text style={styles.buttonText}>Confirmar</Text>
           </TouchableOpacity>
+          <ButtonSave save={handleOnPress} text={"Confirmar"} gradient={styles.gradient} data={pass} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -101,6 +115,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'rgba(0, 0, 0, 0.62)',
     marginBottom: 10,
+  },
+
+  gradient: {
+    flex: 1,
+    borderRadius: 27,
+    marginTop: 80,
+    width: 380,
   },
 
   confirbutton: {
