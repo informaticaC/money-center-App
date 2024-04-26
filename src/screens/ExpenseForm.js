@@ -56,23 +56,25 @@ const ExpenseForm = () => {
         });
         navigation.navigate('MainTabs', { screen: 'inicio' });  
       })
-        .catch(error => {
-          
-          console.log(error,"error, linea 53 ExpenseForm.js")
-          if (error.response) {
-            // La solicitud fue hecha y el servidor respondió con un código de estado
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // La solicitud fue hecha pero no se recibió ninguna respuesta
-            console.log(error.request);
-          } else {
-            // Algo sucedió en el proceso de configuración que desencadenó el error
-            console.log('Error', error.message);
-          }
-          
-        });
+      .catch(error => {
+        
+        console.log(error,"error, linea 53 ExpenseForm.js")
+        if (error.response) {
+          // La solicitud fue hecha y el servidor respondió con un código de estado
+          console.log('Error.message:==>>', error.message);
+          console.log('error.response.data:==>>',error.response.data);
+          console.log('error.response.status:==>>',error.response.status);
+          console.log('error.response.headers:==>>',error.response.headers);
+          console.log('error.request:===>>',error.request);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('error.request:===>>',error.request);
+        } else {
+          // Algo sucedió en el proceso de configuración que desencadenó el error
+          console.log('Error.message:==>>', error.message);
+        }
+        
+      });
         
   };
   

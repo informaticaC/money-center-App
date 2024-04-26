@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { useEffect } from 'react';
 import { useDispatch} from 'react-redux';
 import { setUsers } from '../../store/slices/users.slice';
 import { setToken } from '../../store/slices/token.slice';
@@ -30,7 +31,7 @@ const SocialLogin = () => {
 
   const dispatch = useDispatch();
   
-  React.useEffect(() => {
+  useEffect(() => {
 
 		//console.log('SocialLogin.js, line 35, handleSignInWithGoogle with response:', response);
     //console.log('SocialLogin.js, line 36, handleSignInWithGoogle with request:', request);
@@ -51,10 +52,17 @@ const SocialLogin = () => {
 				await sendToken(response.params.id_token)
           .then((response)=>{
             //actualizar Redux!!
-            //console.log('SocialLogin.js, line 53, response:===>>>', response);
+            console.log('SocialLogin.js, line 53, response:===>>>', response);
             const googleUser = response.user;
             const googleUserToken = response.token;
-            //console.log('SocialLogin.js, line 57, response.googleUser:===>>>', googleUser);
+            console.log('SocialLogin.js, line 57, response.googleUser:===>>>', googleUser);
+            if (googleUser === undefined){
+              AsyncStorage.removeItem("@user");
+              AsyncStorage.removeItem("@token");
+              dispatch(setUsers(null));
+              dispatch(setToken(null));
+              navigation.navigate('MoneyCenter');
+            }
             dispatch(setUsers(googleUser));
             dispatch(setToken(googleUserToken));
             //console.log('Navigating to MainTabs, { screen: "inicio" }');
@@ -67,7 +75,8 @@ const SocialLogin = () => {
             //navigation.navigate('UserPage');e
             })
           .catch(err => {
-            console.error('SocialLogin err:==>', err);
+            console.error('SocialLogin, line 74, err:==>', err);
+            navigation.navigate('MoneyCenter');
             });
 				  //console.log('user:==>',user);
 			}

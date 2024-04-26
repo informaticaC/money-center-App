@@ -17,9 +17,6 @@ const IconP = ({ onSelect}) => {
     // Agrega más iconos según sea necesario
   ];
 
-  
-  
-
   const filteredData = data.filter(item => item.label.toLowerCase().includes(searchQuery.toLowerCase()));
 
   const renderItem = ({ item }) => (

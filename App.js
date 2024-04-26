@@ -1,4 +1,4 @@
-import { NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MoneyCenter from './src/screens/MoneyCenter';
@@ -60,9 +60,9 @@ export default function App() {
             <Stack.Screen name="UserPage" component={UserPage} />
             <Stack.Screen name="GoogleLogin" component={GoogleLogin} />
             <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
-            <Stack.Screen name="IncomeForm" component={IncomeForm} />
-            <Stack.Screen name="ExpenseForm" component={ExpenseForm} />
-            <Stack.Screen name="ObjetiveForm" component={ObjetiveForm} />
+            <Stack.Screen name="IncomeForm" component={IncomeForm} options={{title: 'Formulario de ingresos'}}/>
+            <Stack.Screen name="ExpenseForm" component={ExpenseForm} options={{title: 'Formulario de gastos'}}/>
+            <Stack.Screen name="ObjetiveForm" component={ObjetiveForm} options={{title: 'Formulario de metas de ahorro'}}/>
             <Stack.Screen name="Otpverified" component={Otpverified} />
             <Stack.Screen name="FormRegister" component={FormRegister} />
           </Stack.Navigator>
