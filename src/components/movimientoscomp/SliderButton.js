@@ -24,27 +24,31 @@ const SliderButtons = () => {
   };
   return (
     <SafeAreaView>
+
       <View>
         <MonthPicker setSelectedMonth={setSelectedMonth} selectedMonth={selectedMonth}/>
       </View>
-    <View style={styles.container}>
-      
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, selectedOption === "Ingresos" && styles.buttonIngresos ]} onPress={handleIngresosPress}>
-          <Text style={[styles.buttonText, selectedOption === "Ingresos" && styles.buttonTextIngresos  ]}>Ingresos</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, selectedOption === "Gastos" && styles.buttonGastos  ]} onPress={handleGastosPress}>
-          <Text style={[styles.buttonText, selectedOption === "Gastos" && styles.buttonTextGastos  ]}>Gastos</Text>
-        </TouchableOpacity>
+
+      <View style={styles.container}>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={[styles.button, selectedOption === "Ingresos" && styles.buttonIngresos ]} onPress={handleIngresosPress}>
+            <Text style={[styles.buttonText, selectedOption === "Ingresos" && styles.buttonTextIngresos  ]}>Ingresos</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, selectedOption === "Gastos" && styles.buttonGastos  ]} onPress={handleGastosPress}>
+            <Text style={[styles.buttonText, selectedOption === "Gastos" && styles.buttonTextGastos  ]}>Gastos</Text>
+          </TouchableOpacity>
+        </View>
+
+        {selectedOption === 'Gastos' && (
+          <ExpensesCard selectedOption = {selectedOption} selectedMonth={selectedMonth} />
+        )}
+        {selectedOption === 'Ingresos' && (
+          <IncomesCard selectedOption = {selectedOption} selectedMonth={selectedMonth} />
+        )}
+
       </View>
-      {selectedOption === 'Gastos' && (
-        <ExpensesCard selectedOption= {selectedOption} selectedMonth={selectedMonth} />
-      )}
-      {selectedOption === 'Ingresos' && (
-        <IncomesCard selectedOption= {selectedOption} selectedMonth={selectedMonth}/>
-      )}
-      
-    </View>
+
     </SafeAreaView>
   );
 };

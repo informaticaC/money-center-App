@@ -12,7 +12,8 @@ const IncomesCard = ({selectedOption, selectedMonth}) => {
   
   const token = useSelector(selectToken);
   //console.log('Linea 14, IncomesCard.js, selectToken:==>>',  token); //selectToken
-  
+  const balance = useSelector((state) => state.balance);
+
   useEffect(() => {
     
     fetchIncomeData(token).then(incomes => {
@@ -22,7 +23,7 @@ const IncomesCard = ({selectedOption, selectedMonth}) => {
       console.error('IncomesCard, line 23, reject from fetchIncomeData',reject)
     }).finally(() => setLoading(false));
 
-  }, [selectedOption]); //
+  }, [selectedOption, balance]); //
   
   const monthNameToNumber = () => {
     const monthsMap = {
