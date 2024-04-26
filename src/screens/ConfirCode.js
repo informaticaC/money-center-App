@@ -1,12 +1,11 @@
 import { useState, useRef } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import Toast from 'react-native-root-toast';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CircleDegrade from '../components/shared/CircleDegrade';
 import ButtonSave from "../components/formComponents/ButtonSave";
-
 
 const ConfirCode = (email) => {
   console.log('l 7 ConfirCode.js email: ', email.route.params);
