@@ -7,7 +7,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CircleDegrade from '../components/shared/CircleDegrade';
 import ButtonSave from "../components/formComponents/ButtonSave";
 
-
 const ConfirCode = (email) => {
   console.log('l 7 ConfirCode.js email: ', email.route.params);
 

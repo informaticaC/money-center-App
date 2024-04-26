@@ -1,45 +1,46 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, ScrollView } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonSave from "../components/formComponents/ButtonSave";
+import CircleDegrade from '../components/shared/CircleDegrade';
 
 const ConfirChangePassword = (email) => {
   const { route } = email.route.params;
   //console.log('ConfirChangePassword email:==>>', route.params);
   const navigation = useNavigation();
-  const [pass1, setPass1] = useState(null);
-  const [pass2, setPass2] = useState(null);
+  /* const [pass1, setPass1] = useState(null);
+  const [pass2, setPass2] = useState(null);*/
   const [pass, setPass] = useState({
-    pass1:"",
-    pass2:"",
+    pass1: "",
+    pass2: "",
   })
-  const handleInputChange = (text) => {
+  /*const handleInputChange = (text) => {
     //console.log('l 12 letter:', letter);
-    setPass1(text);
-    console.log('l 16 pass1:>>', pass1);
-  }
+    setPass(text);
+    console.log('l 16 pass1:>>', pass.pass1);
+  }*/
 
-  const handleInputChange1 = (key, value) => {
+  const handleInputChange = (key, value) => {
     setPass({
       ...pass,
       [key]: value,
     });
   };
 
-  const handleInputChange2 = (text) => {
+  /*const handleInputChange2 = (text) => {
     //console.log('l 12 letter:', letter);
-    setPass2(text);
+    setPass(text);
     //console.log('l 16 pass2:>>',pass2);
-  }
+  }*/
 
   const handleOnPress = () => {
-    if (pass1 === pass2) {
+    if (pass.pass1 === pass.pass2) {
       const email = route.params;
       const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
       const url = `${url_base}/users/reset_password/11`
-      axios.post(url, { password: pass1, email: email })
+      axios.post(url, { password: pass.pass1, email: email })
         .then(res => {
           //console.log(res.data);
           navigation.navigate('LoginScreen');
@@ -50,32 +51,29 @@ const ConfirChangePassword = (email) => {
       console.log("Las contraseñas deben ser iguales!!")
     }
   }
- 
-  
+
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
-          <Text style={styles.title}>Nueva Contraseña</Text>
+          <CircleDegrade styleCircle={styles.circle} />
+          <View>
+            <Text style={styles.title}>Nueva Contraseña</Text>
+          </View>
           <View style={styles.inputContainer}>
             <Text style={styles.inputLabel}>Contraseña:</Text>
             <TextInput
               style={styles.input}
-              placeholder='Ingresa tu nueva contraseña'
-              onChangeText={(text) => handleInputChange1('pass1', text)}
+              onChangeText={(text) => handleInputChange('pass1', text)}
               value={pass.pass1}
             />
             <Text style={styles.inputLabel}>Repetir contraseña:</Text>
             <TextInput
               style={styles.input}
-              placeholder='Repite tu nueva contraseña'
-              onChangeText={(text) => handleInputChange1('pass2', text)}
+              onChangeText={(text) => handleInputChange('pass2', text)}
               value={pass.pass2}
             />
           </View>
-          <TouchableOpacity style={styles.confirbutton} onPress={() => handleOnPress()} >
-            <Text style={styles.buttonText}>Confirmar</Text>
-          </TouchableOpacity>
           <ButtonSave save={handleOnPress} text={"Confirmar"} gradient={styles.gradient} data={pass} />
         </View>
       </ScrollView>
@@ -85,61 +83,55 @@ const ConfirChangePassword = (email) => {
 
 const styles = StyleSheet.create({
   container: {
-    
-
   },
 
   title: {
     fontSize: 36,
     fontWeight: "bold",
-    marginBottom: 50,
+    marginBottom: 120,
+    marginTop: 80,
+    alignSelf: "center",
   },
- 
+
   inputContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    alignSelf: "center",
+    width: '85%',
   },
-  
 
   inputLabel: {
     fontSize: 16,
     color: "rgba(74, 74, 74, 1)",
     alignSelf: "flex-start",
-    paddingLeft: 25,
+    
   },
 
   input: {
-    width: '85%',
+    width: "100%",
     height: 40,
     borderBottomWidth: 1,
     borderColor: 'rgba(0, 0, 0, 0.62)',
-    marginBottom: 10,
+    marginBottom: 20,
+    fontSize: 16
   },
 
   gradient: {
     flex: 1,
     borderRadius: 27,
     marginTop: 80,
-    width: 380,
+    width: 350,
+    alignSelf: "center",
   },
 
-  confirbutton: {
-    backgroundColor: '#008000',
-    borderRadius: 10,
-    padding: 10,
-    margin: 10,
-    width: '40%',
-    alignItems: 'center',
+  circle: {
+    position: "absolute",
+    zIndex: 0,
+    borderRadius: 240,
+    width: 500,
+    height: 500,
+    top: -300,
+    alignSelf: "center"
   },
-
-  buttonText: {
-    color: '#fff',
-    fontSize: 20,
-
-  },
-
-
 });
 
 

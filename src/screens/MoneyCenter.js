@@ -4,13 +4,14 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Logo from '../../assets/img/moneylogo.png';
-
+import CircleDegrade from '../components/shared/CircleDegrade';
 import axios from 'axios';
 import getConfigToken from '../utils/getConfigToken';
 import FormLogin from '../components/loginRegister/FormLogin';
 import { setUsers } from '../../store/slices/users.slice';
 import { setToken } from '../../store/slices/token.slice';
 import { useDispatch, useSelector } from 'react-redux';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const MoneyCenter = () => {
   const navigation = useNavigation();
@@ -126,35 +127,40 @@ const MoneyCenter = () => {
       });
 
   }, []);
-  const email = "kekelom88@gmail.com"
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 50 }}>
+    <View style={styles.container}>
+      <CircleDegrade styleCircle={styles.circle} />
+      <View style={styles.containerLogo}>
         <Image source={Logo} style={styles.logo} />
         <Text style={styles.moneyCenterText}>Money Center</Text>
       </View>
       <Text style={styles.title}>¡Bienvenido!</Text>
       <Text style={styles.text}>Controla tus finanzas con nosotros</Text>
       <Text style={styles.title2}>¡Empieza hoy!</Text>
-      <TouchableOpacity style={styles.button}
-        onPress={() => navigation.navigate('LoginScreen')}>
-        <Text style={styles.buttonText}>Iniciar Sesión</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('ConfirChangePassword', email)}
-      >
-        <Text style={styles.buttonText}>Crear cuenta</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={logOut}>
-        <Text>logOut</Text>
-      </TouchableOpacity>
+      <LinearGradient colors={['#32B166', '#206D40']} style={styles.button}>
+        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+          <Text style={styles.buttonText}>Comenzar</Text>
+        </TouchableOpacity>
+      </LinearGradient>
     </View>
   )
 }
 const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  containerLogo: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 50,
+  },
+
   title: {
-    marginTop: 80,
+    marginTop: 60,
+    marginBottom: 20,
     fontSize: 40,
     fontWeight: 'bold',
   },
@@ -182,17 +188,30 @@ const styles = StyleSheet.create({
     margin: 10, // Margen superior
     width: '50%', // Ancho del botón
     alignItems: 'center', // Alinear contenido al centro horizontalmente
+    marginTop: 30,
+
+    
   },
   buttonText: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: 25,
+    fontWeight: "bold"
   },
   logo: {
     width: 140,
     height: 140,
     marginBottom: 5,
-    borderRadius: 5
-
+    borderRadius: 5,
+    
+  },
+  circle: {
+    position: "absolute",
+    zIndex: 0,
+    borderRadius: 240,
+    width: 500,
+    height: 500,
+    top: -250,
+    alignSelf: "center"
   },
 });
 
