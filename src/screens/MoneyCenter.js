@@ -106,7 +106,7 @@ const MoneyCenter = () => {
             };
           })
           .catch(err => {
-            console.error('MoneyCenter.js, line 108, Expired Token, you musto to login again!!: ',err)
+            console.log('MoneyCenter.js, line 108, Expired Token, you musto to login again!!: ',err)
             logOut().then(() => {
               navigation.navigate("MoneyCenter");
            });

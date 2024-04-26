@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, } from 'react-native';
 import CircleProgress from './CircleProgress';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,17 +9,35 @@ import fetchIncomeData from '../../utils/fetchIncomeData';
 import fetchExpensesData from '../../utils/fetchExpensesData';
 // import Icon from 'react-native-vector-icons/MaterialIcons';
 // import { Icon } from 'react-native-elements';
-import { Icon } from 'react-native-elements'
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import {IconButton} from 'react-native-paper';
 import Svg, { Path } from "react-native-svg";
-import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 
 
 const IngresosGastosView = () => {
-  //console.log('IngresosGastosView, begining, line 11');
+  console.log('IngresosGastosView, begining, line 11');
   
+  useEffect (()=>{
+    console.log('Showing Splash Screen')
+    SplashScreen.preventAutoHideAsync();
+
+  },[])
+
+  const [fontsLoaded] = useFonts({
+    UrbanistRegular: require('../../../assets/fonts/UrbanistRegular.ttf'),
+    UrbanistBold: require('../../../assets/fonts/UrbanistBold.ttf')
+  });
+
+    const onLayoutRootView = useCallback(async () => {
+      if(fontsLoaded ) {
+        console.log('fontsLoaded:', fontsLoaded);
+        await SplashScreen.hideAsync();
+       
+      }
+     }, [fontsLoaded]);
+
+    
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
   const user = useSelector((state) => state.users);
@@ -72,7 +90,7 @@ const IngresosGastosView = () => {
       });
       //dispatch(setReload(false));
       
-  }, [balance, user, monthSelected, totalExpense, totalIncome]);
+  }, [balance, user, monthSelected, totalIncome, totalExpense]);
 
   const sum = (accumulator, item) => {
     //console.log(item.amount);
@@ -81,7 +99,7 @@ const IngresosGastosView = () => {
   
   const initialValue = 0 ; 
   const getTotal = async (arrayData) => {
-    //console.log('line 74, arrrayData in getTotal:::::::::::::', arrayData);
+    //console.log('line 74, arrayData in getTotal:::::::::::::', arrayData);
     //console.log('getTotal, line 78, monthSelected___________________:', monthSelected);
     //arrayData.map(data => console.log('Month:=======>>>-+-+->>>>>',Number(data.date.split('-')[1])));
     const newArrayData = arrayData.filter(data => {
@@ -133,47 +151,45 @@ const IngresosGastosView = () => {
   };
 
   const calcCent = () => {
-    const cent = balance - Math.trunc(new Intl.NumberFormat( { maximumSignificantDigits: 2 }).format(balance));
-      //console.log('IngresosGastosView.js, line 66, cent:==>', cent);
-      if (cent === 0) return '00';
-      return (new Intl.NumberFormat().format(cent * 100));
+    console.log('part of balance to rest:', Math.trunc(balance));
+    //const cent = balance - Math.trunc(new Intl.NumberFormat( { maximumSignificantDigits: 2 }).format(balance));
+    const cent = balance - Math.trunc(balance);
+    console.log('IngresosGastosView.js, line 156, balance:==>', balance)
+    console.log('IngresosGastosView.js, line 157, cent:==>', cent);
+    if (cent === 0) return '00';
+    return (Math.round(cent * 100));
   }
-
-  // const hideBalance = () => {
-  //   if (showComponent){
-  //     setShowComponent(false);
-  //   }else{
-  //     setShowComponent(true);
-  //   }
-  // }
 
   const handleOnpressSeeMore = () => {
     navigation.navigate('MainTabs', { screen: 'movimientos' });
   }
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayoutRootView}>
       <View style={styles.textContainer}>
         <Text style={styles.movimientosText}>Mis movimientos</Text>
         <TouchableOpacity style={styles.balanceContainer} onPress={handleOnpressSeeMore }>
           <Text style={styles.seeMore}>Ver más</Text>
           <View style={styles.arrowSeeMore} >
-            <Svg xmlns="http://www.w3.org/2000/svg" height={36} fill={'green'} viewBox="0 -960 960 960" width={36} >
+            <Svg xmlns="http://www.w3.org/2000/svg" height={32} fill={'rgba(50, 175, 101, 1)'} viewBox="0 -960 960 960" width={32} >
               <Path d="M504-480L320-664l56-56 240 240-240 240-56-56 184-184z" />
             </Svg>
           </View>
-          
         </TouchableOpacity>
-        
       </View>
 
       <View style={styles.balanceContainer}>
-        <Text style={[styles.balance, {display: showComponent ? 'flex' : 'none'}]} >${Math.trunc(new Intl.NumberFormat().format(balance))}</Text>
+        <Text style={[styles.balance, {display: showComponent ? 'flex' : 'none'}]} >${new Intl.NumberFormat().format(Math.trunc(balance))}</Text>
         <Text style={[styles.cent, {display: showComponent ? 'flex' : 'none'}]}>{calcCent()}</Text>
-        <Text style={[styles.balanceOff,{display: showComponent ? 'none' : 'flex'}]}>$$$$😉</Text>
+        <Text style={[styles.balanceOff,{display: showComponent ? 'none' : 'flex'}]}>$ ****</Text>
 
         <View style={[styles.eyeContainer,{display: showComponent ? 'none' : 'flex'}]}  >
           <TouchableOpacity style={styles.showBalance} onPress={() => setShowComponent(true)}>
-            <Svg  style={styles.eye} xmlns="http://www.w3.org/2000/svg" height={36} viewBox="0 -960 960 960" width={36} >
+            <Svg  style={styles.eye} xmlns="http://www.w3.org/2000/svg" height={34} viewBox="0 -960 960 960" width={34} >
               <Path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200zm0-300zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280z" />
             </Svg>
           </TouchableOpacity>
@@ -181,7 +197,7 @@ const IngresosGastosView = () => {
 
         <View style={[styles.eyeContainer,{display: showComponent ? 'flex' : 'none'}]} >
           <TouchableOpacity style={styles.showBalance} onPress={() => setShowComponent(false)} >
-            <Svg style={styles.eye} xmlns="http://www.w3.org/2000/svg" height={36} viewBox="0 -960 960 960" width={36} >
+            <Svg style={styles.eye} xmlns="http://www.w3.org/2000/svg" height={34} viewBox="0 -960 960 960" width={34} >
               <Path d="M644-428l-58-58q9-47-27-88t-93-32l-58-58q17-8 34.5-12t37.5-4q75 0 127.5 52.5T660-500q0 20-4 37.5T644-428zm128 126l-58-56q38-29 67.5-63.5T832-500q-50-101-143.5-160.5T480-720q-29 0-57 4t-55 12l-62-62q41-17 84-25.5t90-8.5q151 0 269 83.5T920-500q-23 59-60.5 109.5T772-302zm20 246L624-222q-35 11-70.5 16.5T480-200q-151 0-269-83.5T40-500q21-53 53-98.5t73-81.5L56-792l56-56 736 736-56 56zM222-624q-29 26-53 57t-41 67q50 101 143.5 160.5T480-280q20 0 39-2.5t39-5.5l-36-38q-11 3-21 4.5t-21 1.5q-75 0-127.5-52.5T300-500q0-11 1.5-21t4.5-21l-84-82zm319 93zm-151 75z" />
             </Svg>
           </TouchableOpacity>
@@ -209,10 +225,11 @@ const IngresosGastosView = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {fontFamily: 'UrbanistBold',},
   textContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    fontFamily: 'UrbanistBold',
   },
   circleContainer: {
     flexDirection: 'row',
@@ -227,14 +244,14 @@ const styles = StyleSheet.create({
   movimientosText: {
     flexDirection: 'row',
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'UrbanistBold',
     marginHorizontal: 30,
     marginTop: 16,
     marginBottom: 10,
   },
   seeMore:{
     fontSize: 20,
-    fontWeight: '600',
+    fontFamily: 'UrbanistRegular',
     marginHorizontal: 30,
     marginTop: 16,
     marginBottom: 10,
@@ -242,29 +259,29 @@ const styles = StyleSheet.create({
   },
   arrowSeeMore: {
     position: 'absolute',
-    top: '26%',
-    left: '80%',
+    top: '30%',
+    left: '78%',
   },
   balanceContainer: {
     flexDirection: 'row',
     alignContent: 'center'
-
   },
   balance: {
     fontSize: 40,
-    fontWeight: 'bold',
+    fontFamily: 'UrbanistBold',
     paddingStart:  30,
     display: 'flex',
   },
   balanceOff: {
-    fontSize: 40,
-    fontWeight: '100',
+    fontSize: 41,
+    fontFamily: 'UrbanistRegular',
     paddingStart:  30,
     display: 'none',
   },
   cent: {
     paddingTop: 6,
     fontSize: 22,
+    fontFamily: 'UrbanistBold',
     paddingLeft: 10,
     display: 'flex',
   },
@@ -272,7 +289,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '21%',
     left: '55%',
-    
   },
   
   containerCircleText: {
@@ -283,16 +299,16 @@ const styles = StyleSheet.create({
    
   },
   text: {
-    fontWeight: 'bold',
+    fontFamily: 'UrbanistBold',
     marginHorizontal: 0,
     paddingHorizontal: 0
     
   },
   textDescriptionIncomes: {
-    fontWeight: 'normal',
+    fontFamily: 'UrbanistRegular',
   },
   textDescriptionExpenses: {
-    fontWeight: 'normal',
+    fontFamily: 'UrbanistRegular',
     paddingHorizontal: 6,
   },
 });
