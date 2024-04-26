@@ -1,14 +1,33 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet,ImageBackground } from 'react-native';
+import { View, Text, TextInput, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Fondo3 from '../../assets/img/fondo3.png';
+import CircleDegrade from '../components/shared/CircleDegrade';
 import axios from 'axios';
+import ButtonSave from "../components/formComponents/ButtonSave";
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const ForgotPasswordScreen = () => {
+  ///estado button
+  /*const [isButtonEnabled, setButtonEnabled] = useState(false);
 
-  const [email, setEmail] = useState(''); 
+  const checkButtonEnabled = () => {
+    if (email.trim() !== '') {
+      setButtonEnabled(true);
+      
+    } else {
+      setButtonEnabled(false);
+    }
+  };
+
+  //actualiza el estado de los campos 
+  useEffect(() => {
+    checkButtonEnabled();
+  }, [email]);*/
+
+  const [email, setEmail] = useState('');
   const navigation = useNavigation();
-  
+
   const handleInputChange = (letter) => {
     //console.log('l 12 letter:', letter);
     setEmail(letter);
@@ -19,115 +38,140 @@ const ForgotPasswordScreen = () => {
     const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
     const url = `${url_base}/users/reset_password`;
     //console.log('handle OnPress email:',email);
-    axios.post(url, {email})
-          .then(res => {
-            //console.log(res.data);
-            navigation.navigate('ConfirCode', email);
+    axios.post(url, { email })
+      .then(res => {
+        //console.log(res.data);
+        navigation.navigate('ConfirCode', email);
 
-          })
-          .catch(err => {
-            console.log('No se pudo realizar la consulta')
-            console.log(err);
-          })
+      })
+      .catch(err => {
+        console.log('No se pudo realizar la consulta')
+        console.log(err);
+      })
   }
+
+  const emaill = {email}
+  
   return (
-    <ImageBackground
-    source={Fondo3}
-    style={styles.backgroundImage}
-    >
-    <View style={styles.container}>
-      
-      <View style={styles.seccion}>
-        <Text style={styles.title}>Recupera tu contraseña</Text>
-      </View>
-      <View style={styles.seccion1}>
-        <Text style={styles.inputLabel}>Correo electrónico:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder='Ingresa tu correo'
+    <SafeAreaView>
+      <ScrollView>
+        <View style={styles.container}>
+          <CircleDegrade styleCircle={styles.circle} />
+          <View style={styles.seccion}>
+            <Text style={styles.titleT}>Vamos a </Text>
+            <Text style={styles.title}>Recuperar</Text>
+            <Text style={styles.title}>contraseña</Text>
+          </View>
+          <Text style={styles.text}>
+            Escribe tu correo electrónico y
+          </Text>
+          <Text style={styles.text}>
+            enviaremos un mail para que puedas
+          </Text>
+          <Text style={styles.text}>
+            restaurar tu contraseña
+          </Text>
+          <View style={styles.seccion1}>
+            <Text style={styles.inputLabel}>Email</Text>
+            <TextInput
+              style={styles.input}
               onChangeText={(text) => handleInputChange(text)}
-              value={email} 
+              value={email}
               keyboardType="email-address"
-        />
-      </View>
-      <View style={styles.seccion2}>
-       <TouchableOpacity style={styles.recoverybutton} title="" onPress={() => handleOnPress()} >
-         <Text style={styles.buttonText}>Continuar</Text>
-       </TouchableOpacity>
-       {/* <TouchableOpacity style={styles.recoverybutton} title=""  >
-         <Text style={styles.buttonText}>Atras</Text>
-       </TouchableOpacity> */}
-     </View>
-     
-    </View>
-    </ImageBackground>
+            />
+          </View>
+          <ButtonSave save={handleOnPress} text={"Solicita el cambio"} gradient={styles.gradient} data={emaill}/>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.8,
     justifyContent: 'center',
     alignItems: 'center',
-    
-  },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: 'cover',
+
+
   },
 
   seccion: {
-    width:"100%",
-    marginBottom: 40,
-    textAlign: 'center',
+    marginBottom: 60,
   },
 
   seccion1: {
-    width:"100%",
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
   },
   seccion2: {
-    width:"100%",
-    marginTop:50,
+    marginTop: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    
   },
+
   title: {
-    textAlign:"center",
-    fontSize:40,
-    fontWeight: 'bold',    
-   },
- 
-  
+    textAlign: "center",
+    fontSize: 40,
+    fontWeight: 'bold',
+  },
+
+  titleT: {
+    textAlign: "center",
+    fontSize: 20,
+    marginTop: 20,
+  },
+
+
+  text: {
+    textAlign: "center",
+    fontSize: 20,
+    color: "rgba(0, 0, 0, 1)",
+  },
+
   input: {
-    width: '80%',
+    width: 350,
     height: 40,
-    borderColor: 'grey',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 10,
-    borderRadius: 10,
+    borderBottomWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.62)',
+    marginVertical: 25,
+    fontSize: 20,
   },
   inputLabel: {
-    marginBottom: 5,
-    width: "80%",
-    
+    marginTop: 20,
+    fontSize: 25,
+    color: "rgba(74, 74, 74, 1)",
+    alignSelf: "flex-start",
+
   },
   buttonText: {
-    color: '#fff', 
-    fontSize: 20, 
-    
+    color: '#fff',
+    fontSize: 20,
+
   },
   recoverybutton: {
-    backgroundColor: '#008000', 
-    borderRadius: 10, 
-    padding: 10, 
-    margin: 10, 
-    width: '40%', 
-    alignItems: 'center', 
+    backgroundColor: '#008000',
+    borderRadius: 10,
+    padding: 10,
+    width: '40%',
+    alignItems: 'center',
+  },
+
+  circle: {
+    position: "absolute",
+    zIndex: 0,
+    borderRadius: 240,
+    width: 500,
+    height: 500,
+    top: -300,
+    alignContent: "center"
+  },
+
+  gradient: {
+    flex: 1,
+    borderRadius: 27,
+    marginTop: 80,
+    width: 380,
   },
 
 });

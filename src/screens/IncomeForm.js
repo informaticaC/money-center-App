@@ -5,7 +5,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonSave from '../components/formComponents/ButtonSave';
 import axios from 'axios';
 import { selectToken} from '../../store/slices/token.slice';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch } from 'react-redux';
+import { setBalance } from '../../store/slices/balance.slice';
 import ShowPickerDate from '../components/formComponents/ShowPickerDate';
 import { useNavigation } from '@react-navigation/native'
 
@@ -18,7 +19,9 @@ const IncomeForm = () => {
     date:"",
   })
   
-  const token= useSelector(selectToken);
+  const dispatch = useDispatch();
+  const token = useSelector(selectToken);
+  
   const headers = {
     Authorization: `Bearer ${token}`,
   };
@@ -30,14 +33,14 @@ const IncomeForm = () => {
     const { name, amount, description, date} = incomeData;
     axios.post(url, { name, amount, description, date}, {headers})
       .then((res) => {
+        dispatch(setBalance(0));
         setIncomeData({
           name:"",
           description:"",
           amount:"",
           date:"",
-        });
+        });                
         navigation.navigate('MainTabs', { screen: 'inicio' });
-        
       })
         .catch(error => {
           
@@ -60,7 +63,7 @@ const IncomeForm = () => {
   };
 
   // estados del button guardar para desavilitar en caso de que los input esten vacios  
-  const [isButtonEnabled, setButtonEnabled] = useState(false);
+  /*const [isButtonEnabled, setButtonEnabled] = useState(false);*/
 
   const handleInputChange = (key, value) => {
     setIncomeData({
@@ -71,7 +74,7 @@ const IncomeForm = () => {
 
   // funciones de button guardar 
   // verifica si los input estan vacios 
-  const checkButtonEnabled = () => {
+  /*const checkButtonEnabled = () => {
     if (incomeData.name.trim() !== '' && incomeData.amount.trim() !== '' && incomeData.date.trim() !== '' && incomeData.description.trim() !== '') {
       setButtonEnabled(true);
     } else {
@@ -82,7 +85,7 @@ const IncomeForm = () => {
   //actualiza el estado de los campos 
   useEffect(() => {
     checkButtonEnabled();
-  }, [incomeData.name, incomeData.amount, incomeData.date, incomeData.description]);
+  }, [incomeData.name, incomeData.amount, incomeData.date, incomeData.description]);*/
   
   return (
     <SafeAreaView style={styles.container}>
@@ -118,7 +121,7 @@ const IncomeForm = () => {
           style1={styles.selectedCheckbox}
           style2={styles.selectedTextCheckbox}
         />
-        <ButtonSave isButtonEnabled={isButtonEnabled} save={handleSave}/>
+        <ButtonSave save={handleSave} text={"Guardar"} gradient={styles.gradient} data={incomeData}/>
       </View>
       </ScrollView>
     </SafeAreaView>  
@@ -171,6 +174,13 @@ const styles = StyleSheet.create({
   selectedTextCheckbox: {
     color: "#206D40",
     fontWeight: 'bold',
+  },
+
+  gradient: {
+    borderRadius: 27,
+    flex: 1,
+    marginTop: 165,
+    width: 380,
   },
 });
 
