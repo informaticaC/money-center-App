@@ -112,13 +112,13 @@ const MoneyCenter = () => {
               navigation.navigate("MoneyCenter");
            });
           });
-        }else{
-              console.log('Not logued :(' );
-              logOut().then(() => {
-                navigation.navigate("MoneyCenter");
-              });
-            };
-          });
+        // }else{
+        //       console.log('Not logued :(' );
+        //       logOut().then(() => {
+        //         navigation.navigate("MoneyCenter");
+        //       });
+        //     };
+        //   });
         } else {
           console.log('Not logued :(');
           logOut().then(() => {
