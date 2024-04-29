@@ -151,11 +151,7 @@ const IngresosGastosView = () => {
   };
 
   const calcCent = () => {
-    console.log('part of balance to rest:', Math.trunc(balance));
-    //const cent = balance - Math.trunc(new Intl.NumberFormat( { maximumSignificantDigits: 2 }).format(balance));
     const cent = balance - Math.trunc(balance);
-    console.log('IngresosGastosView.js, line 156, balance:==>', balance)
-    console.log('IngresosGastosView.js, line 157, cent:==>', cent);
     if (cent === 0) return '00';
     return (Math.round(cent * 100));
   }
