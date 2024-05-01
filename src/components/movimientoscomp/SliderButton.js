@@ -20,8 +20,8 @@ const SliderButtons = () => {
   //controles boton expenses
   const handleGastosPress = () => {
     setSelectedOption('Gastos');
-    
   };
+
   return (
     <SafeAreaView>
 
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 20,
     width: '100%',
+    fontFamily: 'UrbanistBold'
   },
   button: {
     backgroundColor: '#FEF7FF',
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
 
   buttonText: {
     color: 'white',
-    fontWeight: 'bold',
+    fontFamily: 'UrbanistMedium',
     color: "#A3A3A3",
     fontSize: 14,
   },

@@ -22,6 +22,9 @@ import ExpenseForm from './src/screens/ExpenseForm';
 import ObjetiveForm from './src/screens/ObjetiveForm';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import FormRegister from './src/components/loginRegister/FormRegister';
+import { useEffect, useCallback } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
+import { useFonts } from 'expo-font';
 
 
 const Stack = createNativeStackNavigator();
@@ -47,6 +50,33 @@ const MainTabs = () => {
 
 export default function App() {
 
+  useEffect (()=>{
+    console.log('Showing Splash Screen');
+    SplashScreen.preventAutoHideAsync();
+
+  },[]);
+
+  const [fontsLoaded] = useFonts({
+    UrbanistRegular: require('./assets/fonts/UrbanistRegular.ttf'),
+    UrbanistBold: require('./assets/fonts/UrbanistBold.ttf'),
+    UrbanistMedium: require('./assets/fonts/UrbanistMedium.ttf'),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if(fontsLoaded ) {
+      console.log('fontsLoaded:', fontsLoaded);
+      await SplashScreen.hideAsync();
+    }
+   }, [fontsLoaded]);
+
+   const splashOff = async () => {
+    await SplashScreen.hideAsync();
+   }
+
+   if (!fontsLoaded) {
+    return null;
+  } else { splashOff();  }
+  
   return (
     <Provider store={store}>
       <RootSiblingParent>
@@ -60,9 +90,9 @@ export default function App() {
             <Stack.Screen name="UserPage" component={UserPage} />
             <Stack.Screen name="GoogleLogin" component={GoogleLogin} />
             <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
-            <Stack.Screen name="IncomeForm" component={IncomeForm} options={{title: 'Formulario de ingresos'}}/>
-            <Stack.Screen name="ExpenseForm" component={ExpenseForm} options={{title: 'Formulario de gastos'}}/>
-            <Stack.Screen name="ObjetiveForm" component={ObjetiveForm} options={{title: 'Formulario de metas de ahorro'}}/>
+            <Stack.Screen name="IncomeForm" component={IncomeForm} options={{title: 'Formulario de ingresos'}} />
+            <Stack.Screen name="ExpenseForm" component={ExpenseForm} options={{title: 'Formulario de gastos'}} />
+            <Stack.Screen name="ObjetiveForm" component={ObjetiveForm} options={{title: 'Formulario de metas de ahorro'}} />
             <Stack.Screen name="Otpverified" component={Otpverified} />
             <Stack.Screen name="FormRegister" component={FormRegister} />
           </Stack.Navigator>

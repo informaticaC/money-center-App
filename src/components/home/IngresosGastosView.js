@@ -11,33 +11,11 @@ import fetchExpensesData from '../../utils/fetchExpensesData';
 // import { Icon } from 'react-native-elements';
 import Svg, { Path } from "react-native-svg";
 import { useNavigation } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-
+import Months from '../../constants/Months';
 
 const IngresosGastosView = () => {
-  console.log('IngresosGastosView, begining, line 11');
+  //console.log('IngresosGastosView, begining, line 11');
   
-  useEffect (()=>{
-    console.log('Showing Splash Screen')
-    SplashScreen.preventAutoHideAsync();
-
-  },[])
-
-  const [fontsLoaded] = useFonts({
-    UrbanistRegular: require('../../../assets/fonts/UrbanistRegular.ttf'),
-    UrbanistBold: require('../../../assets/fonts/UrbanistBold.ttf')
-  });
-
-    const onLayoutRootView = useCallback(async () => {
-      if(fontsLoaded ) {
-        console.log('fontsLoaded:', fontsLoaded);
-        await SplashScreen.hideAsync();
-       
-      }
-     }, [fontsLoaded]);
-
-    
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
   const user = useSelector((state) => state.users);
@@ -124,7 +102,7 @@ const IngresosGastosView = () => {
 
   const circleIngresos = {
     progress: progress(totalIncome, totalExpense, true),
-    size: 100,
+    size: 102,
     indeterminate: false,
     color: '#206D40',
     borderWidth: 4,
@@ -138,7 +116,7 @@ const IngresosGastosView = () => {
 
   const circleGastos = {
     progress:  progress(totalIncome, totalExpense, false),
-    size: 100,
+    size: 102,
     indeterminate: false,
     color: '#C91A2F',
     borderWidth: 4,
@@ -160,14 +138,14 @@ const IngresosGastosView = () => {
     navigation.navigate('MainTabs', { screen: 'movimientos' });
   }
 
-  if (!fontsLoaded) {
-    return null;
-  }
-
+  
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
+    <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.movimientosText}>Mis movimientos</Text>
+        <View>
+          <Text style={styles.movimientosText}>Mis movimientos</Text>
+          <Text style={styles.date}>{Months[monthSelected]} {new Date().getFullYear()}</Text>
+        </View>
         <TouchableOpacity style={styles.balanceContainer} onPress={handleOnpressSeeMore }>
           <Text style={styles.seeMore}>Ver más</Text>
           <View style={styles.arrowSeeMore} >
@@ -225,7 +203,8 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    fontFamily: 'UrbanistBold',
+    //fontFamily: 'UrbanistBold',
+    paddingBottom: 5
   },
   circleContainer: {
     flexDirection: 'row',
@@ -243,7 +222,11 @@ const styles = StyleSheet.create({
     fontFamily: 'UrbanistBold',
     marginHorizontal: 30,
     marginTop: 16,
-    marginBottom: 10,
+    marginBottom: 0,
+  },
+  date: {
+    marginHorizontal: 30,
+    marginTop: 0, 
   },
   seeMore:{
     fontSize: 20,
@@ -260,8 +243,8 @@ const styles = StyleSheet.create({
   },
   balanceContainer: {
     flexDirection: 'row',
-    alignContent: 'center'
-  },
+    alignContent: 'center',
+    },
   balance: {
     fontSize: 40,
     fontFamily: 'UrbanistBold',
@@ -270,7 +253,7 @@ const styles = StyleSheet.create({
   },
   balanceOff: {
     fontSize: 41,
-    fontFamily: 'UrbanistRegular',
+    fontFamily: 'UrbanistBold',
     paddingStart:  30,
     display: 'none',
   },
@@ -291,8 +274,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     top: '35%',
-    left: '28%',
-   
+    left: '24%',
+    
   },
   text: {
     fontFamily: 'UrbanistBold',
@@ -301,10 +284,10 @@ const styles = StyleSheet.create({
     
   },
   textDescriptionIncomes: {
-    fontFamily: 'UrbanistRegular',
+    fontFamily: 'UrbanistMedium',
   },
   textDescriptionExpenses: {
-    fontFamily: 'UrbanistRegular',
+    fontFamily: 'UrbanistMedium',
     paddingHorizontal: 6,
   },
 });

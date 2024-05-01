@@ -24,12 +24,12 @@ const MoneyCenter = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
 
-  const isLogged = async () => { //función que devuelve una promesa de recuperar los datos del local storage y cargarlos en userStored
-    return new Promise(async (resolve, reject) => {
+  const isLogged = async () => { // función que devuelve una promesa de recuperar los datos del
+    return new Promise(async (resolve, reject) => { // local storage y cargarlos en userStored
       console.log('Is logged?')
       await AsyncStorage.getItem("@user").then(res => {
         setUserStored(JSON.parse(res));
-        dispatch(setUsers(JSON.parse(res))); //actualizar el usuario global
+        dispatch(setUsers(JSON.parse(res))); // actualizar el usuario global
         const usr = JSON.parse(res);
         AsyncStorage.getItem("@token").then(res => {
           setTokenStored(JSON.parse(res));
@@ -157,7 +157,8 @@ const MoneyCenter = () => {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    fontFamily: 'UrbanistBold'
   },
 
   containerLogo: {
@@ -170,23 +171,26 @@ const styles = StyleSheet.create({
     marginTop: 60,
     marginBottom: 20,
     fontSize: 40,
-    fontWeight: 'bold',
+    fontFamily: 'UrbanistBold'
   },
 
   title2: {
     marginBottom: 40,
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'UrbanistBold'
   },
 
   text: {
-    fontSize: 18
+    fontSize: 18,
+    fontFamily: 'UrbanistBold'
   },
 
   moneyCenterText: {
     color: 'black', // Color de texto predeterminado
     fontSize: 24, // Tamaño de fuente
-    fontWeight: 'bold', // Peso de fuente en negrita
+    //fontWeight: 'bold', // Peso de fuente en negrita
+    fontFamily: 'UrbanistBold'
   },
 
   button: {
@@ -197,21 +201,21 @@ const styles = StyleSheet.create({
     width: '50%', // Ancho del botón
     alignItems: 'center', // Alinear contenido al centro horizontalmente
     marginTop: 30,
-
-    
   },
+
   buttonText: {
     color: '#fff',
     fontSize: 25,
     fontWeight: "bold"
   },
+
   logo: {
     width: 140,
     height: 140,
     marginBottom: 5,
     borderRadius: 5,
-    
   },
+
   circle: {
     position: "absolute",
     zIndex: 0,

@@ -40,7 +40,7 @@ const styles = StyleSheet.create ({
 
   textMoney: {
     fontSize: 28,
-    fontWeight: "bold",
+    fontFamily: 'UrbanistBold'
   },
 
   

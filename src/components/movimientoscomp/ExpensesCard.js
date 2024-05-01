@@ -1,15 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert, Modal, Pressable} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { selectToken} from '../../../store/slices/token.slice';
 import {useSelector} from 'react-redux';
 import SearchInput from './SearchInput';  
 import fetchExpensesData from '../../utils/fetchExpensesData';
+//import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 
 const ExpensesCard = ({selectedOption, selectedMonth}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [nameSearchTerm, setNameSearchTerm] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const token = useSelector(selectToken);
   const balance = useSelector((state) => state.balance);
@@ -85,7 +87,29 @@ const ExpensesCard = ({selectedOption, selectedMonth}) => {
             <View>
               <Text>$ {item.amount}</Text>
             </View>
-            <TouchableOpacity style={styles.buttonEdit}>
+            <Modal
+              animationType="fade"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => {
+                Alert.alert('Modal has been closed.');
+                setModalVisible(!modalVisible);
+              }}>
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <TouchableOpacity>
+                    <MaterialIcons name="edit" size={24} color="black" />
+                    <Text style={styles.modalText}>Editar</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => setModalVisible(!modalVisible)}>
+                    <MaterialIcons name="delete-outline" size={24} color="black" />  
+                    <Text style={styles.textStyle}>Eliminar</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+            <TouchableOpacity style={styles.buttonEdit} onPress={() => setModalVisible(true)}>
               <MaterialIcons name="more-vert" size={24} color="black" />
             </TouchableOpacity>
           </View>
@@ -140,6 +164,42 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingRight: 10,
     alignItems: "center",
+  },
+  //modal styles
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 22,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  
+  
+  textStyle: {
+    color: 'red',
+    fontFamily: 'UrbanistBold',
+    textAlign: 'center',
+    fontSize: 16
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontFamily: 'UrbanistBold',
+    fontSize: 16
   },
 });
 
