@@ -10,13 +10,19 @@ import { setBalance } from '../../store/slices/balance.slice';
 import ShowPickerDate from '../components/formComponents/ShowPickerDate';
 import { useNavigation } from '@react-navigation/native'
 
-const IncomeForm = () => {
-
+const IncomeForm = ({route}) => {
+  const {itemId, mode} = route.params;
+  const income = useSelector( state => state.income);
+  // console.log('Incomeform.js, line 17, data to edit, itemId:', itemId);
+  console.log('Incomeform.js, line 18, data to edit, mode:', mode);
+  // console.log('Incomeform.js, line 19, income:', income);
+  const incomeToEdit = income.filter(inc => inc.id === itemId);
+  //console.log('incomeToEdit::::', incomeToEdit)
   const [incomeData, setIncomeData] = useState({
-    name:"",
-    description:"",
-    amount:"",
-    date:"",
+    name: (mode==="edit") ? (incomeToEdit[0].name) : "",
+    description: (mode==="edit") ? incomeToEdit[0].description : "",
+    amount: (mode==="edit") ? (incomeToEdit[0].amount).toString() : "",
+    date: (mode==="edit") ? (incomeToEdit[0].date) : "",
   })
   
   const dispatch = useDispatch();
@@ -29,9 +35,28 @@ const IncomeForm = () => {
   
   const handleSave = () => {
     const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
-    const url = `${url_base}/income`//'http://192.168.100.21:8080/api/v1/income'
+    //const url = `${url_base}/income`//'http://192.168.100.21:8080/api/v1/income'
     const { name, amount, description, date} = incomeData;
-    axios.post(url, { name, amount, description, date}, {headers})
+
+    if (mode === 'edit'){
+      const url = `${url_base}/income/${itemId}`;
+      axios.put(url,  { name, amount, description, date}, {headers} )
+            .then((res) => {
+              console.log('IncomeForm.js, line 45, res:', res);
+              console.log('Dato actualizado correctamente, itemId:', itemId);
+              dispatch(setBalance(null));
+              setIncomeData({
+                name:"",
+                description:"",
+                amount:"",
+                date:"",
+              });                
+              navigation.navigate('MainTabs', { screen: 'inicio' });
+            })
+            .catch( err => console.error(err));
+    } else {
+      const url = `${url_base}/income`
+      axios.post(url, { name, amount, description, date}, {headers})
       .then((res) => {
         dispatch(setBalance(null));
         setIncomeData({
@@ -59,6 +84,10 @@ const IncomeForm = () => {
           }
           
         });
+    }
+    
+    
+
         
   };
 
@@ -72,20 +101,6 @@ const IncomeForm = () => {
     });
   };
 
-  // funciones de button guardar 
-  // verifica si los input estan vacios 
-  /*const checkButtonEnabled = () => {
-    if (incomeData.name.trim() !== '' && incomeData.amount.trim() !== '' && incomeData.date.trim() !== '' && incomeData.description.trim() !== '') {
-      setButtonEnabled(true);
-    } else {
-      setButtonEnabled(false);
-    }
-  };
-
-  //actualiza el estado de los campos 
-  useEffect(() => {
-    checkButtonEnabled();
-  }, [incomeData.name, incomeData.amount, incomeData.date, incomeData.description]);*/
   
   return (
     <SafeAreaView style={styles.container}>
@@ -114,7 +129,7 @@ const IncomeForm = () => {
             />
           </View>
         </View>
-        <ShowPickerDate data={incomeData} funcion={setIncomeData} field="date"/>
+        <ShowPickerDate data={incomeData} funcion={setIncomeData} field="date" mode={mode}/>
         <CheckboxButton
           Data={incomeData}
           setData={setIncomeData}

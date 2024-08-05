@@ -3,7 +3,6 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { parse } from 'date-fns';
 
-
 const fetchExpensesData = async (token) => {
   //console.log('Fetching expenses from server!!!!!!!');
  

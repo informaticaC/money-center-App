@@ -27,8 +27,8 @@ const FloatingButton = () => {
         elevation={5}
         actions={[
           { icon: "checkbox-marked-circle-plus-outline", label: 'Nueva meta',labelTextColor:"#CDCDCD", color: "#585858",style:{backgroundColor:"#CDCDCD", }, containerStyle:{backgroundColor:"#585858", }, onPress: () => navigation.navigate("ObjetiveForm") },
-          { icon:"currency-usd", label: 'Nuevo ingreso',labelTextColor:"#CDCDCD",color: "#585858",style:{backgroundColor:"#CDCDCD"}, containerStyle:{backgroundColor:"#585858"}, onPress: () => navigation.navigate('IncomeForm') },
-          { icon:"currency-usd-off" , label: 'Nuevo Gasto',labelTextColor:"#CDCDCD",color: "#585858",style:{backgroundColor:"#CDCDCD"}, containerStyle:{backgroundColor:"#585858"}, onPress: () =>  navigation.navigate("ExpenseForm") },
+          { icon:"currency-usd", label: 'Nuevo ingreso',labelTextColor:"#CDCDCD",color: "#585858",style:{backgroundColor:"#CDCDCD"}, containerStyle:{backgroundColor:"#585858"}, onPress: () => navigation.navigate('IncomeForm',{itemId: null, mode: "new"}) },
+          { icon:"currency-usd-off" , label: 'Nuevo Gasto',labelTextColor:"#CDCDCD",color: "#585858",style:{backgroundColor:"#CDCDCD"}, containerStyle:{backgroundColor:"#585858"}, onPress: () =>  navigation.navigate("ExpenseForm", {itemId: null, mode: "new"}) },
           ]}
         onStateChange={({ open }) => open ? openMenu() : closeMenu()}
         onPress={() => {
@@ -41,8 +41,6 @@ const FloatingButton = () => {
         }}
       />
     </Portal>
-      
-    
   );
 };
 

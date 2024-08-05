@@ -28,13 +28,14 @@ const styles = StyleSheet.create ({
   container:{
     backgroundColor: "#FFF",
     flex: 1,
+    
   },
 
   textMovimiento:{
     fontSize: 24,
     textAlign: 'center',
     color: "#212121",
-    fontWeight: "bold",
+    fontFamily: 'UrbanistBold',
     marginBottom: 0,
   }, 
 });

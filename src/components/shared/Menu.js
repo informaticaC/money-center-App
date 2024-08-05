@@ -7,11 +7,9 @@ import Finanzas from "../../../assets/img/finanzas.png";
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-
 const Menu = () => {
 
   const navigation = useNavigation();  
-
   const menuItems = [
     { id: 'inicio', icon: Home },
     { id: 'movimientos', icon: Finanzas },
@@ -22,10 +20,8 @@ const Menu = () => {
   
   const onMenuItemPress = (item) => {
     
-    setSelectedMenuItem(item.id)
-    
+    setSelectedMenuItem(item.id);
     navigation.navigate('MainTabs', { screen: item.id} );
-    
   };
 
   
@@ -87,7 +83,7 @@ const styles = StyleSheet.create({
     borderTopColor: 'rgba(0, 0, 0, 0.16)',
     borderStyle: 'solid',
     backgroundColor: "#FFF",
-    
+    fontFamily: 'UrbanistBold'
   },
 
   gradient: {
@@ -101,7 +97,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: "center",
     alignItems: 'center',
-    
   },
 
   menuItem: {

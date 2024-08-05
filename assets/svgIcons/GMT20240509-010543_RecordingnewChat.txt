@@ -1,0 +1,453 @@
+00:19:07	Sergio Delgado Maco:	Justo a tiempo, buenas noches
+00:19:31	Julian Andrés Mosquera Gaviria:	donde se puede encontrar ese notion profe?
+00:19:59	Cesar David Montes aSerna:	Buenas noches
+00:20:05	Cesar David Montes aSerna:	Me agarro la tarde
+00:20:51	Reinaldo Jose de la cruz:	buenas noches
+00:21:10	Luis Alberto Catalán Ibáñez:	muy buenas noches profe gabriel
+00:21:31	JOEL JATIVA:	Buenas noches
+00:22:19	Steven Contreras:	se ve bien
+00:22:21	Steven Contreras:	perfecto
+00:22:29	Luis Alberto Catalán Ibáñez:	la clase se esta grabando?
+00:22:36	Reinaldo Jose de la cruz:	nos vamos a cmd
+00:22:39	Steven Contreras:	una pregunta rápida, si no he visto las otras 2 clases, si entenderé lo que se dara hoy?
+00:22:47	Luis Miguel Avendaño Lozano:	Replying to "una pregunta rápida,..."
+
+Si todo perfecto
+00:22:56	Steven Contreras:	Replying to "una pregunta rápida,..."
+
+gracias
+00:23:05	Reinaldo Jose de la cruz:	stiven que mas hermano
+00:23:25	Steven Contreras:	Replying to "stiven que mas herma..."
+
+Hermano, como estas? escríbeme por privado jajaja para guardar tu numero
+00:23:35	Alejandra Olazagasti:	Replying to "una pregunta rápida,..."
+
+No Steven, ponte a estudiar y regresa jeje no te creas, un gusto verte por acá
+00:23:47	Alejandra Olazagasti:	Hola  TODOS
+00:23:51	Alejandra Olazagasti:	uN PLACER ESTAR ACÁ
+00:23:58	Steven Contreras:	Replying to "una pregunta rápida,..."
+
+PROFEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE <3
+00:24:06	Reinaldo Jose de la cruz:	Respondiendo a "stiven que mas her..."
+
+ok listo
+00:24:30	Reinaldo Jose de la cruz:	hola profe ale
+00:24:34	Steven Contreras:	Replying to "Hola  TODOS"
+
+la extrañamos
+00:24:41	Cesar David Montes aSerna:	Estas horitas nos servirán demasiado para familiarizarnos
+00:24:46	Alejandra Olazagasti:	Reacted to "hola profe ale" with 🙌
+00:24:54	Alejandra Olazagasti:	Reacted to "{F11FB25D-C27D-4774-8E55-19B3B6FBCE31}.png" with 😅
+00:25:50	Reinaldo Jose de la cruz:	Se ha reaccionado a "hola profe ale" con 🙌
+00:26:47	Jose Delgado:	es ng serve o server?
+00:26:58	Jose Delgado:	ok
+00:27:03	Alejandra Olazagasti:	ng serve -o Inicia el servidor y lo despliega, shorthand de shorthand
+00:27:22	Steven Contreras:	Replying to "ng serve -o Inicia e..."
+
+va
+00:28:43	Steven Contreras:	si
+00:28:47	Reinaldo Jose de la cruz:	si
+00:28:49	Joan Rodríguez:	vale
+00:28:50	JOEL JATIVA:	1
+00:28:52	Sergio Delgado Maco:	1
+00:29:15	Steven Contreras:	pregunta, lo genera en la carpeta respectiva directamente?
+00:29:55	Luis Miguel Avendaño Lozano:	Replying to "pregunta, lo genera ..."
+
+que cosa stiven?
+00:30:29	Karen Moreno:	Si
+00:30:32	JOEL JATIVA:	Si
+00:30:34	Steven Contreras:	Replying to "pregunta, lo genera ..."
+
+la carpeta del componente, al usar el comando, lo genera en la carpeta component?
+00:31:16	Alejandra Olazagasti:	Replying to "pregunta, lo genera ..."
+
+Lo genera en app, pero tú puedes manejar la ruta donde deseas generar el componente
+00:31:38	Steven Contreras:	Replying to "pregunta, lo genera ..."
+
+perfecto
+00:32:10	Karen Moreno:	bien
+00:32:16	Steven Contreras:	perfecto
+00:32:17	Reinaldo Jose de la cruz:	siii
+00:32:22	Karen Moreno:	ese track es como el id si?
+00:32:30	JOEL JATIVA:	Ok
+00:33:07	Luis Miguel Avendaño Lozano:	Replying to "ese track es como el..."
+
+es como el key de react en el map
+00:33:58	JOEL JATIVA:	Ok
+00:34:27	Reinaldo Jose de la cruz:	me siento como en fundamenos pero de angular jaja
+00:34:41	Sergio Delgado Maco:	Reacted to "me siento como en fu..." with 🤣
+00:34:48	Kattia Contreras:	Se ha reaccionado a "me siento como en ..." con 🤣
+00:34:48	Steven Contreras:	Replying to "me siento como en fu..."
+
+x2
+00:36:08	Cesar David Montes aSerna:	Disculpe, la. La de quedará grabada?
+00:36:12	Karen Moreno:	10
+00:36:36	Alejandra Olazagasti:	Replying to "Disculpe, la. La de ..."
+
+Síp
+00:36:42	Steven Contreras:	funciona como los seudo elementos?
+00:36:48	Cesar David Montes aSerna:	Reacted to "Síp" with ❤️
+00:37:20	Luis Miguel Avendaño Lozano:	Replying to "funciona como los se..."
+
+realmente no porque es mas relacionado con el la información que se muestra en el html
+00:37:49	Steven Contreras:	Replying to "funciona como los se..."
+
+ok
+00:40:23	Reinaldo Jose de la cruz:	ok
+00:40:39	Steven Contreras:	si
+00:40:41	Anibal Quintero:	si si
+00:40:41	Steven Contreras:	todo ok
+00:40:42	Karen Moreno:	si
+00:40:45	Reinaldo Jose de la cruz:	si
+00:40:45	elio maure:	si se ve y se escucha
+00:40:49	JOEL JATIVA:	Si
+00:41:52	Reinaldo Jose de la cruz:	es con typecript
+00:42:02	Steven Contreras:	o sea, alli se haría el reset del css?
+00:42:09	Anibal Quintero:	Replying to "es con typecript"
+
+si tienes que saber
+00:42:29	Gabriel Martinez:	Replying to "o sea, alli se haría..."
+
+si se podria
+00:42:38	Steven Contreras:	Replying to "o sea, alli se haría..."
+
+perfecto
+00:43:43	Steven Contreras:	Y como se iniciaría sin el shorth?
+00:45:09	Alejandra Olazagasti:	Replying to "o sea, alli se haría..."
+
+O puedes usar Tailwind y ahí colocas las directivas base, components y utilities
+00:46:23	Alejandra Olazagasti:	Replying to "Y como se iniciaría ..."
+
+Pues debes crear manualmente cada una de los archivos esenciales como angular.json tsconfig.app.json main.ts, etc, etc
+00:46:43	Steven Contreras:	Replying to "Y como se iniciaría ..."
+
+a#
+00:49:14	Alejandra Olazagasti:	si deseas que no se genere directamente el archivo de pruebas pueden hacer ng g c micomponente --skip-tests
+00:49:31	Jose Delgado:	Reacted to "si deseas que no se ..." with 😯
+00:49:33	Anibal Quintero:	Reacted to "si deseas que no se ..." with 👍
+00:51:27	Joan Rodríguez:	Reacted to "si deseas que no se ..." with 👍
+00:51:47	Cesar David Montes aSerna:	Se puede trabajar angular con Js y no Ts?
+00:51:48	Julian Andrés Mosquera Gaviria:	al inicio del archivo
+00:51:51	Steven Contreras:	en la parte superior
+00:51:54	Joel Játiva:	logica
+00:51:56	Joan Rodríguez:	en la parte superior del archivo en el
+00:52:15	Joan Rodríguez:	ok vale
+00:53:15	Gabriel Martinez:	Replying to "Se puede trabajar an..."
+
+si se puede, pero...no va a proporcionar los beneficios como la detección de errores estática, autocompletado de código, refactorización segura,etc
+00:53:39	Reinaldo Jose de la cruz:	se esta renderisando
+00:54:22	Reinaldo Jose de la cruz:	parceroo
+00:54:26	Julian Andrés Mosquera Gaviria:	Me lo perdí
+00:54:41	Luis Alberto Catalán Ibáñez:	si y se termina mañana
+00:56:46	Steven Contreras:	a de ser el tamaño del div
+00:57:10	Reinaldo Jose de la cruz:	el css
+00:57:26	Julian Andrés Mosquera Gaviria:	si importo un componente en el app componente que a su vez importa otros, necesito importar esos otros también en el app component. No verdad?
+01:00:05	Alejandra Olazagasti:	Replying to "si importo un compon..."
+
+Nop, en el componente integra los otro componentes que lo complementan y en tu app sólo importa ese componente que itnegra los demás
+01:00:15	Reinaldo Jose de la cruz:	para renderizarlos
+01:01:52	Orlando Amado Ardila:	nos puede compartir los estilos
+01:02:06	Gabriel Martinez:	Replying to "nos puede compartir ..."
+
+se les compartira el codifo
+01:02:16	Gabriel Martinez:	Replying to "nos puede compartir ..."
+
+codigo*
+01:03:01	Orlando Amado Ardila:	yes
+01:03:05	Orlando Amado Ardila:	si claro
+01:03:18	Steven Contreras:	pregunta, los estados y las props de los componentes, se manejan parecido a react?
+01:03:22	Orlando Amado Ardila:	Claro profe, aquí en su tierra
+01:03:42	Reinaldo Jose de la cruz:	las promesas
+01:05:41	Jose Delgado:	Replying to "las promesas"
+
+fetch
+01:08:30	Jose Delgado:	width: max-content
+01:08:59	Steven Contreras:	el w del body?
+01:09:53	Jose Delgado:	yo cuando programo estilos sjsjs
+01:11:00	Steven Contreras:	pregunta, el no encerrarlo en una etiqueta sintáctica no seria mala practica?
+01:11:23	Steven Contreras:	ok ok
+01:12:27	Jose Delgado:	al elemente
+01:12:41	Jose Delgado:	si
+01:12:43	Steven Contreras:	ok
+01:12:55	Kevin Lugo:	Replying to "al elemente"
+
+lenguaje inclusivo
+01:13:13	Steven Contreras:	no tomaría el estilo
+01:13:19	Joan Rodríguez:	no tendría los mismoa eestilos
+01:13:31	Gabriel Martinez:	y eso es genial!!
+01:13:35	Steven Contreras:	brutal
+01:13:42	Anibal Quintero:	Reacted to "y eso es genial!!" with 👍
+01:13:43	Steven Contreras:	menos dolores de cabeza con las clases xD
+01:14:18	Steven Contreras:	si
+01:14:18	Orlando Amado Ardila:	si señor
+01:14:20	Kevin Lugo:	yes
+01:14:22	Joel Játiva:	yes
+01:14:29	Alexander Jerez:	claro profe
+01:14:44	Steven Contreras:	una pregunta, entonces para poder reutilizar estilos, se colocarían en la hoja de estilo de la raíz?
+01:14:51	Reinaldo Jose de la cruz:	si claro, hay que volver a mirar el video para poder ir paso a pso
+01:15:11	Steven Contreras:	reduc
+01:15:14	Steven Contreras:	redux
+01:15:16	elio maure:	fetch
+01:15:17	Julian Andrés Mosquera Gaviria:	la api fetch
+01:15:18	Steven Contreras:	axios
+01:15:19	Joan Rodríguez:	axios
+01:15:19	milton manuel sanchez:	axios
+01:15:19	Steven Contreras:	xD
+01:15:20	Reinaldo Jose de la cruz:	si axios
+01:15:22	Gabriel Martinez:	Replying to "una pregunta, entonc..."
+
+exacto
+01:15:39	Jose Delgado:	😯
+01:15:45	Reinaldo Jose de la cruz:	me imagino
+01:17:00	Gabriel Martinez:	esto es muy importante
+01:18:06	Steven Contreras:	pregunta, por casualidad hay alguna clase grabada de TS??
+01:18:18	Gabriel Martinez:	si Steven
+01:18:25	Gabriel Martinez:	https://www.notion.so/academlo/Taller-de-Angular-De-Principiante-a-Experto-5aa0450010b54e758276f10827931c36?pvs=4
+01:18:54	Steven Contreras:	Replying to "https://www.notion.s..."
+
+grandeee !!!
+01:18:55	Alexander Jerez:	es como una caja de sopresa
+01:20:34	Vivian La Farina:	Reacted to "https://www.notion.s..." with 👌🏻
+01:20:38	Steven Contreras:	Reacted to "https://www.notion.s..." with 👌🏻
+01:21:58	Steven Contreras:	useEffect
+01:21:59	Julian Andrés Mosquera Gaviria:	useEffect
+01:22:05	Steven Contreras:	u_U
+01:22:27	Jose Delgado:	😯
+01:23:51	Steven Contreras:	llaves**
+01:24:01	Jose Delgado:	jaja
+01:24:02	Steven Contreras:	me pasa xD
+01:25:11	Jose Delgado:	this
+01:25:55	Gabriel Martinez:	https://api-angular-exp.onrender.com/api/v1/burgers
+01:25:59	Steven Contreras:	🫢
+01:26:34	Steven Contreras:	ehhhhhhhhhh, claro claro
+01:26:44	Gabriel Martinez:	lo vimos! Estan grabadas las otras dos sesiones
+01:27:00	Kevin Lugo:	la definición de los datos
+01:27:56	Joan Rodríguez:	js
+01:28:40	Steven Contreras:	esa estructura de interfaz la obtenemos de la DOC de la api a utilizar?
+01:29:04	Gabriel Martinez:	se suele utilizer una extension llamda: Paste JSON as Code
+01:29:04	Steven Contreras:	useState
+01:29:48	Jose Delgado:	interface
+01:30:39	Joan Rodríguez:	jajajajja
+01:30:48	Kevin Lugo:	burguer nft
+01:31:37	Kevin Lugo:	curioso
+01:31:39	Joan Rodríguez:	bien
+01:31:44	Steven Contreras:	medio enredado pero porque me falta la info pasada
+01:31:45	JOEL JATIVA:	Cool
+01:31:46	Alexander Jerez:	bien profe si se entiende
+01:31:51	Joan Rodríguez:	si señor
+01:32:36	Steven Contreras:	huele a .map
+01:32:43	Gabriel Martinez:	Reacted to "huele a .map" with 😯
+01:34:51	Cesar Ordoñez:	Donde se  pueden ver las clases grabadas..??
+01:34:53	Gabriel Martinez:	o sea la card esta planteando
+01:35:09	Steven Contreras:	Replying to "Donde se  pueden ver..."
+
+https://academlo.notion.site/Taller-de-Angular-De-Principiante-a-Experto-5aa0450010b54e758276f10827931c36
+01:35:47	Jose Delgado:	directivas
+01:36:09	Cesar Ordoñez:	Replying to "Donde se  pueden ver..."
+
+ok. gracias, pero las otras clases anteriores de otros temas..??
+01:36:15	Steven Contreras:	Replying to "Donde se  pueden ver..."
+
+alli andan
+01:37:40	Jose Delgado:	@for
+01:38:52	Jose Delgado:	hamburgers
+01:38:54	Joan Rodríguez:	si
+01:38:56	Steven Contreras:	si señor
+01:38:56	Karen Moreno:	1
+01:39:42	Gabriel Martinez:	el track es la key de react
+01:39:59	Jose Delgado:	nice
+01:40:05	Steven Contreras:	henial
+01:40:09	Joan Rodríguez:	si
+01:40:22	Jose Delgado:	?
+01:40:25	Steven Contreras:	?
+01:40:26	Jose Delgado:	nullisg
+01:40:35	Jose Delgado:	??
+01:40:36	Steven Contreras:	if
+01:40:39	Julian Andrés Mosquera Gaviria:	conditional rendering
+01:40:40	Steven Contreras:	o ternario
+01:40:55	Julian Andrés Mosquera Gaviria:	sip
+01:40:59	Steven Contreras:	jajajjaa
+01:41:13	Julian Andrés Mosquera Gaviria:	😱
+01:41:47	Julian Andrés Mosquera Gaviria:	esa sintaxis esta genial
+01:41:52	Kevin Lugo:	Esta genial
+01:41:55	Jose Delgado:	😅
+01:42:06	Esmir Roque:	que genial
+01:42:20	Luis Alberto Catalán Ibáñez:	el empty seria el else para el for
+01:43:43	Steven Contreras:	y si la petición tarda en llegar?
+01:43:43	Jose Delgado:	profe, podría compartir las diapositivas, o esta en el notio?
+01:43:54	Steven Contreras:	queda undefined?
+01:44:04	Steven Contreras:	KHE?
+01:44:09	Steven Contreras:	espera?
+01:44:12	Julian Andrés Mosquera Gaviria:	bloquea el thread mientras espera?
+01:44:14	Steven Contreras:	O_O
+01:44:17	Gabriel Martinez:	https://docs.google.com/presentation/d/1ODugVCRmpQD7Iyal0OfqsMChrzbT5GA11npNCV-X4EI/edit?usp=sharing
+01:44:37	Kevin Lugo:	angular es de Google, difícilmente no optimicen en eso
+01:44:48	Steven Contreras:	Replying to "https://docs.google...."
+
+esto estará en el notion?
+01:44:51	emmanuel canqui:	es tan waso que no nesesita explicacion
+01:44:58	Gabriel Martinez:	Replying to "https://docs.google...."
+
+si
+01:45:02	Julian Andrés Mosquera Gaviria:	si tiene una forma de no bloquear el main thread y esperar la respuesta que no sea verbosa ni use top level awaits ni nada de eso me paso a angular ya mismo jaja
+01:45:04	Steven Contreras:	Replying to "https://docs.google...."
+
+ty
+01:45:09	Jose Delgado:	existen otros métodos en httpClient que nos permite, esperar, o generar un loading o una barra de carga
+01:45:21	Luis Alberto Catalán Ibáñez:	como una pantalla de carga
+01:46:02	Julian Andrés Mosquera Gaviria:	en el navegador serían los workers pero no es lo mismo
+01:46:06	Jose Delgado:	Reacted to "https://docs.google...." with 👏
+01:46:14	Kevin Lugo:	¿cómo se llama esa librería de node + express profe?
+01:46:24	Luis Miguel Avendaño Lozano:	libuv
+01:46:36	Kevin Lugo:	Reacted to "libuv" with 🙌
+01:46:47	Jose Delgado:	Reacted to "libuv" with 🙌
+01:46:54	Kevin Lugo:	gracias profe
+01:47:26	Steven Contreras:	3
+01:47:27	Jose Delgado:	3
+01:47:28	elio maure:	app menú burguer
+01:47:29	Kevin Lugo:	3
+01:47:31	Luis Alberto Catalán Ibáñez:	3
+01:47:42	Steven Contreras:	por props??
+01:49:50	Julian Andrés Mosquera Gaviria:	!
+01:51:03	Karen Moreno:	en react es posible pero con usequery
+01:51:09	Julian Andrés Mosquera Gaviria:	eso esta buenisimoooo
+01:51:22	Julian Andrés Mosquera Gaviria:	proptypes ?
+01:51:35	Julian Andrés Mosquera Gaviria:	XD
+01:51:47	elio maure:	alguien pudo ver como esta hecha la interface?
+01:51:48	Jose Delgado:	ni idea jajaja
+01:52:45	Jose Delgado:	Replying to "alguien pudo ver com..."
+
+la puedes hacer colocando el json que te da la api, en JSON PARCE TO CODE, es un sitio que te convierte a interfaz para TS, arriba el profe Gabriel lo menciona
+01:52:48	Steven Contreras:	ts
+01:52:51	Steven Contreras:	?
+01:53:46	Steven Contreras:	falta el import
+01:53:48	Steven Contreras:	en el ts
+01:53:57	Jose Delgado:	eso como se llama?
+01:54:05	Steven Contreras:	andamos activos xD
+01:54:07	Julian Andrés Mosquera Gaviria:	me confunde que lleve "" pero no reciba una string sino una variable
+01:54:17	Steven Contreras:	Replying to "me confunde que llev..."
+
+x2
+01:55:32	Steven Contreras:	el mismo comportamiento del map
+01:55:39	Gabriel Martinez:	Reacted to "el mismo comportamie..." with 👍
+01:56:38	Steven Contreras:	se
+01:56:43	Jose Delgado:	jaja
+01:57:15	Luis Alberto Catalán Ibáñez:	{Llaves} y [Corchetes]
+01:57:54	Steven Contreras:	azúcar xD
+01:58:30	Steven Contreras:	sexy
+01:58:40	Joan Rodríguez:	no
+01:58:40	Gabriel Martinez:	fijense la genialidad de angular que el IntelliSense de vscode le va prediciendo todo, eso es por ts
+01:58:42	Julian Andrés Mosquera Gaviria:	nop
+01:58:43	Orlando Amado Ardila:	no
+01:58:44	Karen Moreno:	no
+01:58:52	Orlando Amado Ardila:	estilos
+01:58:53	Jose Delgado:	con css
+01:58:55	Steven Contreras:	Font stayle
+01:58:55	Joan Rodríguez:	upprcase
+01:58:57	Julian Andrés Mosquera Gaviria:	css si
+01:59:07	Jose Delgado:	capitalize
+01:59:09	Steven Contreras:	font-decoration
+01:59:11	Steven Contreras:	xD
+01:59:20	Gabriel Martinez:	pipes
+01:59:45	Steven Contreras:	a
+02:00:15	Luis Alberto Catalán Ibáñez:	la visualizacion
+02:00:35	Julian Andrés Mosquera Gaviria:	los transforma en tiempo de ejecución? o sea, si el formato cambia me puede dar error? {
+02:02:07	Steven Contreras:	brutal
+02:02:08	Luis Alberto Catalán Ibáñez:	la conversión de dólares a pesos colombianos y  a pesos mexicanos
+02:02:08	Julian Andrés Mosquera Gaviria:	supongo que estos pipes funcionan en compilación, porque si se le pasara un number a este pipe no podría capitalizarlo en tiempo de ejecución.
+02:02:09	Joan Rodríguez:	Chevere
+02:02:43	Kevin Lugo:	Reacted to "supongo que estos pi..." with 👌
+02:03:35	Steven Contreras:	pfff las posibilidades para el dark mode xD
+02:04:28	Jose Delgado:	con un pipe personalizado puedo convertir varios formatos de imágenes, audio y video
+02:04:50	Julian Andrés Mosquera Gaviria:	necesito un pipe que me pase de word a pdf XD
+02:05:10	Steven Contreras:	Replying to "necesito un pipe que..."
+
+ya hay uno, es "Guardar como" jajajajajjajajaja
+02:05:19	Julian Andrés Mosquera Gaviria:	Replying to "necesito un pipe que..."
+
+Loool
+02:05:23	Julian Andrés Mosquera Gaviria:	Replying to "necesito un pipe que..."
+
+true
+02:06:23	Steven Contreras:	es como es react-hook-form??
+02:06:48	Steven Contreras:	ya ya
+02:07:44	Gabriel Martinez:	esten atentos, esto es muy solicitado en entrevistas
+02:10:37	Steven Contreras:	eso es para un filtro a tiempo real?
+02:10:48	Gabriel Martinez:	una busqueda
+02:10:56	Steven Contreras:	Replying to "una busqueda"
+
+va
+02:11:22	Julian Andrés Mosquera Gaviria:	el onClick de react
+02:12:13	Gabriel Martinez:	es otro endpoint de la api
+02:12:51	Gabriel Martinez:	debes guardar
+02:12:54	Gabriel Martinez:	ahh vale
+02:12:55	Kevin Lugo:	Se puede filtrar
+02:13:04	Steven Contreras:	genial
+02:13:05	Jose Delgado:	otra vez?
+02:13:08	Gabriel Martinez:	un genio
+02:13:43	Steven Contreras:	y si esta petición da error, donde se ve reflejado el mens de error?
+02:13:49	Jose Delgado:	👏
+02:13:51	Steven Contreras:	tipo el .fetch?
+02:13:56	Julian Andrés Mosquera Gaviria:	ese .suscribe me hace pensar en el patron observable, pero no entiendo la implementación 🙁
+02:14:31	Gabriel Martinez:	seria un 404 de la api
+02:14:34	Gabriel Martinez:	el error
+02:14:34	Jose Delgado:	cual es la diferencia entre comillas dobles y simples en los atributos HTML?
+02:14:36	Reinaldo Jose de la cruz:	profe sigue la masterclass de angular
+02:14:47	Jose Delgado:	listo
+02:15:01	Steven Contreras:	si, esta muiy simple
+02:15:04	Julian Andrés Mosquera Gaviria:	Excelente y sin ninguna librería externa
+02:15:05	Gabriel Martinez:	directo al portafolio
+02:15:05	Steven Contreras:	solo que distinta
+02:15:05	Reinaldo Jose de la cruz:	sii esta bueno
+02:15:06	Gabriel Martinez:	jhaja
+02:15:07	Julian Andrés Mosquera Gaviria:	10/10
+02:15:09	Joan Rodríguez:	si
+02:15:13	Alexander Jerez:	si excelte
+02:15:20	Reinaldo Jose de la cruz:	quiero aprender mas
+02:15:25	Jose Delgado:	si, bonito frameworrk
+02:16:14	Alexander Jerez:	profe dan certificado ?
+02:16:34	Gabriel Martinez:	por el momento no
+02:16:40	Joan Rodríguez:	en vivo y en directo!!!!!!
+02:17:21	Kevin Lugo:	Esos cursos no es que estaban en el class center? 👀
+02:17:23	Julian Andrés Mosquera Gaviria:	los cursos de academlo eran gratis antes y ya no o me metí donde no era? O.o
+02:17:35	Esmir Roque:	habrá descuento para nosotros?
+02:17:36	Luis Miguel Avendaño Lozano:	https://advanced.academlo.com/
+02:17:45	Julian Andrés Mosquera Gaviria:	ahhhh
+02:17:59	Jose Delgado:	😯
+02:18:03	Luis Alberto Catalán Ibáñez:	pero estos son pagos
+02:18:03	Steven Contreras:	y que costos tienen?
+02:18:08	Steven Contreras:	ma so menos?
+02:18:23	Gabriel Martinez:	eso es genial!!!!!
+02:18:24	Jose Delgado:	60 dólares anual
+02:18:53	Julian Andrés Mosquera Gaviria:	+ el ARI XD
+02:19:57	Kevin Lugo:	AWS?
+02:21:17	Jose Delgado:	tienen algún curso especializado en pinia Vuejs
+02:21:19	Jose Delgado:	?
+02:21:38	Julian Andrés Mosquera Gaviria:	Las masterclass van a seguir o todo se va a migrar a esos cursos?
+02:21:38	Jose Delgado:	nice
+02:21:51	Julian Andrés Mosquera Gaviria:	🥳
+02:22:23	Alexander Jerez:	porfe dan certificado ?
+02:22:35	Jose Delgado:	falta las rutas en Angular
+02:22:42	Reinaldo Jose de la cruz:	profe linux ?
+02:23:45	emmanuel canqui:	nose la verdad estamos pagando ari que en total es un monton y ahora que estos cursos tener que pagar nuevamente otro monto mas pues no me hace sentido
+02:24:31	Julian Andrés Mosquera Gaviria:	Concuerdo con Emmanuel. Una de las cosas sobresalientes de academlo es que no era solo durante el bootcamp sino que el aprendizaje es longitudinal. Creo que esto puede ser un poco ...
+02:24:40	Julian Andrés Mosquera Gaviria:	fuera de tradición por decirlo de alguna manera XD
+02:24:54	emmanuel canqui:	Reacted to "fuera de tradición p..." with 👍🏻
+02:25:21	emmanuel canqui:	Reacted to "Concuerdo con Emmanu..." with 👍🏻
+02:26:04	Steven Contreras:	pregunta, esta era la sorpresa?
+02:26:10	Julian Andrés Mosquera Gaviria:	ojalá no muera academlo plus :'(
+02:26:42	Steven Contreras:	Replying to "ojalá no muera acade..."
+
+me imaginno que lo usaran como para dar conocimientos básicos y ya aqui seria mas avanzados.
+02:27:40	Alexander Jerez:	Profe cuando hacer un cursos de php con wordpress. ya que lo usan muchos las empresas de marketing.
+02:28:16	Reinaldo Jose de la cruz:	profe lanzaran cursos de linux ?
+02:28:38	Reinaldo Jose de la cruz:	ok
+02:28:58	Steven Contreras:	profe me tengo que retirar
+02:29:03	Steven Contreras:	me encanto la clase
+02:29:31	Luis Miguel Avendaño Lozano:	https://angular.io/
+02:29:39	Kevin Lugo:	Cómo siempre buenas clases profe Luis, saludos!
+02:29:49	Steven Contreras:	buenas noches
+02:29:51	Reinaldo Jose de la cruz:	ok profe gracias
+02:29:53	Steven Contreras:	saludos
+02:29:58	Kevin Lugo:	feliz noche
+02:30:04	Alexander Jerez:	buena profe

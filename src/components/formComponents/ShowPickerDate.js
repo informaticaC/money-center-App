@@ -3,11 +3,14 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { View, Text, StyleSheet, Pressable, TextInput}from 'react-native';
 import { format } from 'date-fns';
 
-const ShowPickerDate = ({data, funcion , field}) => {
+const ShowPickerDate = ({data, funcion , field, mode}) => { //if mode === 'edit' => edit data
   
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(mode === 'edit' ? 
+    new Date(parseInt(data.date.split('-')[2]),
+              parseInt(data.date.split('-')[1])-1,
+              parseInt(data.date.split('-')[0])) 
+    : new Date());
   const [showPicker, setShowPicker] = useState(false);
-
   const [incomeDate, setIncomeDate] = useState("");
   
   //funciones para input fecha
@@ -45,7 +48,7 @@ const ShowPickerDate = ({data, funcion , field}) => {
       <Text style={styles.label}>Fecha</Text>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="seleccionar una fecha"
+          placeholder={data.date}
           value={incomeDate}
           editable={false}
           style={styles.input}

@@ -11,14 +11,18 @@ import { setBalance } from '../../store/slices/balance.slice';
 import ShowPickerDate from '../components/formComponents/ShowPickerDate';
 import { useNavigation } from '@react-navigation/native';
 
-const ExpenseForm = () => {
-
+const ExpenseForm = ({route}) => {
+  const {itemId, mode} = route.params;
+  const expenses = useSelector(state => state.expenses);
+  const expenseToEdit = expenses.filter(expense => expense.id === itemId);
+  console.log('Expenseform.js, line 18, data to edit, mode:', mode);
+  console.log('Expenseform, line 19, expenseToEdit:', expenseToEdit);
   const [expenseData, setExpenseData] = useState({
-    name:"",
-    description:"",
-    amount:"",
-    date:"",
-    icon:"",
+    name:(mode === 'edit') ? (expenseToEdit[0].name) : "",
+    description: (mode === 'edit') ? (expenseToEdit[0].description) : "",
+    amount: (mode === 'edit') ? (expenseToEdit[0].amount).toString() : "",
+    date: (mode === 'edit') ? (expenseToEdit[0].date) : "",
+    icon: (mode === 'edit') ? (expenseToEdit[0].icon) : "",
   })
     
   // estados del checkbox digital o efectivo 
@@ -40,11 +44,30 @@ const ExpenseForm = () => {
     Authorization: `Bearer ${token}`,
   };
   const navigation = useNavigation();
+
   const handleSave = () => {
     const url_base = process.env.EXPO_PUBLIC_API_URL_BASE;
-    const url = `${url_base}/expense`; //'http://192.168.100.21:8080/api/v1/expense'
+    //const url = `${url_base}/expense`; //'http://192.168.100.21:8080/api/v1/expense'
     const { name, amount, description, date, icon} = expenseData;
-    axios.post(url, { name, amount, description, date, icon}, {headers})
+    if ( mode === 'edit' ){
+      const url = `${url_base}/expense/${itemId}`;
+      axios.put(url, { name, amount, description, date, icon}, {headers})
+      .then((res) => {
+        console.log('Dato actualizado correctamente, itemId:', itemId);
+        dispatch(setBalance(0));
+        setExpenseData({
+          name:"",
+          description:"",
+          amount:"",
+          date:"",
+          icon:"",
+        });
+        navigation.navigate('MainTabs', { screen: 'inicio' });  
+      })
+      .catch( err => console.error('ExpenseForm.js, line 66, error:',err) )
+    }else {
+      const url = `${url_base}/expense`
+      axios.post(url, { name, amount, description, date, icon}, {headers})
       .then((res) => {
         dispatch(setBalance(0));
         setExpenseData({
@@ -75,6 +98,8 @@ const ExpenseForm = () => {
         }
         
       });
+    }
+    
         
   };
   
@@ -88,23 +113,7 @@ const ExpenseForm = () => {
         
       });
     };
-   
-  // funciones de button guardar 
-  // verifica si los input estan vacios 
- /* const checkButtonEnabled = () => {
-    if (expenseData.name.trim() !== '' && expenseData.amount.trim() !== '' && expenseData.date.trim() !== '' && expenseData.description.trim() !== '' && expenseData.icon.trim() !== '') {
-      setButtonEnabled(true);
-    } else {
-      setButtonEnabled(false);
-    }
-  };
-  
-  //actualiza el estado de los campos 
-
-  useEffect(() => {
-    checkButtonEnabled();
-  }, [expenseData.name, expenseData.amount, expenseData.date, expenseData.icon, expenseData.description]);*/
-  
+    
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -135,7 +144,7 @@ const ExpenseForm = () => {
                 />
               </View>
           </View>
-          <ShowPickerDate data={expenseData} funcion={setExpenseData} field="date"/>
+          <ShowPickerDate data={expenseData} funcion={setExpenseData} field="date" mode={mode} />
           <CheckboxButton
             Data={expenseData}
             setData={setExpenseData}

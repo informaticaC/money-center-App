@@ -5,11 +5,14 @@ import { selectToken} from '../../../store/slices/token.slice';
 import {useSelector} from 'react-redux';
 import SearchInput from './SearchInput';
 import fetchIncomeData from '../../utils/fetchIncomeData';
+import ModalDeleteEdit from './ModalDeleteEdit';
+import ModalWarningDelete from './ModalWarningDelete';
 
 const IncomesCard = ({selectedOption, selectedMonth}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalWarningVisible, setModalWarningVisible] = useState(false);
   const token = useSelector(selectToken);
   //console.log('Linea 14, IncomesCard.js, selectToken:==>>',  token); //selectToken
   const balance = useSelector((state) => state.balance);
@@ -76,7 +79,9 @@ const IncomesCard = ({selectedOption, selectedMonth}) => {
             <View>
               <Text>$ {item.amount}</Text>
             </View>
-            <TouchableOpacity style={styles.buttonEdit}>
+            <ModalDeleteEdit modalVisible = {modalVisible} setModalVisible={setModalVisible} setModalWarningVisible={setModalWarningVisible} item={item.id} whatEdit={'income'} />
+            <ModalWarningDelete modalWarningVisible={modalWarningVisible} setModalWarningVisible={setModalWarningVisible} />
+            <TouchableOpacity style={styles.buttonEdit} onPress={() => setModalVisible(true)}  >
               <MaterialIcons name="more-vert" size={24} color="black" />
             </TouchableOpacity>
           </View>

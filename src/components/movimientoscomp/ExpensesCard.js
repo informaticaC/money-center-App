@@ -2,14 +2,19 @@ import React, {useState, useEffect} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { selectToken} from '../../../store/slices/token.slice';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import SearchInput from './SearchInput';  
 import fetchExpensesData from '../../utils/fetchExpensesData';
+import ModalWarningDelete from './ModalWarningDelete';
+
+import ModalDeleteEdit from './ModalDeleteEdit';
 
 const ExpensesCard = ({selectedOption, selectedMonth}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [nameSearchTerm, setNameSearchTerm] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalWarningVisible, setModalWarningVisible] = useState(false);
 
   const token = useSelector(selectToken);
   const balance = useSelector((state) => state.balance);
@@ -18,7 +23,7 @@ const ExpensesCard = ({selectedOption, selectedMonth}) => {
   useEffect(() => {
    
     fetchExpensesData(token).then(expenses => {
-      //console.log('ExpensesCard.js, line 21, fetchExpensesData response.data: ==>', expenses);
+      //console.log('ExpensesCard.js, line 26, fetchExpensesData response.data: ==>', expenses);
       setData(expenses);
     }).catch(reject => {
       console.error('IncomesCard, line 24, reject from fetchIncomeData', reject)
@@ -61,7 +66,6 @@ const ExpensesCard = ({selectedOption, selectedMonth}) => {
   const handleNameSearchChange = () => {
     setNameSearchTerm();
   };
-
   
   return (
     <ScrollView style={styles.ingresosContainer}>
@@ -85,7 +89,9 @@ const ExpensesCard = ({selectedOption, selectedMonth}) => {
             <View>
               <Text>$ {item.amount}</Text>
             </View>
-            <TouchableOpacity style={styles.buttonEdit}>
+            <ModalDeleteEdit modalVisible = {modalVisible} setModalVisible={setModalVisible} item={item.id} whatEdit={'expense'} setModalWarningVisible={setModalWarningVisible} />
+            <ModalWarningDelete modalWarningVisible={modalWarningVisible} setModalWarningVisible={setModalWarningVisible} />
+            <TouchableOpacity style={styles.buttonEdit} onPress={() => setModalVisible(true)} >
               <MaterialIcons name="more-vert" size={24} color="black" />
             </TouchableOpacity>
           </View>
@@ -132,15 +138,12 @@ const styles = StyleSheet.create({
     color: "#4A4A4A",
   },
 
-  buttonEdit: {
-  
-  },
-
   containerDer: {
     flexDirection: "row",
     paddingRight: 10,
     alignItems: "center",
   },
+  
 });
 
 

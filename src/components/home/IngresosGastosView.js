@@ -5,46 +5,27 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useSelector, useDispatch } from 'react-redux';
 import { setBalance } from '../../../store/slices/balance.slice';
 import { setMonthSelected } from '../../../store/slices/monthSelected';
+import { setIncome } from '../../../store/slices/income.slice';
+import { setExpenses } from '../../../store/slices/expenses.slice';
 import fetchIncomeData from '../../utils/fetchIncomeData';
 import fetchExpensesData from '../../utils/fetchExpensesData';
 // import Icon from 'react-native-vector-icons/MaterialIcons';
 // import { Icon } from 'react-native-elements';
 import Svg, { Path } from "react-native-svg";
 import { useNavigation } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-
+import Months from '../../constants/Months';
 
 const IngresosGastosView = () => {
-  console.log('IngresosGastosView, begining, line 11');
+  //console.log('IngresosGastosView, begining, line 11');
   
-  useEffect (()=>{
-    console.log('Showing Splash Screen')
-    SplashScreen.preventAutoHideAsync();
-
-  },[])
-
-  const [fontsLoaded] = useFonts({
-    UrbanistRegular: require('../../../assets/fonts/UrbanistRegular.ttf'),
-    UrbanistBold: require('../../../assets/fonts/UrbanistBold.ttf')
-  });
-
-    const onLayoutRootView = useCallback(async () => {
-      if(fontsLoaded ) {
-        console.log('fontsLoaded:', fontsLoaded);
-        await SplashScreen.hideAsync();
-       
-      }
-     }, [fontsLoaded]);
-
-    
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
   const user = useSelector((state) => state.users);
   const token = useSelector((state) => state.auth.token);
   const balance = useSelector((state) => state.balance);
+  const monthSelected = useSelector((state) => state.monthSelected);
+  const income = useSelector((state) => state.income);
   const [showComponent, setShowComponent] = useState(true);
-  const monthSelected = useSelector( (state) => state.monthSelected);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   //console.log('IngresosGastosView.js, line 22, balance:===========>>', balance);
@@ -52,11 +33,12 @@ const IngresosGastosView = () => {
    
     const currentMonth = new Date().getMonth();
     //console.log('IngresosGastosView, line28, currentMonth:===>>>>>>>>>>>>>>>>>>>>>>>>>>>>', currentMonth);
-    dispatch(setMonthSelected(currentMonth+1));
+    dispatch(setMonthSelected(currentMonth + 1));
     //console.log('IngresosGastosView.js, line 32, monthSelected:-------------------------------: ', monthSelected);
-    fetchIncomeData(token).then((incomes)=>{
+    fetchIncomeData(token).then((incomes) => {
+      dispatch(setIncome(incomes));
       
-      //console.log('IngresosGastosView.js, line 31, incomes from fetchIncomesData(incomes):::', incomes);
+      console.log('IngresosGastosView.js, line 31, incomes from fetchIncomesData(incomes):::', incomes);
       
       getTotal(incomes).then(resIncomes => {
         //console.log('Total incomes, line 35, resIncomes:', resIncomes);
@@ -68,7 +50,8 @@ const IngresosGastosView = () => {
       }
       // here goes fetchExpenseData
       ).then(()=> {
-        fetchExpensesData(token).then((expenses) =>{
+        fetchExpensesData(token).then((expenses) => {
+          dispatch(setExpenses(expenses))
           //console.log('IngresosGastosView.js, line 44, expenses array returned by fetchExpensesData:', expenses);
           //
           getTotal(expenses).then(resExpenses => {
@@ -78,15 +61,15 @@ const IngresosGastosView = () => {
             //console.log('IngresosGastosView.js, line 49, balance:================>>>>>>>>>>>>>>>>>>>', Math.round(balance));
           })
           .catch( err => 
-            console.error('error on line 66 IngresosGastosView.js getTotal(expenses):==>>',err)
+            console.error('error on line 59 IngresosGastosView.js getTotal(expenses):==>>',err)
             );
             
           }).catch( err => {
-            console.error('IngresosGastosView.js, line 57 error: ===>>>', err)
+            console.error('IngresosGastosView.js, line 63 error: ===>>>', err)
           });
       })
       .catch( err => {
-        console.error('IngresosGastosView.js, line 40 error: ===>>>', err)
+        console.error('IngresosGastosView.js, line 67 error: ===>>>', err)
       });
       //dispatch(setReload(false));
       
@@ -124,7 +107,7 @@ const IngresosGastosView = () => {
 
   const circleIngresos = {
     progress: progress(totalIncome, totalExpense, true),
-    size: 100,
+    size: 102,
     indeterminate: false,
     color: '#206D40',
     borderWidth: 4,
@@ -138,7 +121,7 @@ const IngresosGastosView = () => {
 
   const circleGastos = {
     progress:  progress(totalIncome, totalExpense, false),
-    size: 100,
+    size: 102,
     indeterminate: false,
     color: '#C91A2F',
     borderWidth: 4,
@@ -151,11 +134,7 @@ const IngresosGastosView = () => {
   };
 
   const calcCent = () => {
-    console.log('part of balance to rest:', Math.trunc(balance));
-    //const cent = balance - Math.trunc(new Intl.NumberFormat( { maximumSignificantDigits: 2 }).format(balance));
     const cent = balance - Math.trunc(balance);
-    console.log('IngresosGastosView.js, line 156, balance:==>', balance)
-    console.log('IngresosGastosView.js, line 157, cent:==>', cent);
     if (cent === 0) return '00';
     return (Math.round(cent * 100));
   }
@@ -164,14 +143,14 @@ const IngresosGastosView = () => {
     navigation.navigate('MainTabs', { screen: 'movimientos' });
   }
 
-  if (!fontsLoaded) {
-    return null;
-  }
-
+  
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
+    <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.movimientosText}>Mis movimientos</Text>
+        <View>
+          <Text style={styles.movimientosText}>Mis movimientos</Text>
+          <Text style={styles.date}>{Months[monthSelected]} {new Date().getFullYear()}</Text>
+        </View>
         <TouchableOpacity style={styles.balanceContainer} onPress={handleOnpressSeeMore }>
           <Text style={styles.seeMore}>Ver más</Text>
           <View style={styles.arrowSeeMore} >
@@ -229,7 +208,8 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    fontFamily: 'UrbanistBold',
+    //fontFamily: 'UrbanistBold',
+    paddingBottom: 5
   },
   circleContainer: {
     flexDirection: 'row',
@@ -247,7 +227,11 @@ const styles = StyleSheet.create({
     fontFamily: 'UrbanistBold',
     marginHorizontal: 30,
     marginTop: 16,
-    marginBottom: 10,
+    marginBottom: 0,
+  },
+  date: {
+    marginHorizontal: 30,
+    marginTop: 0, 
   },
   seeMore:{
     fontSize: 20,
@@ -264,8 +248,8 @@ const styles = StyleSheet.create({
   },
   balanceContainer: {
     flexDirection: 'row',
-    alignContent: 'center'
-  },
+    alignContent: 'center',
+    },
   balance: {
     fontSize: 40,
     fontFamily: 'UrbanistBold',
@@ -274,7 +258,7 @@ const styles = StyleSheet.create({
   },
   balanceOff: {
     fontSize: 41,
-    fontFamily: 'UrbanistRegular',
+    fontFamily: 'UrbanistBold',
     paddingStart:  30,
     display: 'none',
   },
@@ -295,8 +279,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     top: '35%',
-    left: '28%',
-   
+    left: '24%',
+    
   },
   text: {
     fontFamily: 'UrbanistBold',
@@ -305,10 +289,10 @@ const styles = StyleSheet.create({
     
   },
   textDescriptionIncomes: {
-    fontFamily: 'UrbanistRegular',
+    fontFamily: 'UrbanistMedium',
   },
   textDescriptionExpenses: {
-    fontFamily: 'UrbanistRegular',
+    fontFamily: 'UrbanistMedium',
     paddingHorizontal: 6,
   },
 });

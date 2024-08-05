@@ -1,20 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
 import users from "./slices/users.slice";  // Cambiado el nombre del import
 import auth from "./slices/token.slice";
-import incomes from "./slices/incomes.slice";
+import income from "./slices/income.slice";
+import expenses from "./slices/expenses.slice"
 import balance from "./slices/balance.slice";
 import monthSelected from "./slices/monthSelected";
-import reload from "./slices/reload.slice";
-
 
 const store = configureStore({
   reducer: {
     users,
     auth,
-    incomes,
+    income,
+    expenses,
     balance,
     monthSelected,
-    reload
+    
   },
 });
 
