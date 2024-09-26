@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView} from 'react-native';
 import IconPicker from '../components/formComponents/IconPicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -6,9 +6,11 @@ import ButtonSave from '../components/formComponents/ButtonSave';
 import CheckboxButton from '../components/formComponents/CheckboxButton';
 import axios from 'axios';
 import { selectToken} from '../../store/slices/token.slice';
-import {useSelector} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setBalance } from '../../store/slices/balance.slice';
 import ShowPickerDate from '../components/formComponents/ShowPickerDate';
 import { useNavigation } from '@react-navigation/native';
+
 const ExpenseForm = () => {
 
   const [expenseData, setExpenseData] = useState({
@@ -22,7 +24,7 @@ const ExpenseForm = () => {
   // estados del checkbox digital o efectivo 
   
   // estados del button guardar para deshabilitar en caso de que los input esten vacios  
-  const [isButtonEnabled, setButtonEnabled] = useState(false);
+  /*const [isButtonEnabled, setButtonEnabled] = useState(false);*/
 
   const handleInputChange = (key, value) => {
     setExpenseData({
@@ -31,6 +33,7 @@ const ExpenseForm = () => {
     });
   };
 
+  const dispatch = useDispatch();
   const token = useSelector(selectToken);
   
   const headers = {
@@ -43,6 +46,7 @@ const ExpenseForm = () => {
     const { name, amount, description, date, icon} = expenseData;
     axios.post(url, { name, amount, description, date, icon}, {headers})
       .then((res) => {
+        dispatch(setBalance(0));
         setExpenseData({
           name:"",
           description:"",
@@ -52,30 +56,32 @@ const ExpenseForm = () => {
         });
         navigation.navigate('MainTabs', { screen: 'inicio' });  
       })
-        .catch(error => {
-          
-          console.log(error,"error, linea 53 ExpenseForm.js")
-          if (error.response) {
-            // La solicitud fue hecha y el servidor respondió con un código de estado
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // La solicitud fue hecha pero no se recibió ninguna respuesta
-            console.log(error.request);
-          } else {
-            // Algo sucedió en el proceso de configuración que desencadenó el error
-            console.log('Error', error.message);
-          }
-          
-        });
+      .catch(error => {
+        
+        console.log(error,"error, linea 53 ExpenseForm.js")
+        if (error.response) {
+          // La solicitud fue hecha y el servidor respondió con un código de estado
+          console.log('Error.message:==>>', error.message);
+          console.log('error.response.data:==>>',error.response.data);
+          console.log('error.response.status:==>>',error.response.status);
+          console.log('error.response.headers:==>>',error.response.headers);
+          console.log('error.request:===>>',error.request);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('error.request:===>>',error.request);
+        } else {
+          // Algo sucedió en el proceso de configuración que desencadenó el error
+          console.log('Error.message:==>>', error.message);
+        }
+        
+      });
         
   };
   
   // funcion para input iconos 
   
     const handleIconSelect = (selectedIcon) => {
-      console.log(expenseData.icon)
+      //console.log(expenseData.icon)
       setExpenseData({
         ...expenseData,
         icon: selectedIcon,
@@ -85,7 +91,7 @@ const ExpenseForm = () => {
    
   // funciones de button guardar 
   // verifica si los input estan vacios 
-  const checkButtonEnabled = () => {
+ /* const checkButtonEnabled = () => {
     if (expenseData.name.trim() !== '' && expenseData.amount.trim() !== '' && expenseData.date.trim() !== '' && expenseData.description.trim() !== '' && expenseData.icon.trim() !== '') {
       setButtonEnabled(true);
     } else {
@@ -97,7 +103,7 @@ const ExpenseForm = () => {
 
   useEffect(() => {
     checkButtonEnabled();
-  }, [expenseData.name, expenseData.amount, expenseData.date, expenseData.icon, expenseData.description]);
+  }, [expenseData.name, expenseData.amount, expenseData.date, expenseData.icon, expenseData.description]);*/
   
   return (
     <SafeAreaView style={styles.container}>
@@ -136,7 +142,7 @@ const ExpenseForm = () => {
             style1={styles.selectedCheckbox}
             style2={styles.selectedTextCheckbox}
           />
-          <ButtonSave isButtonEnabled={isButtonEnabled} save={handleSave} />
+          <ButtonSave save={handleSave} text={"Guardar"} gradient={styles.gradient} data={expenseData}/>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -204,6 +210,13 @@ const styles = StyleSheet.create({
   selectedTextCheckbox: {
     color: '#B00020',
     fontWeight: 'bold',
+  },
+
+  gradient: {
+    borderRadius: 27,
+    flex: 1,
+    marginTop: 165,
+    width: 380,
   },
 });
 

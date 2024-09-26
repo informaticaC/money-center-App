@@ -11,7 +11,7 @@ const UserProfile = () => {
   //console.log('imagen:===>',user.image);
   
   useEffect(() => {
-    console.log('global User, (state.users)', user);
+    console.log('UserProfile.js, line 14, global User, (state.users)', user);
     if (user?.image) {
       setAvatarSource({ uri: user?.image });
     }

@@ -10,7 +10,6 @@ const ShowPickerDate = ({data, funcion , field}) => {
 
   const [incomeDate, setIncomeDate] = useState("");
   
-
   //funciones para input fecha
   const esLocale = require('date-fns/locale/es'); 
 

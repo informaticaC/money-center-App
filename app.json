@@ -27,6 +27,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": ["assets/fonts/Urbanist-Regular.ttf","assets/fonts/Urbanist-Bold.ttf","assets/fonts/Urbanist-ExtraBold.ttf"]
+        }
+      ]
+    ]
   }
 }

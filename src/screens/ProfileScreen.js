@@ -5,21 +5,25 @@ import UserProfile from '../components/shared/UserProfile';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-
+import { useDispatch } from 'react-redux';
+import { setUsers } from '../../store/slices/users.slice';
+import { setToken } from '../../store/slices/token.slice';
+import { setBalance } from '../../store/slices/balance.slice';
 const ProfileScreen = () => {
+  const dispatch = useDispatch();
   
   const navigation = useNavigation();
 
-  const clearAsyncStorage = async () => {
-    try {
-      await AsyncStorage.clear();
-      console.log('AsyncStorage ha sido limpiado exitosamente.');
-      navigation.navigate("LoginScreen")
-    } catch (error) {
-      console.error('Error al limpiar AsyncStorage:', error);
-    }
-  };
+ 
+  const logOut = async () => {
+    console.log('Loggin Out!!')
+    await AsyncStorage.removeItem("@user");
+    await AsyncStorage.removeItem("@token");
+    dispatch(setUsers(null));
+    dispatch(setToken(null));
+    console.log('Already Out From Money Center!!');
+    navigation.navigate("MoneyCenter");
+  }
 
   return (
     <SafeAreaView>
@@ -72,7 +76,7 @@ const ProfileScreen = () => {
             </View>
           </View>
         </View>
-        <TouchableOpacity  onPress={clearAsyncStorage} style={styles.button}>
+        <TouchableOpacity  onPress={logOut} style={styles.button}>
           <Text style={styles.buttonText}>Cerrar sesión</Text>
         </TouchableOpacity>
       </View>

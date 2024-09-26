@@ -18,7 +18,7 @@ const fetchIncomeData = async (token) => {
               }
         }).then( response => {
             data = response.data;
-            incomes(data);
+            incomes(data.sort((a,b) => Date.parse(b.date)-Date.parse(a.date)));
         }).catch( err => {
             console.error('fetchIncomeData.js, line 20, error:', err);
             reject(err);

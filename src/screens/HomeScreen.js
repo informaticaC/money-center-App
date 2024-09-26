@@ -14,7 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 
 const HomeScreen = () => {
-
+  console.log('HomeScreen.js, line 17')
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
   const token = useSelector((state) => state.auth.token);
@@ -23,48 +23,49 @@ const HomeScreen = () => {
 
   const navigator = useNavigation();
 
-  const checkUserLogged = async () => {
-    console.log('HomeScreen.js, line 27, users (global store):', users)
-    console.log('HomeScreen.js, line 28, token from global store:======>>', token);
-    const url = `${process.env.EXPO_PUBLIC_API_URL_BASE}/users/me`;
+  // const checkUserLogged = async () => {
+  //   console.log('HomeScreen.js, line 27, users (global store):', users)
+  //   console.log('HomeScreen.js, line 28, token from global store:======>>', token);
+  //   const url = `${process.env.EXPO_PUBLIC_API_URL_BASE}/users/me`;
 
-    axios.get(url, { headers: { Authorization:`Bearer ${token}` } })
-          .then(res => {
-            //console.log('UserData = true!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-            setUserData(true);
-            return true;
-          })
-          .catch(err => {
-            console.error(err);
-            logOut();
-            console.log('UserData = false!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  //   axios.get(url, { headers: { Authorization:`Bearer ${token}` } })
+  //         .then(res => {
+  //           //console.log('UserData = true!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  //           setUserData(true);
+  //           return true;
+  //         })
+  //         .catch(err => {
+  //           console.error(err);
+  //           logOut();
+  //           console.log('UserData = false!!!!!!!!!!!!!!!!!!!!!!!!!!!');
 
-            setUserData(false);
-          });
+  //           setUserData(false);
+  //         });
           
-  };
+  // };
 
-  const logOut = async () => {
-    console.log('Loggin Out!!')
-    await AsyncStorage.removeItem("@user");
-    await AsyncStorage.removeItem("@token");
-    setTimeout(() => {
-      console.log('From HomeScreen, line54, going to Login Screen');
-      navigator.navigate("LoginScreen");
-    }, 50);
-    console.log('Already Out!!');
-  }
+  // const logOut = async () => {
+  //   console.log('Loggin Out!!')
+  //   await AsyncStorage.removeItem("@user");
+  //   await AsyncStorage.removeItem("@token");
+  //   setTimeout(() => {
+  //     console.log('From HomeScreen, line54, going to Login Screen');
+  //     navigator.navigate("LoginScreen");
+  //   }, 50);
+  //   console.log('Already Out!!');
+  // }
   
   const fetchData = async () => {
     try {
+      console.log('HomeScreen.js, line 60, global state users:', users);
       // Recupera los datos de AsyncStorage
-      const storedUserData = await AsyncStorage.getItem('@user');
-      const user = JSON.parse(storedUserData);
-      const storedToken = await AsyncStorage.getItem('@token');
-      const token = JSON.parse(storedToken);
-      // Actualiza el estado local con los datos recuperados
-      dispatch(setUsers(user));
-      dispatch(setToken(token));
+      // const storedUserData = await AsyncStorage.getItem('@user');
+      // const user = JSON.parse(storedUserData);
+      // const storedToken = await AsyncStorage.getItem('@token');
+      // const token = JSON.parse(storedToken);
+      // // Actualiza el estado local con los datos recuperados
+      // dispatch(setUsers(user));
+      // dispatch(setToken(token));
 
     } catch (error) {
       console.error('Error al recuperar datos de AsyncStorage:', error);
